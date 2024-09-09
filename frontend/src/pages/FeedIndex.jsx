@@ -6,7 +6,8 @@ import { loadFeeds, addFeed, updateFeed, removeFeed } from '../store/actions/fee
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service'
 import { feedService } from '../services/feed'
 
-import { FeedList } from '../cmps/FeedList'
+import { Outlet } from 'react-router'
+import { NavBar } from '../cmps/NavBar'
 
 export function FeedIndex() {
 
@@ -51,15 +52,9 @@ export function FeedIndex() {
     }
 
     return (
-        <main className="feed-index">
-            <header>
-                <h2>Feeds</h2>
-                <button onClick={onAddFeed}>Add a Feed</button>
-            </header>
-            <FeedList 
-                feeds={feeds}
-                onRemoveFeed={onRemoveFeed} 
-                onUpdateFeed={onUpdateFeed}/>
+        <main className="feed-index main-layout">
+            <NavBar />
+            <Outlet />
         </main>
     )
 }

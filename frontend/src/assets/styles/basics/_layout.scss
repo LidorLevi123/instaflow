@@ -1,6 +1,6 @@
 .main-layout {
     display: grid;
-    grid-template-columns: 323px minmax(1fr, 1013px);
+    grid-template-columns: 323px minmax(1013px, 1fr);
 
     // @include for-narrow-layout {
     //     grid-template-columns: 

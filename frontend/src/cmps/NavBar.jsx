@@ -1,14 +1,22 @@
 import { Link, NavLink } from 'react-router-dom'
-import { useNavigate } from 'react-router'
+import { SvgIcon } from './SvgIcon'
 
 export function NavBar() {
-	const navigate = useNavigate()
 
 	return (
 		<nav className="nav-bar">
 			<ul className="nav-list">
                 <li>
-                    <NavLink to="/" className="home-page">Home</NavLink>
+                    <NavLink to="/"><SvgIcon iconName="logoTxt"/></NavLink>
+                </li>
+                <li>
+                    <NavLink to="/"><SvgIcon iconName="home"/>Home</NavLink>
+                </li>
+                <li>
+                    <NavLink to="/"><SvgIcon iconName="search"/>Search</NavLink>
+                </li>
+                <li>
+                    <NavLink to="/"><SvgIcon iconName="explore"/>Explore</NavLink>
                 </li>
 			</ul>
 		</nav>

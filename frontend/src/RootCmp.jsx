@@ -7,12 +7,9 @@ import { FeedDetails } from './pages/FeedDetails.jsx'
 import { FeedIndex } from './pages/FeedIndex.jsx'
 
 export function RootCmp() {
-    console.log('We\'re live')
-
     return (
         <div className="main-container">
             <UserMsg />
-
             <main>
                 <Routes>
                     <Route path="" element={<FeedIndex />} />
