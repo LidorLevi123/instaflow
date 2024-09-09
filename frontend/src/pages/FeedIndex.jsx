@@ -52,9 +52,9 @@ export function FeedIndex() {
     }
 
     return (
-        <main className="feed-index main-layout">
+        <section className="feed-index main-layout">
             <NavBar />
             <Outlet />
-        </main>
+        </section>
     )
 }
