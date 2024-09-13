@@ -5,7 +5,6 @@ export const feedService = {
     getById,
     save,
     remove,
-    addFeedMsg
 }
 
 async function query(filterBy = { txt: '', price: 0 }) {
@@ -27,9 +26,4 @@ async function save(feed) {
         savedFeed = await httpService.post('feed', feed)
     }
     return savedFeed
-}
-
-async function addFeedMsg(feedId, txt) {
-    const savedMsg = await httpService.post(`feed/${feedId}/msg`, {txt})
-    return savedMsg
 }

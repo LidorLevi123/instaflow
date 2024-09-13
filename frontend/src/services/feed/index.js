@@ -1,4 +1,4 @@
-const { DEV, VITE_LOCAL } = import.meta.env
+const { VITE_LOCAL } = import.meta.env
 
 import { getRandomIntInclusive, makeId } from '../util.service'
 
@@ -24,8 +24,3 @@ function getDefaultFilter() {
 
 const service = VITE_LOCAL === 'true' ? local : remote
 export const feedService = { getEmptyFeed, getDefaultFilter, ...service }
-
-// Easy access to this service from the dev tools console
-// when using script - dev / dev:local
-
-if (DEV) window.feedService = feedService
