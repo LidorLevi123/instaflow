@@ -1,16 +1,12 @@
 import { FeedPreview } from './FeedPreview'
 
-export function FeedList({ feeds, onRemoveFeed, onUpdateFeed }) {
+export function FeedList({ feeds }) {
 
     return <section>
-        <ul className="list">
+        <ul className="feed-list">
             {feeds.map(feed =>
                 <li key={feed._id}>
                     <FeedPreview feed={feed}/>
-                    <div className="actions">
-                        <button onClick={() => onUpdateFeed(feed)}>Edit</button>
-                        <button onClick={() => onRemoveFeed(feed._id)}>x</button>
-                    </div>
                 </li>)
             }
         </ul>
