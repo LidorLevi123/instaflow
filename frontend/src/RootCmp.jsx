@@ -3,8 +3,8 @@ import { Routes, Route } from 'react-router'
 
 import { UserMsg } from './cmps/UserMsg.jsx'
 import { LoginSignup } from './pages/LoginSignup.jsx'
-import { FeedDetails } from './pages/FeedDetails.jsx'
 import { FeedIndex } from './pages/FeedIndex.jsx'
+import { HomePage } from './pages/HomePage.jsx'
 
 export function RootCmp() {
     return (
@@ -12,8 +12,9 @@ export function RootCmp() {
             <UserMsg />
             <main>
                 <Routes>
-                    <Route path="" element={<FeedIndex />} />
-                    <Route path="feed/:feedId" element={<FeedDetails />} />
+                    <Route path="" element={<FeedIndex />} >
+                        <Route path="" element={<HomePage />} />
+                    </Route>
                     <Route path="login" element={<LoginSignup />} />
                 </Routes>
             </main>
