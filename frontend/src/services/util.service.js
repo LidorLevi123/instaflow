@@ -25,15 +25,33 @@ export function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min //The maximum is inclusive and the minimum is inclusive 
 }
 
-
-export function randomPastTime() {
+export function getRandomPastTime() {
     const HOUR = 1000 * 60 * 60
-    const DAY = 1000 * 60 * 60 * 24
-    const WEEK = 1000 * 60 * 60 * 24 * 7
+    const DAY = HOUR * 24
+    const WEEK = DAY * 7
 
     const pastTime = getRandomIntInclusive(HOUR, WEEK)
     return Date.now() - pastTime
 }
+
+export function getTimeSince(createdAt) {
+    const now = Date.now()
+    const diffInMs = now - createdAt
+
+    const seconds = Math.floor(diffInMs / 1000)
+    const minutes = Math.floor(seconds / 60)
+    const hours = Math.floor(minutes / 60)
+    const days = Math.floor(hours / 24)
+    const weeks = Math.floor(days / 7)
+
+    if (weeks > 0) return `${weeks}w`
+    if (days > 0) return `${days}d`
+    if (hours > 0) return `${hours}h`
+    if (minutes > 0) return `${minutes}m`
+    return `${seconds}s`
+}
+
+window.getTimeSince = getTimeSince
 
 export function debounce(func, timeout = 300) {
     let timer

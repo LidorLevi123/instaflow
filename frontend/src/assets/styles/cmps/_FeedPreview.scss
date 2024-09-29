@@ -1,0 +1,48 @@
+.feed-preview {
+    display: grid;
+
+    .uploader {
+        $gap: rem(4px);
+        
+        display: grid;
+        grid-template-columns: repeat(6, auto) 1fr;
+        justify-content: start;
+        gap: $gap;
+        align-items: center;
+        font-size: calc(1rem - 2px);
+        margin-block-end: rem(12px);
+
+        img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            margin-inline-end: calc(em(12px) - $gap);
+        }
+
+        .fullname {
+            font-weight: 600;
+        }
+
+        .created-at, .dot {
+            color: $gray3;
+        }
+
+        .follow {
+            color: $clr4;
+            font-weight: 600;
+            cursor: pointer;
+
+            &:hover {
+                color: $clr3;
+            }
+        }
+
+        .options-icon {
+            justify-self: end;
+            display: flex;
+            align-items: center;
+        }
+    }
+}
