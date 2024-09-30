@@ -1,16 +1,15 @@
 .feed-preview {
     display: grid;
-
+    row-gap: 12px;
     .uploader {
         $gap: rem(4px);
-        
+
         display: grid;
         grid-template-columns: repeat(6, auto) 1fr;
         justify-content: start;
         gap: $gap;
         align-items: center;
         font-size: calc(1rem - 2px);
-        margin-block-end: rem(12px);
 
         img {
             width: 32px;
@@ -43,6 +42,22 @@
             justify-self: end;
             display: flex;
             align-items: center;
+        }
+    }
+
+    .actions {
+        display: grid;
+        gap: 18px;
+        grid-template-columns: repeat(3, auto) 1fr;
+
+        > * {
+            cursor: pointer;
+            &:hover {
+                color: lighten(black, 50%);
+            }
+            &:last-child {
+                justify-self: end;
+            }
         }
     }
 }
