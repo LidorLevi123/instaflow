@@ -1,6 +1,14 @@
 .feed-preview {
     display: grid;
     row-gap: 12px;
+    font-size: calc(1rem - 2px);
+    border-block-end: 1px solid $gray1;
+    margin-block-end: rem(20px);
+
+    .fullname {
+        font-weight: 600;
+    }
+
     .uploader {
         $gap: rem(4px);
 
@@ -9,7 +17,6 @@
         justify-content: start;
         gap: $gap;
         align-items: center;
-        font-size: calc(1rem - 2px);
 
         img {
             width: 32px;
@@ -20,11 +27,8 @@
             margin-inline-end: calc(em(12px) - $gap);
         }
 
-        .fullname {
-            font-weight: 600;
-        }
-
-        .created-at, .dot {
+        .created-at,
+        .dot {
             color: $gray3;
         }
 
@@ -50,13 +54,72 @@
         gap: 18px;
         grid-template-columns: repeat(3, auto) 1fr;
 
-        > * {
+        >* {
             cursor: pointer;
+
             &:hover {
                 color: lighten(black, 50%);
             }
+
             &:last-child {
                 justify-self: end;
+            }
+        }
+    }
+
+    .details {
+        display: grid;
+        gap: rem(7px);
+
+        .fullname {
+            margin-inline-end: em(4px);
+        }
+
+        .likes {
+            font-weight: 600;
+        }
+
+        .view-comments {
+            color: $gray3;
+        }
+
+        .add-comment-container {
+            display: flex;
+            align-items: center;
+            gap: rem(8px);
+            margin-block-end: rem(16px);
+
+            textarea {
+                flex: 1;
+                border: none;
+                resize: none;
+                font-family: $font;
+                height: rem(18px);
+                overflow-y: hidden;
+
+                &:focus-visible {
+                    outline: none;
+                }
+
+                &::placeholder {
+                    font-family: $font;
+                    font-size: 14px;
+                }
+            }
+
+            .btn-post {
+                color: $clr4;
+                font-weight: 600;
+                cursor: pointer;
+
+                &:hover {
+                    color: $clr3;
+                }
+            }
+
+            >*:last-child {
+                color: $gray3;
+                cursor: pointer;
             }
         }
     }
