@@ -1,0 +1,39 @@
+.add-comment {
+    display: flex;
+    align-items: center;
+    gap: rem(8px);
+    margin-block-end: rem(16px);
+
+    textarea {
+        flex: 1;
+        border: none;
+        resize: none;
+        font-family: $font;
+        height: rem(18px);
+        overflow-y: hidden;
+
+        &:focus-visible {
+            outline: none;
+        }
+
+        &::placeholder {
+            font-family: $font;
+            font-size: 14px;
+        }
+    }
+
+    .btn-post {
+        color: $clr4;
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover {
+            color: $clr3;
+        }
+    }
+
+    >*:last-child {
+        color: $gray3;
+        cursor: pointer;
+    }
+}

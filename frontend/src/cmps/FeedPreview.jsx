@@ -1,33 +1,8 @@
-import { useRef } from "react"
 import { getTimeSince } from "../services/util.service"
 import { SvgIcon } from "./SvgIcon"
+import { AddComment } from "./AddComment"
 
 export function FeedPreview({ feed }) {
-    const textRef = useRef()
-
-    function onResize() {
-        const elText = textRef.current
-        const maxHeight = 18 * 4
-
-        if (!elText) return
-        if (!elText.value) {
-            elText.style.height = '18px'
-            return
-        }
-
-        elText.style.height = 'auto'
-        const contentHeight = elText.scrollHeight
-
-        let newHeight = Math.min(contentHeight, maxHeight)
-        elText.style.height = newHeight + 'px'
-
-        if (contentHeight > maxHeight) {
-            elText.style.overflowY = 'auto'
-        } else {
-            elText.style.overflowY = 'hidden'
-        }
-    }
-
     console.log('feed:', feed)
     return (
         <article className="feed-preview">
@@ -59,11 +34,7 @@ export function FeedPreview({ feed }) {
                     {feed.txt}
                 </p>
                 <span className="view-comments">View all {feed.comments.length} comments</span>
-                <div className="add-comment-container">
-                    <textarea placeholder="Add a comment..." ref={textRef} onInput={onResize}></textarea>
-                    <span className="btn-post">Post</span>
-                    <SvgIcon iconName="emoji"></SvgIcon>
-                </div>
+                <AddComment />
             </section>
         </article>
     )
