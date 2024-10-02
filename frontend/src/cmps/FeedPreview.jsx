@@ -4,13 +4,16 @@ import { AddComment } from "./AddComment"
 
 export function FeedPreview({ feed }) {
     console.log('feed:', feed)
+    const likeCount = feed.likedBy.length.toLocaleString('en-US')
+    const createdAt = getTimeSince(feed.createdAt)
+
     return (
         <article className="feed-preview">
             <section className="uploader">
                 <img src={feed.by.imgUrl} alt="Uploader img" />
                 <span className="fullname">{feed.by.fullname}</span>
                 <span className="dot">•</span>
-                <span className="created-at">{getTimeSince(feed.createdAt)}</span>
+                <span className="created-at">{createdAt}</span>
                 <span className="dot">•</span>
                 <span className="follow">Follow</span>
                 <span className="options-icon">
@@ -28,7 +31,7 @@ export function FeedPreview({ feed }) {
             </section>
 
             <section className="details">
-                <span className="likes">{feed.likedBy.length} likes</span>
+                <span className="likes">{likeCount} likes</span>
                 <p className="txt">
                     <span className="fullname">{feed.by.fullname}</span>
                     {feed.txt}

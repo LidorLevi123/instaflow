@@ -23,13 +23,7 @@
     }
 
     .btn-post {
-        color: $clr4;
-        font-weight: 600;
-        cursor: pointer;
-
-        &:hover {
-            color: $clr3;
-        }
+        @include btn-primary
     }
 
     >*:last-child {
