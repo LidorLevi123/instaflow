@@ -1,11 +1,19 @@
 import { getTimeSince } from "../services/util.service"
 import { SvgIcon } from "./SvgIcon"
 import { AddComment } from "./AddComment"
+import { Link, useSearchParams } from "react-router-dom"
 
 export function FeedPreview({ feed }) {
+    const [searchParams, setSearchParams] = useSearchParams()
     console.log('feed:', feed)
     const likeCount = feed.likedBy.length.toLocaleString('en-US')
     const createdAt = getTimeSince(feed.createdAt)
+
+    function addSearchParam(feedId) {
+        const newParams = new URLSearchParams(searchParams)
+        newParams.set('feedId', feedId)
+        setSearchParams(newParams)
+    }
 
     return (
         <article className="feed-preview">
@@ -25,7 +33,9 @@ export function FeedPreview({ feed }) {
 
             <section className="actions">
                 <SvgIcon iconName="heart" />
-                <SvgIcon iconName="comment" />
+                <span onClick={()=> addSearchParam(feed._id)}>
+                    <SvgIcon iconName="comment" />
+                </span>
                 <SvgIcon iconName="share" />
                 <SvgIcon iconName="bookmark" />
             </section>

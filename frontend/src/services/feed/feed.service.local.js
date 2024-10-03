@@ -123,6 +123,7 @@ function _createFeeds() {
                         imgUrl: '/img/user2.jpg',
                     },
                     txt: 'Looks amazing!',
+                    createdAt: 1652352378,
                 },
             ],
             likedBy: [
