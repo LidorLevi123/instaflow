@@ -10,55 +10,12 @@
     }
 
     .uploader {
-        $gap: rem(4px);
-
-        display: grid;
-        grid-template-columns: repeat(6, auto) 1fr;
-        justify-content: start;
-        gap: $gap;
-        align-items: center;
-
-        img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: top;
-            margin-inline-end: calc(em(12px) - $gap);
-        }
-
-        .created-at,
-        .dot {
-            color: $gray3;
-        }
-
-        .follow {
-            @include btn-primary
-        }
-
-        .options-icon {
-            justify-self: end;
-            display: flex;
-            align-items: center;
-        }
+        $gtc: repeat(6, auto) 1fr;
+        @include uploader($gtc)
     }
 
     .actions {
-        display: grid;
-        gap: 18px;
-        grid-template-columns: repeat(3, auto) 1fr;
-
-        >* {
-            cursor: pointer;
-
-            &:hover {
-                color: lighten(black, 50%);
-            }
-
-            &:last-child {
-                justify-self: end;
-            }
-        }
+        @include feed-action-bar
     }
 
     .details {
