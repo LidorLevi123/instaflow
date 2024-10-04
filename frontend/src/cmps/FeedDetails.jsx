@@ -68,8 +68,6 @@ export function FeedDetails({ feedId }) {
                     <span className="likes">{feed.likedBy?.length} likes</span>
                     <span className="created-at">{createdAt} ago</span>
 
-                    <hr />
-
                     <AddComment />
                 </div>
 

@@ -1,0 +1,69 @@
+.feed-details {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+        'img uploader'
+        'img info'
+        'img bottom-bar';
+    max-width: 1405px;
+    background-color: white;
+
+    >*:not(.feed-img) {
+        padding: rem(16px)
+    }
+    .feed-img {
+        grid-area: img
+    }
+
+    .created-at {
+        color: $gray3;
+        font-size: em(12px);
+    }
+
+    .uploader {
+        grid-area: uploader;
+        $gtc: repeat(2, auto) 1fr;
+        @include uploader($gtc);
+    }
+
+    .info {
+        grid-area: info;
+
+        .fullname {
+            font-weight: 600;
+            margin-inline-end: em(4px);
+        }
+    }
+
+    .bottom-section {
+        grid-area: bottom-bar;
+        display: grid;
+        gap: rem(4px);
+
+        .actions {
+            @include feed-action-bar;
+            margin-block-end: 12px
+        }
+
+        .likes {
+            font-weight: 600;
+            font-size: em(14px);
+        }
+
+        .created-at {
+            border-block-end: 1px solid $gray1;
+            padding-block-end: em(13px);
+        }
+
+        .add-comment {
+            align-self: center;
+            margin: em(10px) 0;
+        }
+    }
+}
