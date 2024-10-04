@@ -11,7 +11,6 @@
 @import "basics/forms";
 
 // Pages
-@import "pages/FeedDetails";
 @import "pages/FeedIndex";
 @import "pages/LoginSignup";
 @import "pages/HomePage";
@@ -19,6 +18,8 @@
 // Components
 @import "cmps/FeedList";
 @import "cmps/FeedPreview";
+@import "cmps/FeedDetails";
 @import "cmps/NavBar";
 @import "cmps/UserMsg";
 @import "cmps/AddComment";
+@import "cmps/Backdrop";

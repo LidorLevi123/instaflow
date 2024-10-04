@@ -3,9 +3,12 @@ import { feedService } from '../services/feed'
 import { SvgIcon } from './SvgIcon'
 import { AddComment } from './AddComment'
 import { CommentList } from './CommentList'
+import { Backdrop } from './Backdrop'
+import { useSearchParams } from 'react-router-dom'
 
 export function FeedDetails({ feedId }) {
     const [feed, setFeed] = useState(null)
+    const [searchParams, setSearchParams] = useSearchParams()
 
     useEffect(() => {
         loadFeed()
@@ -21,47 +24,56 @@ export function FeedDetails({ feedId }) {
         }
     }
 
+    function onCloseDetails() {
+        searchParams.delete('feedId')
+        setSearchParams(searchParams)
+    }
+
     if (!feed) return
 
     const createdAt = getTimeSince(feed.createdAt)
 
     return (
-        <section className="feed-details">
-            <img src={feed.imgUrls[0]} alt="" />
+        <>
+            <Backdrop onClose={onCloseDetails}/>
+            <section className="feed-details">
 
-            <div className="uploader">
-                <img src={feed.by.imgUrl} alt="Uploader img" />
-                <span className="fullname">{feed.by.fullname}</span>
-                <span className="options-icon">
-                    <SvgIcon iconName="options" />
-                </span>
-            </div>
+                <img src={feed.imgUrls[0]} alt="" className="feed-img" />
 
-            <div className="info">
-                <p className="txt">
+                <div className="uploader">
+                    <img src={feed.by.imgUrl} alt="Uploader img" />
                     <span className="fullname">{feed.by.fullname}</span>
-                    {feed.txt}
-                </p>
-                <span className="created-at">{createdAt}</span>
-                <CommentList comments={feed.comments} />
-            </div>
+                    <span className="options-icon">
+                        <SvgIcon iconName="options" />
+                    </span>
+                </div>
 
-            <div>
-                <section className="actions">
-                    <SvgIcon iconName="heart" />
-                    <SvgIcon iconName="comment" />
-                    <SvgIcon iconName="share" />
-                    <SvgIcon iconName="bookmark" />
-                </section>
+                <div className="info">
+                    <p className="txt">
+                        <span className="fullname">{feed.by.fullname}</span>
+                        {feed.txt}
+                    </p>
+                    <span className="created-at">{createdAt}</span>
+                    {/* <CommentList comments={feed.comments} /> */}
+                </div>
 
-                <span className="likes">{feed.likedBy?.length} likes</span>
-                <span className="created-at">{createdAt} ago</span>
+                <div className="bottom-section">
+                    <section className="actions">
+                        <SvgIcon iconName="heart" />
+                        <SvgIcon iconName="comment" />
+                        <SvgIcon iconName="share" />
+                        <SvgIcon iconName="bookmark" />
+                    </section>
 
-                <hr />
+                    <span className="likes">{feed.likedBy?.length} likes</span>
+                    <span className="created-at">{createdAt} ago</span>
 
-                <AddComment />
-            </div>
+                    <hr />
 
-        </section>
+                    <AddComment />
+                </div>
+
+            </section>
+        </>
     )
 }
