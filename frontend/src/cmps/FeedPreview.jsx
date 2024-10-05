@@ -44,7 +44,7 @@ export function FeedPreview({ feed }) {
                 <span className="likes">{likeCount} likes</span>
                 <p className="txt">
                     <span className="fullname">{feed.by.fullname}</span>
-                    {feed.txt}
+                    {feed.txt || ''}
                 </p>
                 <span className="view-comments">View all {feed.comments.length} comments</span>
                 <AddComment />

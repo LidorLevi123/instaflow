@@ -51,7 +51,7 @@ export function FeedDetails({ feedId }) {
                 <div className="info">
                     <p className="txt">
                         <span className="fullname">{feed.by.fullname}</span>
-                        {feed.txt}
+                        {feed.txt || ''}
                     </p>
                     <span className="created-at">{createdAt}</span>
                     {/* <CommentList comments={feed.comments} /> */}
