@@ -54,13 +54,13 @@ export function FeedDetails({ feedId }) {
                 <div className="info">
                     <div>
                         <img src={feed.by.imgUrl} alt="Uploader img" />
-                        <p className="txt">
+                        <div>
                             <span className="fullname">{feed.by.fullname}</span>
-                            {feed.txt || ''}
-                        </p>
+                            <span className="txt">{feed.txt || ''}</span>
+                        </div>
+                        <span className="created-at">{createdAt}</span>
                     </div>
-                    <span className="created-at">{createdAt}</span>
-                    {/* <CommentList comments={feed.comments} /> */}
+                    <CommentList comments={feed.comments} />
                 </div>
 
                 <div className="bottom-section">

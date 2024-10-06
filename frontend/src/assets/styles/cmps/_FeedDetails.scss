@@ -40,6 +40,10 @@
         font-size: rem(14px);
         padding-block: rem(14px);
         border-block-end: 1px solid $gray0;
+
+        img {
+            margin-inline-end: rem(14px);
+        }
     }
 
     .info {
@@ -47,9 +51,9 @@
 
         >*:first-child {
             $gtc: auto auto 1fr;
-            @include uploader($gtc);
             font-size: rem(14px);
-            margin-block-end: rem(4px);
+            margin-block-end: rem(24px);
+            @include comment-layout
         }
 
         img {
