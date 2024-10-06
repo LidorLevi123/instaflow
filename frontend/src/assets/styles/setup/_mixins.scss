@@ -115,3 +115,20 @@
             align-items: center;
         }
 }
+
+@mixin comment-layout {
+    display: grid;
+    row-gap: rem(7px);
+    column-gap: rem(18px);
+    grid-template-columns: 32px 1fr;
+
+    img {
+        align-self: start;
+        grid-row: 1 / 3;
+    }
+
+    .actions {
+        display: flex;
+        gap: rem(12px);
+    }
+}
