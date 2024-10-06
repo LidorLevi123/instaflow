@@ -1,0 +1,19 @@
+.comment-preview {
+    @include comment-layout;
+
+    .user {
+        font-size: rem(14px);
+    }
+
+    .actions {
+        >*:not(.created-at) {
+            font-size: rem(12px);
+            font-weight: 600;
+            color: $gray3;
+        }
+
+        >*:hover {
+            cursor: pointer;
+        }
+    }
+}
