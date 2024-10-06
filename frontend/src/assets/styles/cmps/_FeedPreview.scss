@@ -1,13 +1,9 @@
 .feed-preview {
     display: grid;
     row-gap: 12px;
-    font-size: calc(1rem - 2px);
+    font-size: rem(14px);
     border-block-end: 1px solid $gray1;
     margin-block-end: rem(20px);
-
-    .fullname {
-        font-weight: 600;
-    }
 
     .uploader {
         $gtc: repeat(6, auto) 1fr;

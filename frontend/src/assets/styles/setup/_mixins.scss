@@ -96,6 +96,10 @@
             margin-inline-end: calc(em(12px) - $gap);
         }
 
+        .fullname {
+            font-weight: 600;
+        }
+
         .created-at,
         .dot {
             color: $gray3;

@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
+
 import { feedService } from '../services/feed'
+import { getTimeSince } from '../services/util.service'
+
 import { SvgIcon } from './SvgIcon'
 import { AddComment } from './AddComment'
 import { CommentList } from './CommentList'
 import { Backdrop } from './Backdrop'
-import { useSearchParams } from 'react-router-dom'
 
 export function FeedDetails({ feedId }) {
     const [feed, setFeed] = useState(null)
@@ -35,7 +38,7 @@ export function FeedDetails({ feedId }) {
 
     return (
         <>
-            <Backdrop onClose={onCloseDetails}/>
+            <Backdrop onClose={onCloseDetails} />
             <section className="feed-details">
 
                 <img src={feed.imgUrls[0]} alt="" className="feed-img" />
@@ -49,10 +52,13 @@ export function FeedDetails({ feedId }) {
                 </div>
 
                 <div className="info">
-                    <p className="txt">
-                        <span className="fullname">{feed.by.fullname}</span>
-                        {feed.txt || ''}
-                    </p>
+                    <div>
+                        <img src={feed.by.imgUrl} alt="Uploader img" />
+                        <p className="txt">
+                            <span className="fullname">{feed.by.fullname}</span>
+                            {feed.txt || ''}
+                        </p>
+                    </div>
                     <span className="created-at">{createdAt}</span>
                     {/* <CommentList comments={feed.comments} /> */}
                 </div>

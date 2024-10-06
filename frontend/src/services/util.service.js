@@ -51,8 +51,6 @@ export function getTimeSince(createdAt) {
     return `${seconds}s`
 }
 
-window.getTimeSince = getTimeSince
-
 export function debounce(func, timeout = 300) {
     let timer
     return (...args) => {

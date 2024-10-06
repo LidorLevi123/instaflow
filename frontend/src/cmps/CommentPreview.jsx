@@ -1,5 +1,6 @@
-export function CommentPreview({ comment }) {
+import { getTimeSince } from "../services/util.service";
 
+export function CommentPreview({ comment }) {
     return (
         <article className="comment-preview">
             <img src={comment.by.imgUrl} alt="" />
@@ -8,7 +9,7 @@ export function CommentPreview({ comment }) {
                 <span className="txt">{comment.txt}</span>
             </div>
             <div>
-                <span className="created-at">{comment.createdAt}</span>
+                <span className="created-at">{getTimeSince(comment.createdAt)}</span>
                 <span className="likes">{comment.likedBy?.length} likes</span>
                 <span className="btn-reply">Reply</span>
             </div>

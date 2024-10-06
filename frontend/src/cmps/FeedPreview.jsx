@@ -1,7 +1,7 @@
+import { useSearchParams } from "react-router-dom"
 import { getTimeSince } from "../services/util.service"
 import { SvgIcon } from "./SvgIcon"
 import { AddComment } from "./AddComment"
-import { useSearchParams } from "react-router-dom"
 
 export function FeedPreview({ feed }) {
     const [searchParams, setSearchParams] = useSearchParams()
