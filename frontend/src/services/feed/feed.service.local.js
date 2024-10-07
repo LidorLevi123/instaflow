@@ -81,8 +81,35 @@ function _createFeeds() {
                             fullname: 'Sara Lee',
                             imgUrl: '/img/user2.jpg',
                         },
+                        {
+                            _id: 'u107',
+                            fullname: 'Sara Bee',
+                            imgUrl: '/img/user2.jpg',
+                        },
                     ],
                     createdAt: 1652352378,
+                },
+                {
+                    id: 'c1004',
+                    by: {
+                        _id: 'u102',
+                        fullname: 'Shiran Shvartz',
+                        imgUrl: '/img/user2.jpg',
+                    },
+                    txt: 'I\'m and actual noob! I have to quit CS as long as possible.',
+                    likedBy: [
+                        {
+                            _id: 'u108',
+                            fullname: 'Sara Lee',
+                            imgUrl: '/img/user2.jpg',
+                        },
+                        {
+                            _id: 'u107',
+                            fullname: 'Sara Bee',
+                            imgUrl: '/img/user2.jpg',
+                        },
+                    ],
+                    createdAt: Date.now() - 60000,
                 },
             ],
             likedBy: [
