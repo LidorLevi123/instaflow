@@ -6,10 +6,10 @@ export function CommentPreview({ comment }) {
         <article className="comment-preview">
             <img src={comment.by.imgUrl} alt="" />
             <div className="user">
-                <span className="fullname">{comment.by.fullname}</span>
+                <span className="btn fullname">{comment.by.fullname}</span>
                 <span className="txt">{comment.txt}</span>
             </div>
-            <span className="btn-like">
+            <span className="btn btn-like">
                 <SvgIcon iconName="heartSmall" />
             </span>
             <div className="actions">

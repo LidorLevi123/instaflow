@@ -45,7 +45,7 @@ export function FeedDetails({ feedId }) {
 
                 <div className="uploader">
                     <img src={feed.by.imgUrl} alt="Uploader img" />
-                    <span className="fullname">{feed.by.fullname}</span>
+                    <span className="btn fullname">{feed.by.fullname}</span>
                     <span className="options-icon">
                         <SvgIcon iconName="options" />
                     </span>
@@ -55,7 +55,7 @@ export function FeedDetails({ feedId }) {
                     <div>
                         <img src={feed.by.imgUrl} alt="Uploader img" />
                         <div>
-                            <span className="fullname">{feed.by.fullname}</span>
+                            <span className="btn fullname">{feed.by.fullname}</span>
                             <span className="txt">{feed.txt || ''}</span>
                         </div>
                         <span className="created-at">{createdAt}</span>

@@ -38,3 +38,12 @@
 .portrait-ratio {
     @include aspect-ratio(9, 16);
 }
+
+// Buttons
+
+.btn {
+    cursor: pointer;
+    &:hover {
+        color: lighten(black, 50%);
+    }
+}
