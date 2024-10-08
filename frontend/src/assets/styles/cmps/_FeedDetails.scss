@@ -1,10 +1,5 @@
 .feed-details {
-    $border-radius: 5px;
-
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    translate: -50% -50%;
+    @include modal;
 
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -16,7 +11,7 @@
     max-width: 80vw;
     max-height: 96vh;
     background-color: white;
-    border-radius: $border-radius;
+    border-radius: 5px;
 
     >*:not(.feed-img) {
         padding: rem(16px)

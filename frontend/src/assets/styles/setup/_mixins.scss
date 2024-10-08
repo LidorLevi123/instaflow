@@ -136,3 +136,10 @@
         gap: rem(12px);
     }
 }
+
+@mixin modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+}
