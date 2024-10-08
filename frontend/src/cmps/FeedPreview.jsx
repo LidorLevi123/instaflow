@@ -10,9 +10,8 @@ export function FeedPreview({ feed }) {
     const createdAt = getTimeSince(feed.createdAt)
 
     function addSearchParam(feedId) {
-        const newParams = new URLSearchParams(searchParams)
-        newParams.set('feedId', feedId)
-        setSearchParams(newParams)
+        searchParams.set('feedId', feedId)
+        setSearchParams(searchParams)
     }
 
     return (
