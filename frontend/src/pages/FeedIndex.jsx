@@ -2,6 +2,7 @@ import { Outlet } from 'react-router'
 import { NavBar } from '../cmps/NavBar'
 import { useSearchParams } from 'react-router-dom'
 import { FeedDetails } from '../cmps/FeedDetails'
+import { FeedEdit } from '../cmps/FeedEdit'
 
 export function FeedIndex() {
     const [searchParams] = useSearchParams()
@@ -12,6 +13,7 @@ export function FeedIndex() {
             <NavBar />
             <Outlet />
             {feedId && <FeedDetails feedId={feedId} />}
+            <FeedEdit />
         </section>
     )
 }
