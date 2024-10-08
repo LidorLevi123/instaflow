@@ -1,0 +1,49 @@
+.feed-edit {
+    @include modal;
+
+    display: grid;
+    text-align: center;
+    align-items: center;
+
+    grid-template-rows: auto 1fr;
+
+    width: 734px;
+    height: 82vh;
+    background-color: white;
+    border-radius: 10px;
+
+    .title {
+        font-size: 1rem;
+        font-weight: 600;
+        border-block-end: 1px solid $gray1;
+        padding-block: 0.6em;
+    }
+
+    .content-upload-container {
+        display: grid;
+        justify-items: center;
+        row-gap: rem(18px);
+
+        p {
+            font-size: em(20px);
+        }
+
+        .btn-select {
+            background-color: $clr4;
+            color: white;
+            border-radius: 8px;
+            padding: em(7px) em(16px);
+            font-weight: 600;
+            font-size: rem(14px);
+            cursor: pointer;
+
+            &:hover {
+                background-color: $clr5;
+            }
+        }
+
+        input[type=file] {
+            display: none;
+        }
+    }
+}
