@@ -42,7 +42,6 @@ function getLinks() {
         },
         {
             name: 'addFeed',
-            path: 'add',
             txt: 'Create',
         },
         {

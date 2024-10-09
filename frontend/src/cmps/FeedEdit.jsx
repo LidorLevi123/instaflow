@@ -1,10 +1,10 @@
 import { Backdrop } from './Backdrop'
 import { SvgIcon } from './SvgIcon'
 
-export function FeedEdit() {
+export function FeedEdit({ onClose }) {
     return (
         <>
-            <Backdrop />
+            <Backdrop onClose={onClose}/>
             <section className="feed-edit">
                 <h2 className="title">Create new post</h2>
                 <div className="content-upload-container">
