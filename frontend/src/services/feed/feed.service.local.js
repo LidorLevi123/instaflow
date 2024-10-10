@@ -10,6 +10,13 @@ export const feedService = {
     remove,
 }
 
+export const loggedInUser = {
+	_id: 'u101',
+	username: 'pukpuk',
+	password: 'pukpuk',
+	fullname: 'Lidor Levi',
+}
+
 _createFeeds()
 
 async function query(filterBy = { txt: '', price: 0 }) {
@@ -26,25 +33,9 @@ async function remove(feedId) {
 }
 
 async function save(feed) {
-    var savedFeed
-    if (feed._id) {
-        const feedToSave = {
-            _id: feed._id,
-            price: feed.price,
-            speed: feed.speed,
-        }
-        savedFeed = await storageService.put(STORAGE_KEY, feedToSave)
-    } else {
-        const feedToSave = {
-            vendor: feed.vendor,
-            price: feed.price,
-            speed: feed.speed,
-            // Later, owner is set by the backend
-            msgs: []
-        }
-        savedFeed = await storageService.post(STORAGE_KEY, feedToSave)
-    }
-    return savedFeed
+    return feed._id ? 
+        await storageService.put(STORAGE_KEY, feed) :
+        await storageService.post(STORAGE_KEY, feed)
 }
 
 function _createFeeds() {

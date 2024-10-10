@@ -6,7 +6,7 @@ import { FeedEdit } from '../cmps/FeedEdit'
 import { useState } from 'react'
 
 export function FeedIndex() {
-    const [isFeedEditOpen, setIsFeedEditOpen] = useState(true)
+    const [isFeedEditOpen, setIsFeedEditOpen] = useState(false)
     const [searchParams] = useSearchParams()
     const feedId = searchParams.get('feedId')
 

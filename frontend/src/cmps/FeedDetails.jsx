@@ -8,6 +8,7 @@ import { SvgIcon } from './SvgIcon'
 import { AddComment } from './AddComment'
 import { CommentList } from './CommentList'
 import { Backdrop } from './Backdrop'
+import { loggedInUser } from '../services/feed/feed.service.local'
 
 export function FeedDetails({ feedId }) {
     const [feed, setFeed] = useState(null)
@@ -24,6 +25,20 @@ export function FeedDetails({ feedId }) {
         } catch (err) {
             console.log('Cannot load feed', err)
             throw err
+        }
+    }
+
+    async function onLikeFeed() {
+        try {
+            const feedToSave = {
+                ...feed,
+                likedBy: [...feed.likedBy, loggedInUser]
+            }
+            const savedFeed = await feedService.save(feedToSave)
+            console.log('savedFeed:', savedFeed)
+            setFeed(prevFeed => ({ ...prevFeed, likedBy: savedFeed.likedBy }))
+        } catch (err) {
+            console.log(err, 'Could not like feed')
         }
     }
 
@@ -65,7 +80,7 @@ export function FeedDetails({ feedId }) {
 
                 <div className="bottom-section">
                     <section className="actions">
-                        <SvgIcon iconName="heart" />
+                        <span onClick={onLikeFeed}><SvgIcon iconName="heart" /></span>
                         <SvgIcon iconName="comment" />
                         <SvgIcon iconName="share" />
                         <SvgIcon iconName="bookmark" />
