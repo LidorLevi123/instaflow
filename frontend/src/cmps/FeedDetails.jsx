@@ -28,14 +28,16 @@ export function FeedDetails({ feedId }) {
         }
     }
 
-    async function onLikeFeed() {
+    async function onToggleLike() {
         try {
             const feedToSave = {
                 ...feed,
                 likedBy: [...feed.likedBy, loggedInUser]
             }
+            if(feed.likedBy.some(user => user.username === loggedInUser.username)) {
+                feedToSave.likedBy = feedToSave.likedBy.filter(user => user.username !== loggedInUser.username)
+            }
             const savedFeed = await feedService.save(feedToSave)
-            console.log('savedFeed:', savedFeed)
             setFeed(prevFeed => ({ ...prevFeed, likedBy: savedFeed.likedBy }))
         } catch (err) {
             console.log(err, 'Could not like feed')
@@ -80,7 +82,7 @@ export function FeedDetails({ feedId }) {
 
                 <div className="bottom-section">
                     <section className="actions">
-                        <span onClick={onLikeFeed}><SvgIcon iconName="heart" /></span>
+                        <span onClick={onToggleLike}><SvgIcon iconName="heart" /></span>
                         <SvgIcon iconName="comment" />
                         <SvgIcon iconName="share" />
                         <SvgIcon iconName="bookmark" />

@@ -50,6 +50,7 @@ function _createFeeds() {
             by: {
                 _id: 'u102',
                 fullname: 'Anna Smith',
+                username: 'annas',
                 imgUrl: '/img/user1.jpg',
             },
             loc: {
@@ -63,6 +64,7 @@ function _createFeeds() {
                     by: {
                         _id: 'u107',
                         fullname: 'Mike Johnson',
+                        username: 'mikej',
                         imgUrl: '/img/user3.jpg',
                     },
                     txt: 'Absolutely stunning!',
@@ -70,11 +72,13 @@ function _createFeeds() {
                         {
                             _id: 'u108',
                             fullname: 'Sara Lee',
+                            username: 'saral',
                             imgUrl: '/img/user2.jpg',
                         },
                         {
                             _id: 'u107',
                             fullname: 'Sara Bee',
+                            username: 'sarab',
                             imgUrl: '/img/user2.jpg',
                         },
                     ],
@@ -85,6 +89,7 @@ function _createFeeds() {
                     by: {
                         _id: 'u102',
                         fullname: 'Shiran Shvartz',
+                        username: 'shirans',
                         imgUrl: '/img/user2.jpg',
                     },
                     txt: 'I\'m and actual noob! I have to quit CS as long as possible.',
@@ -92,11 +97,13 @@ function _createFeeds() {
                         {
                             _id: 'u108',
                             fullname: 'Sara Lee',
+                            username: 'saral',
                             imgUrl: '/img/user2.jpg',
                         },
                         {
                             _id: 'u107',
                             fullname: 'Sara Bee',
+                            username: 'sarab',
                             imgUrl: '/img/user2.jpg',
                         },
                     ],
@@ -107,11 +114,13 @@ function _createFeeds() {
                 {
                     _id: 'u107',
                     fullname: 'Mike Johnson',
+                    username: 'mikej',
                     imgUrl: '/img/user3.jpg',
                 },
                 {
                     _id: 'u108',
                     fullname: 'Sara Lee',
+                    username: 'saral',
                     imgUrl: '/img/user2.jpg',
                 },
             ],
@@ -125,6 +134,7 @@ function _createFeeds() {
             by: {
                 _id: 'u103',
                 fullname: 'John Doe',
+                username: 'johnd',
                 imgUrl: '/img/user3.jpg',
             },
             loc: {
@@ -138,6 +148,7 @@ function _createFeeds() {
                     by: {
                         _id: 'u109',
                         fullname: 'Alice Brown',
+                        username: 'aliceb',
                         imgUrl: '/img/user2.jpg',
                     },
                     txt: 'Looks amazing!',
@@ -148,11 +159,13 @@ function _createFeeds() {
                 {
                     _id: 'u109',
                     fullname: 'Alice Brown',
+                    username: 'aliceb',
                     imgUrl: '/img/user2.jpg',
                 },
                 {
                     _id: 'u110',
                     fullname: 'Tom White',
+                    username: 'tomw',
                     imgUrl: '/img/user3.jpg',
                 },
             ],
@@ -166,6 +179,7 @@ function _createFeeds() {
             by: {
                 _id: 'u104',
                 fullname: 'Emily Clark',
+                username: 'emilyc',
                 imgUrl: '/img/user2.jpg',
             },
             loc: {
@@ -179,6 +193,7 @@ function _createFeeds() {
                     by: {
                         _id: 'u111',
                         fullname: 'Chris Green',
+                        username: 'chrisg',
                         imgUrl: '/img/user3.jpg',
                     },
                     txt: 'Yummy!',
@@ -186,6 +201,7 @@ function _createFeeds() {
                         {
                             _id: 'u112',
                             fullname: 'Nina Blue',
+                            username: 'ninab',
                             imgUrl: '/img/user1.jpg',
                         },
                     ],
@@ -196,11 +212,13 @@ function _createFeeds() {
                 {
                     _id: 'u111',
                     fullname: 'Chris Green',
+                    username: 'chrisg',
                     imgUrl: '/img/user3.jpg',
                 },
                 {
                     _id: 'u112',
                     fullname: 'Nina Blue',
+                    username: 'ninab',
                     imgUrl: '/img/user1.jpg',
                 },
             ],
