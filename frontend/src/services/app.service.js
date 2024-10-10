@@ -43,6 +43,7 @@ function getLinks() {
         {
             name: 'addFeed',
             txt: 'Create',
+            class: 'btn-create-feed'
         },
         {
             name: 'img',
