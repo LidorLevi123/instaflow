@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { feedService } from '../services/feed'
@@ -13,6 +13,7 @@ import { loggedInUser } from '../services/feed/feed.service.local'
 export function FeedDetails({ feedId }) {
     const [feed, setFeed] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams()
+    const elBtnLikeRef = useRef()
 
     useEffect(() => {
         loadFeed()
@@ -38,6 +39,7 @@ export function FeedDetails({ feedId }) {
                 feedToSave.likedBy = feedToSave.likedBy.filter(user => user.username !== loggedInUser.username)
             }
             const savedFeed = await feedService.save(feedToSave)
+            elBtnLikeRef.current.classList.toggle('like-animation')
             setFeed(prevFeed => ({ ...prevFeed, likedBy: savedFeed.likedBy }))
         } catch (err) {
             console.log(err, 'Could not like feed')
@@ -86,7 +88,7 @@ export function FeedDetails({ feedId }) {
 
                 <div className="bottom-section">
                     <section className="actions">
-                        <span onClick={onToggleLike}>
+                        <span onClick={onToggleLike} className="btn-like" ref={elBtnLikeRef}>
                             {isLiked() ? 
                                 <SvgIcon iconName="heartRed" /> : 
                                 <SvgIcon iconName="heart" />}

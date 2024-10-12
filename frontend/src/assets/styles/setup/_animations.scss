@@ -1,0 +1,21 @@
+.like-animation {
+    animation: like .45s ease-in-out;
+}
+
+@keyframes like {
+    0% {
+        scale: 1;
+    }
+
+    25% {
+        scale: 1.2;
+    }
+
+    50% {
+        scale: 0.95;
+    }
+
+    100% {
+        scale: 1;
+    }
+}
