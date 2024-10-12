@@ -1,9 +1,11 @@
 import { legacy_createStore as createStore, combineReducers } from 'redux'
 
 import { feedReducer } from './reducers/feed.reducer'
+import { userReducer } from './reducers/user.reducer'
 
 const rootReducer = combineReducers({
     feedModule: feedReducer,
+    userModule: userReducer
 })
 
 
