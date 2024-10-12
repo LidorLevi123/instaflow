@@ -12,10 +12,12 @@ export function FeedIndex() {
 
     function onOpenModal() {
         setIsFeedEditOpen(true)
+        document.title = 'Create new post • Instaflow'
     }
 
     function onCloseModal() {
         setIsFeedEditOpen(false)
+        document.title = 'Instaflow'
     }
 
     return (

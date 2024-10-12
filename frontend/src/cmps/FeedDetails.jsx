@@ -34,7 +34,7 @@ export function FeedDetails({ feedId }) {
                 ...feed,
                 likedBy: [...feed.likedBy, loggedInUser]
             }
-            if(feed.likedBy.some(user => user.username === loggedInUser.username)) {
+            if (isLiked()) {
                 feedToSave.likedBy = feedToSave.likedBy.filter(user => user.username !== loggedInUser.username)
             }
             const savedFeed = await feedService.save(feedToSave)
@@ -42,6 +42,10 @@ export function FeedDetails({ feedId }) {
         } catch (err) {
             console.log(err, 'Could not like feed')
         }
+    }
+
+    function isLiked() {
+        return feed.likedBy.some(user => user.username === loggedInUser.username)
     }
 
     function onCloseDetails() {
@@ -82,7 +86,11 @@ export function FeedDetails({ feedId }) {
 
                 <div className="bottom-section">
                     <section className="actions">
-                        <span onClick={onToggleLike}><SvgIcon iconName="heart" /></span>
+                        <span onClick={onToggleLike}>
+                            {isLiked() ? 
+                                <SvgIcon iconName="heartRed" /> : 
+                                <SvgIcon iconName="heart" />}
+                        </span>
                         <SvgIcon iconName="comment" />
                         <SvgIcon iconName="share" />
                         <SvgIcon iconName="bookmark" />
