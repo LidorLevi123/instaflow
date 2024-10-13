@@ -5,6 +5,7 @@ import { UserMsg } from './cmps/UserMsg.jsx'
 import { FeedIndex } from './pages/FeedIndex.jsx'
 import { HomePage } from './pages/HomePage.jsx'
 import { LoginPage } from './pages/LoginPage.jsx'
+import { SignupPage } from './pages/SignupPage.jsx'
 
 export function RootCmp() {
     return (
@@ -16,6 +17,7 @@ export function RootCmp() {
                         <Route path="" element={<HomePage />} />
                     </Route>
                     <Route path="login" element={<LoginPage />} />
+                    <Route path="signup" element={<SignupPage />} />
                 </Routes>
             </main>
         </div>

@@ -56,7 +56,7 @@ export function LoginPage() {
             </div>
 
             <div>
-                <p>Don't have an account? <NavLink to="signup">Sign up</NavLink></p>
+                <p>Don't have an account? <NavLink to="/signup">Sign up</NavLink></p>
             </div>
         </section>
     )
