@@ -29,7 +29,9 @@ export function LoginPage() {
     return (
         <section className="login-page">
             <div>
-                <div className="logo">Instagram</div>
+                <div className="logo">
+                    <img src="https://static.cdninstagram.com/rsrc.php/v3/yv/r/KoLLpWDb4f6.png"  />
+                </div>
 
                 <form onSubmit={onLogin}>
                     <input
@@ -47,15 +49,15 @@ export function LoginPage() {
                     <button className="btn-login">Log in</button>
                 </form>
 
-                <div>
-                    <hr /> OR <hr />
+                <div className="or">
+                    <div></div> OR <div></div>
                 </div>
 
-                <p>Log in with Facebook</p>
-                <small>Continue as a Guest</small>
+                <p className="facebook-login">Log in with Facebook</p>
+                <small className="btn-guest">Continue as a Guest</small>
             </div>
 
-            <div>
+            <div className="btn-no-account">
                 <p>Don't have an account? <NavLink to="/signup">Sign up</NavLink></p>
             </div>
         </section>
