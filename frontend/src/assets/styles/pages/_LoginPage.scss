@@ -29,10 +29,15 @@
 
         input {
             font-size: rem(12px);
+            font-family: $font;
             background-color: #fafafa;
             border: 1px solid $gray1;
             border-radius: rem(3px);
             padding: rem(9px) 0px rem(7px) rem(8px);
+
+            &:focus-visible {
+                outline: 1px solid $gray2;
+            }
         }
 
         .btn-login {
@@ -41,8 +46,9 @@
             background: $clr6;
             padding: rem(7px) rem(16px);
             font-size: 14px;
-            border-radius: rem(8px);
             font-weight: 600;
+            font-family: $font;
+            border-radius: rem(8px);
             margin-block-start: rem(9px);
             margin-block-end: rem(22px);
         }
@@ -67,11 +73,20 @@
         }
 
         .facebook-login {
+            display: flex;
+            align-items: center;
+            width: max-content;
+            margin: auto;
+            gap: 8px;
             font-size: rem(14px);
             font-weight: 600;
             color: $clr2;
             margin-block-end: rem(20px);
             cursor: pointer;
+
+            img {
+                width: 16px;
+            }
         }
 
         .btn-guest {

@@ -53,7 +53,10 @@ export function LoginPage() {
                     <div></div> OR <div></div>
                 </div>
 
-                <p className="facebook-login">Log in with Facebook</p>
+                <div className="facebook-login">
+                    <img src="public/img/facebook.png" alt="facebook-icon" />
+                    <p>Log in with Facebook</p>
+                </div>
                 <small className="btn-guest">Continue as a Guest</small>
             </div>
 
