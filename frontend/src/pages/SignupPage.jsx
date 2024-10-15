@@ -10,11 +10,14 @@ export function SignupPage() {
 
     async function onSignup(ev = null) {
         if (ev) ev.preventDefault()
+        if (!userCreds.username || !userCreds.password || !userCreds.fullname) return
 
-        if (!credentials.username || !credentials.password || !credentials.fullname) return
-        await signup(credentials)
-        clearState()
-        navigate('/')
+        try {
+            await signup(userCreds)
+            navigate('/')
+        } catch (err) {
+            
+        }
     }
 
     function handleChange(ev) {

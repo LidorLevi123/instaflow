@@ -12,8 +12,11 @@ export function LoginPage() {
         if (ev) ev.preventDefault()
 
         if (!userCreds.username) return
-        await login(userCreds)
-        navigate('/')
+        const user = await login(userCreds)
+
+        if(user) navigate('/')
+        else console.log('Could not login')
+        
     }
 
     function handleChange(ev) {
@@ -41,7 +44,7 @@ export function LoginPage() {
                         onChange={handleChange}
                         value={userCreds.username} />
                     <input
-                        type="text"
+                        type="password"
                         placeholder="Password"
                         name="password"
                         onChange={handleChange}

@@ -51,10 +51,12 @@ async function login(userCred) {
 
 async function signup(userCred) {
     if (!userCred.imgUrl) userCred.imgUrl = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
-    userCred.score = 10000
+    const users = await storageService.query('user')
+    const user = users.find(user => user.username === userCred.username || user.email === userCred.email)
 
-    const user = await storageService.post('user', userCred)
-    return saveLoggedinUser(user)
+    if(user) throw new Error('Could not signup')
+    const newUser = await storageService.post('user', userCred)
+    return saveLoggedinUser(newUser)
 }
 
 async function logout() {
@@ -69,9 +71,7 @@ function saveLoggedinUser(user) {
 	user = { 
         _id: user._id, 
         fullname: user.fullname, 
-        imgUrl: user.imgUrl, 
-        score: user.score, 
-        isAdmin: user.isAdmin 
+        username: user.username, 
     }
 	sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
 	return user
