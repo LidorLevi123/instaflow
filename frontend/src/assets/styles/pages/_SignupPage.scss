@@ -1,4 +1,4 @@
-.login-page {
+.signup-page {
     width: 350px;
     margin: auto;
     padding-block-start: 10vh;
@@ -10,6 +10,7 @@
 
     > *:first-child {
         display: grid;
+        gap: rem(18px);
         margin-block-end: rem(10px);
 
         .logo {
@@ -17,7 +18,36 @@
             height: 103px;
             overflow: hidden;
             justify-self: center;
-            margin-block-end: rem(40px);
+
+            &~p {
+                font-weight: 600;
+                color: $gray3;
+            }
+        }
+
+        .btn-facebook-login {
+            justify-self: center;
+            width: 75%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: rem(8px);
+            border: none;
+            color: white;
+            background: $clr4;
+            padding: rem(7px) rem(16px);
+            font-size: 14px;
+            font-weight: 600;
+            font-family: $font;
+            border-radius: rem(8px);
+
+            img {
+                width: 16px;
+            }
+
+            &:hover {
+                background: $clr5;
+            }
         }
 
         form {
@@ -40,7 +70,7 @@
             }
         }
 
-        .btn-login {
+        .btn-signup {
             border: none;
             color: white;
             background: $clr6;
@@ -61,7 +91,6 @@
             font-size: rem(13px);
             font-weight: 600;
             color: $gray3;
-            margin-block-end: rem(30px);
             width: 75%;
             justify-self: center;
 
@@ -71,32 +100,9 @@
                 background-color: $gray1;
             }
         }
-
-        .facebook-login {
-            display: flex;
-            align-items: center;
-            width: max-content;
-            margin: auto;
-            gap: rem(8px);
-            font-size: rem(14px);
-            font-weight: 600;
-            color: $clr2;
-            margin-block-end: rem(20px);
-            cursor: pointer;
-
-            img {
-                width: 16px;
-            }
-        }
-
-        .btn-guest {
-            font-size: rem(12px);
-            color: $clr3;
-            margin-block-end: rem(23px);
-        }
-
     }
-    .btn-no-account {
+
+    .btn-have-account {
         font-size: rem(14px);
 
         a {

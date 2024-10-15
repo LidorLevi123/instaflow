@@ -30,16 +30,21 @@ export function SignupPage() {
     return (
         <section className="signup-page">
             <div>
-                <div className="logo">Instagram</div>
+                <div className="logo">
+                    <img src="https://static.cdninstagram.com/rsrc.php/v3/yv/r/KoLLpWDb4f6.png" />
+                </div>
                 <p>
                     Sign up to see photos and videos
                     <br />
                     from your friends.
                 </p>
-                <button>Log in with Facebook</button>
+                <button className="btn-facebook-login">
+                    <img src="public/img/facebook-white.png" alt="facebook-icon" />
+                    Log in with Facebook
+                </button>
 
-                <div>
-                    <hr /> OR <hr />
+                <div className="or">
+                    <div></div> OR <div></div>
                 </div>
 
                 <form onSubmit={onSignup}>
@@ -71,7 +76,7 @@ export function SignupPage() {
                 </form>
             </div>
 
-            <div>
+            <div className="btn-have-account">
                 <p>Have an account? <NavLink to="/login">Log in</NavLink></p>
             </div>
         </section>
