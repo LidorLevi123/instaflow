@@ -13,7 +13,6 @@ export function NavBar({ onOpenModal }) {
     return (
         <nav className="nav-bar">
             <ul className="nav-list">
-
                 {
                     links.map(link =>
                         <li key={link.name} className={link.class}>
