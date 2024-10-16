@@ -69,9 +69,7 @@ export function FeedDetails({ feedId }) {
                 <div className="uploader">
                     <img src={feed.by.imgUrl} alt="Uploader img" />
                     <span className="btn fullname">{feed.by.fullname}</span>
-                    <span className="options-icon">
-                        <SvgIcon iconName="options" />
-                    </span>
+                    <SvgIcon iconName="options" className="options-icon" />
                 </div>
 
                 <div className="info">
@@ -88,10 +86,9 @@ export function FeedDetails({ feedId }) {
 
                 <div className="bottom-section">
                     <section className="actions">
-                        <span onClick={onToggleLike} className="btn-like" ref={elBtnLikeRef}>
-                            {isLiked() ? 
-                                <SvgIcon iconName="heartRed" /> : 
-                                <SvgIcon iconName="heart" />}
+                        <span style={{ lineHeight: 0.5 }} ref={elBtnLikeRef}>
+                            <SvgIcon iconName={isLiked() ? 'heartRed' : 'heart'}
+                                onClick={onToggleLike} className="btn-like" />
                         </span>
                         <SvgIcon iconName="comment" />
                         <SvgIcon iconName="share" />

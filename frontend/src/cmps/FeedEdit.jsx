@@ -30,7 +30,7 @@ export function FeedEdit({ onClose }) {
             return (
                 <>
                     <div className="title-container">
-                        <span className="btn" onClick={() => setEditStage(prev => prev - 1)}><SvgIcon iconName="back" /></span>
+                        <SvgIcon iconName="back" className="btn" onClick={() => setEditStage(prev => prev - 1)} />
                         <h2>{title}</h2>
                         <span className="btn-next" onClick={btnClickEvent}>{btnTxt}</span>
                     </div>

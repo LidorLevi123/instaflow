@@ -23,18 +23,14 @@ export function FeedPreview({ feed }) {
                 <span className="created-at">{createdAt}</span>
                 <span className="dot">•</span>
                 <span className="follow">Follow</span>
-                <span className="options-icon">
-                    <SvgIcon iconName="options" />
-                </span>
+                <SvgIcon iconName="options" className="options-icon" />
             </section>
 
             <img className="feed-img" src={feed.imgUrls[0]} alt="" />
 
             <section className="actions">
                 <SvgIcon iconName="heart" />
-                <span onClick={()=> addSearchParam(feed._id)}>
-                    <SvgIcon iconName="comment" />
-                </span>
+                <SvgIcon iconName="comment" onClick={() => addSearchParam(feed._id)} />
                 <SvgIcon iconName="share" />
                 <SvgIcon iconName="bookmark" />
             </section>

@@ -9,9 +9,7 @@ export function CommentPreview({ comment }) {
                 <span className="btn fullname">{comment.by.fullname}</span>
                 <span className="txt">{comment.txt}</span>
             </div>
-            <span className="btn btn-like">
-                <SvgIcon iconName="heartSmall" />
-            </span>
+            <SvgIcon iconName="heartSmall" className="btn btn-like" />
             <div className="actions">
                 <span className="created-at">{getTimeSince(comment.createdAt)}</span>
                 <span className="likes">{comment.likedBy?.length} likes</span>

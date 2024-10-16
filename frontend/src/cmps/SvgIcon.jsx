@@ -1,13 +1,13 @@
-export function SvgIcon({ iconName }) {
+export function SvgIcon({ iconName, className = '', ...restOfProps }) {
     const icons = _getIcons()
     const icon = icons[iconName]
 
     if (!icon) {
-        console.error(`Icon "${iconName}" does not exist.`)
+        console.error(`Icon '${iconName}' does not exist.`)
         return null
     }
 
-    return icon
+    return <span className={'svg-icon ' + className } { ...restOfProps } >{icon}</span>
 }
 
 function _getIcons() {
