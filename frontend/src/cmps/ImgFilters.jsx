@@ -11,7 +11,7 @@ export function ImgFilters({ selectedFilter, setSelectedFilter }) {
                         key={filter} 
                         className={selectedFilter === filter ? 'selected' : ''} 
                         onClick={()=>setSelectedFilter(filter)}>
-                        <img src={`https://www.instagram.com/images/instagram/xig/filters/${filter}.jpg?__d=www`} alt="" />
+                        <img src={`public/img/${filter}.jpg`} alt="" />
                         <span>{filter}</span>
                     </li>)
                 }

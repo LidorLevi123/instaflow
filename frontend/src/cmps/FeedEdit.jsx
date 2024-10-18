@@ -92,8 +92,12 @@ export function FeedEdit({ onClose }) {
                         <section className="edit-container">
                             <img src={localImgUrl} alt="Local image" className="local-img" />
                             <div className="tabs">
-                                <div onClick={() => setIsFilterList(true)}>Filters</div>
-                                <div onClick={() => setIsFilterList(false)}>Adjustments</div>
+                                <div 
+                                    onClick={() => setIsFilterList(true)} 
+                                    className={isFilterList ? 'selected' : undefined}>Filters</div>
+                                <div 
+                                    onClick={() => setIsFilterList(false)} 
+                                    className={!isFilterList ? 'selected' : undefined}>Adjustments</div>
                             </div>
                             {isFilterList ?
                                 <ImgFilters 

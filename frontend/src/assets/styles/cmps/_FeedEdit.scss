@@ -13,10 +13,15 @@
     border-radius: 10px;
     opacity: 0;
     pointer-events: none;
+    transition: width 0.5s;
 
     body.feed-edit-active & {
         opacity: 1;
         pointer-events: auto;
+    }
+
+    &.expanded {
+        width: 1074px;
     }
 
     .title {
@@ -77,14 +82,75 @@
         }
     }
 
+    .local-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
     .crop-container {
         height: 100%;
         cursor: grab;
+    }
+
+    .edit-container {
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 330px;
+        grid-template-rows: auto 1fr;
+
         .local-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
+            grid-row: 1 / -1
+        }
+
+        .tabs {
+            display: grid;
+            grid-auto-flow: column;
+            font-size: rem(14px);
+            
+            >* {
+                color: $gray-2;
+                border-bottom: 1px solid $gray-1;
+                padding-block: rem(12px);
+                transition: color 0.7s, border-color 0.5s;
+                cursor: pointer;
+
+                &.selected {
+                    color: $clr3;
+                    border-color: $clr3;
+                    font-weight: 600;
+                }
+            }
+        }
+
+        .img-filters {
+            $gap: rem(18px);
+            display: grid;
+            justify-content: center;
+            gap: $gap;
+            grid-template-columns: repeat(3, 88px);
+            margin-block-start: $gap;
+
+            > li {
+                color: $gray3;
+                display: grid;
+                row-gap: rem(8px);
+                font-size: rem(12px);
+                cursor: pointer;
+
+                img {
+                    border-radius: 3px;
+                }
+
+                &.selected {
+                    color: $clr4;
+                    font-weight: 600;
+                    img {
+                        outline: 2px solid $clr4;
+                    }
+                }
+            }
         }
     }
 }

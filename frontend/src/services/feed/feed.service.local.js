@@ -8,6 +8,7 @@ export const feedService = {
     getById,
     save,
     remove,
+    getEmptyFeed
 }
 
 export const loggedInUser = {
@@ -36,6 +37,16 @@ async function save(feed) {
     return feed._id ? 
         await storageService.put(STORAGE_KEY, feed) :
         await storageService.post(STORAGE_KEY, feed)
+}
+
+function getEmptyFeed() {
+    return {
+        txt: '',
+        imgUrls: [],
+        comments: [],
+        likedBy: [],
+        tags: []
+    }
 }
 
 function _createFeeds() {
