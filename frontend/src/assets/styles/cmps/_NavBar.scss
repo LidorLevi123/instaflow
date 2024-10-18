@@ -14,13 +14,14 @@
         display: flex;
         flex-direction: column;
 
-        li:not(.logo) > * {
+        li:not(.logo) {
             display: flex;
             align-items: center;
             gap: rem(16px);
             padding: rem(16px) rem(12px);
             border-radius: 8px;
             transition: background-color 0.3s;
+            cursor: pointer;
 
             &:hover {
                 background-color: $gray4;
@@ -29,11 +30,22 @@
             &.active {
                 font-weight: bold;
             }
-        }
 
-        .user-img {
-            flex: 1;
-            width: 49px;
+            &>a {
+                display: flex;
+                align-items: center;
+                gap: rem(16px);
+            }
+
+            &.btn-profile {
+                margin-block-end: rem(275px);
+                align-items: start;
+
+                .user-img {
+                    width: 24px;
+                    border-radius: 50%;
+                }
+            }
         }
     }
 }

@@ -64,7 +64,13 @@ async function logout() {
 }
 
 function getLoggedinUser() {
-    return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
+    return {
+        _id: '3dNzu',
+        username: 'lidorle1', 
+        fullname: 'Lidor Levi', 
+        imgUrl: 'https://res.cloudinary.com/dvpkhwyxp/image/upload/v1729242206/instaflow/tzq3es09mdch78lufntr.png'
+    }
+    // return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
 }
 
 function saveLoggedinUser(user) {
@@ -72,6 +78,7 @@ function saveLoggedinUser(user) {
         _id: user._id, 
         fullname: user.fullname, 
         username: user.username, 
+        imgUrl: user.imgUrl
     }
 	sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
 	return user

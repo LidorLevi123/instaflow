@@ -5,6 +5,8 @@
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.65);
+    opacity: 0;
+    pointer-events: none;
 
     >*:first-child {
         position: fixed;
@@ -12,5 +14,10 @@
         right: 17px;
         color: white;
         cursor: pointer;
+    }
+
+    body.backdrop-active & {
+        opacity: 1;
+        pointer-events: auto;
     }
 }
