@@ -3,7 +3,8 @@ import { Backdrop } from './Backdrop'
 import { SvgIcon } from './SvgIcon'
 
 export function FeedEdit({ onClose }) {
-    const [editStage, setEditStage] = useState(2)
+    const [editStage, setEditStage] = useState(0)
+    const [localImgUrl, setLocalImgUrl] = useState(null)
 
     function getTitleTxt() {
         var title = ''
@@ -16,6 +17,12 @@ export function FeedEdit({ onClose }) {
     }
 
     function onAddFeed() { }
+
+    function onUploaded(ev) {
+        const imgUrl = URL.createObjectURL(ev.target.files[0])
+        setLocalImgUrl(imgUrl)
+        setEditStage(1)
+    }
 
     function Title() {
         const title = getTitleTxt()
@@ -46,14 +53,28 @@ export function FeedEdit({ onClose }) {
             <Backdrop onClose={onClose} />
 
             <section className={cmpClass}>
-                <Title />
-                <div className="content-upload-container">
-                    <SvgIcon iconName="media" />
-                    <p>Drag photos and videos here</p>
 
-                    <label htmlFor="file-input" className="btn-select">Select from computer</label>
-                    <input type="file" id="file-input" />
-                </div>
+                {editStage === 0 &&
+                    <>
+                        <Title />
+                        <div className="content-upload-container">
+                            <SvgIcon iconName="media" />
+                            <p>Drag photos and videos here</p>
+
+                            <label htmlFor="file-input" className="btn-select">Select from computer</label>
+                            <input type="file" id="file-input" onChange={onUploaded} />
+                        </div>
+                    </>
+                }
+
+                {editStage === 1 &&
+                    <>
+                        <Title />
+                        <div className="crop-container">
+                            <img src={localImgUrl} alt="Local image" className="local-img"/>
+                        </div>
+                    </>
+                }
             </section>
         </>
     )

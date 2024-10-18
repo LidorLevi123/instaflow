@@ -14,6 +14,11 @@
     opacity: 0;
     pointer-events: none;
 
+    body.feed-edit-active & {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
     .title {
         font-size: 1rem;
         font-weight: 600;
@@ -72,8 +77,14 @@
         }
     }
 
-    body.feed-edit-active & {
-        opacity: 1;
-        pointer-events: auto;
+    .crop-container {
+        height: 100%;
+        cursor: grab;
+        .local-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
     }
 }
