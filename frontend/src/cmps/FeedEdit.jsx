@@ -1,10 +1,22 @@
 import { useState } from 'react'
+
 import { Backdrop } from './Backdrop'
 import { SvgIcon } from './SvgIcon'
+import { ImgAdjustments } from './ImgAdjustments'
+import { ImgFilters } from './ImgFilters'
+
+import { appService } from '../services/app.service'
 
 export function FeedEdit({ onClose }) {
     const [editStage, setEditStage] = useState(0)
     const [localImgUrl, setLocalImgUrl] = useState(null)
+    const [isFilterList, setIsFilterList] = useState(true)
+    const [selectedFilter, setSelectedFilter] = useState('Original')
+    const [adjustments, setAdjustments] = useState(appService.getImgAdjustments())
+
+    function handleAdjustmentsChange() {}
+
+    function onSaveFeed() {}
 
     function getTitleTxt() {
         var title = ''
@@ -15,8 +27,6 @@ export function FeedEdit({ onClose }) {
 
         return title
     }
-
-    function onAddFeed() { }
 
     function onUploaded(ev) {
         const imgUrl = URL.createObjectURL(ev.target.files[0])
@@ -32,7 +42,7 @@ export function FeedEdit({ onClose }) {
         } else {
 
             const btnTxt = editStage === 3 ? 'Share' : 'Next'
-            const btnClickEvent = editStage === 3 ? onAddFeed : () => { setEditStage(prev => prev + 1) }
+            const btnClickEvent = editStage === 3 ? onSaveFeed : () => { setEditStage(prev => prev + 1) }
 
             return (
                 <>
@@ -57,22 +67,43 @@ export function FeedEdit({ onClose }) {
                 {editStage === 0 &&
                     <>
                         <Title />
-                        <div className="content-upload-container">
+                        <section className="content-upload-container">
                             <SvgIcon iconName="media" />
                             <p>Drag photos and videos here</p>
 
                             <label htmlFor="file-input" className="btn-select">Select from computer</label>
                             <input type="file" id="file-input" onChange={onUploaded} />
-                        </div>
+                        </section>
                     </>
                 }
 
                 {editStage === 1 &&
                     <>
                         <Title />
-                        <div className="crop-container">
-                            <img src={localImgUrl} alt="Local image" className="local-img"/>
-                        </div>
+                        <section className="crop-container">
+                            <img src={localImgUrl} alt="Local image" className="local-img" />
+                        </section>
+                    </>
+                }
+
+                {editStage === 2 &&
+                    <>
+                        <Title />
+                        <section className="edit-container">
+                            <img src={localImgUrl} alt="Local image" className="local-img" />
+                            <div className="tabs">
+                                <div onClick={() => setIsFilterList(true)}>Filters</div>
+                                <div onClick={() => setIsFilterList(false)}>Adjustments</div>
+                            </div>
+                            {isFilterList ?
+                                <ImgFilters 
+                                    selectedFilter={selectedFilter} 
+                                    setSelectedFilter={setSelectedFilter}/> :
+                                <ImgAdjustments 
+                                    adjustments={adjustments}
+                                    handleChange={handleAdjustmentsChange}/>
+                            }
+                        </section>
                     </>
                 }
             </section>
