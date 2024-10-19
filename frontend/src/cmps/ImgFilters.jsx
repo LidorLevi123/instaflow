@@ -4,18 +4,16 @@ export function ImgFilters({ selectedFilter, setSelectedFilter }) {
     const filters = appService.getImgFilters()
 
     return (
-        <section>
-            <ul className="img-filters">
-                {filters.map(filter =>
-                    <li 
-                        key={filter} 
-                        className={selectedFilter === filter ? 'selected' : ''} 
-                        onClick={()=>setSelectedFilter(filter)}>
-                        <img src={`public/img/${filter}.jpg`} alt="" />
-                        <span>{filter}</span>
-                    </li>)
-                }
-            </ul>
-        </section>
+        <ul className="img-filters">
+            {filters.map(filter =>
+                <li
+                    key={filter}
+                    className={selectedFilter === filter ? 'selected' : ''}
+                    onClick={() => setSelectedFilter(filter)}>
+                    <img src={`public/img/${filter}.jpg`} alt="" />
+                    <span>{filter}</span>
+                </li>)
+            }
+        </ul>
     )
 }

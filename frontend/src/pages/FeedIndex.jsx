@@ -5,25 +5,28 @@ import { FeedDetails } from '../cmps/FeedDetails'
 import { FeedEdit } from '../cmps/FeedEdit'
 
 export function FeedIndex() {
-    const [searchParams] = useSearchParams()
+    const [searchParams, setSearchParams] = useSearchParams()
     const feedId = searchParams.get('feedId')
+    const isCreate = searchParams.get('create')
 
-    function onOpenModal() {
-        document.body.classList.add('feed-edit-active', 'backdrop-active')
+    function onOpenCreateModal() {
+        searchParams.set('create', true)
+        setSearchParams(searchParams)
         document.title = 'Create new post • Instaflow'
     }
 
-    function onCloseModal() {
-        document.body.classList.remove('feed-edit-active', 'backdrop-active')
+    function onCloseCreateModal() {
+        searchParams.delete('create')
+        setSearchParams(searchParams)
         document.title = 'Instaflow'
     }
 
     return (
         <section className="feed-index main-layout">
-            <NavBar onOpenModal={onOpenModal}/>
+            <NavBar onOpenCreateModal={onOpenCreateModal} />
             <Outlet />
             {feedId && <FeedDetails feedId={feedId} />}
-            <FeedEdit onClose={onCloseModal}/>
+            {isCreate && <FeedEdit onClose={onCloseCreateModal} />}
         </section>
     )
 }

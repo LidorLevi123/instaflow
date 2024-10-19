@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { SvgIcon } from './SvgIcon'
 import { useSelector } from 'react-redux'
 
-export function NavBar({ onOpenModal }) {
+export function NavBar({ onOpenCreateModal }) {
 
     const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
     return (
@@ -46,7 +46,7 @@ export function NavBar({ onOpenModal }) {
                     <SvgIcon iconName="heart" />Notifications
                 </li>
 
-                <li onClick={onOpenModal}>
+                <li onClick={onOpenCreateModal}>
                     <SvgIcon iconName="addFeed" />Create
                 </li>
 

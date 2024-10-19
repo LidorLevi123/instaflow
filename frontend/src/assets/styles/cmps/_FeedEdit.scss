@@ -11,14 +11,7 @@
     height: 82vh;
     background-color: white;
     border-radius: 10px;
-    opacity: 0;
-    pointer-events: none;
     transition: width 0.5s;
-
-    body.feed-edit-active & {
-        opacity: 1;
-        pointer-events: auto;
-    }
 
     &.expanded {
         width: 1074px;
@@ -126,6 +119,7 @@
 
         .img-filters {
             $gap: rem(18px);
+            align-self: start;
             display: grid;
             justify-content: center;
             gap: $gap;
