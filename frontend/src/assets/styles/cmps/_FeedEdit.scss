@@ -101,7 +101,7 @@
             display: grid;
             grid-auto-flow: column;
             font-size: rem(14px);
-            
+
             >* {
                 color: $gray-2;
                 border-bottom: 1px solid $gray-1;
@@ -126,7 +126,7 @@
             grid-template-columns: repeat(3, 88px);
             margin-block-start: $gap;
 
-            > li {
+            >li {
                 color: $gray3;
                 display: grid;
                 row-gap: rem(8px);
@@ -140,9 +140,73 @@
                 &.selected {
                     color: $clr4;
                     font-weight: 600;
+
                     img {
                         outline: 2px solid $clr4;
                     }
+                }
+            }
+        }
+
+        .img-adjustments {
+            $layout-gap-vertical: rem(12px);
+            $layout-gap-horizontal: rem(14px);
+            display: grid;
+            align-content: start;
+            gap: $layout-gap-vertical;
+
+            >li {
+                display: grid;
+                column-gap: $layout-gap-horizontal;
+                row-gap: rem(30px);
+                grid-template-columns: 1fr auto;
+                grid-template-rows: auto auto;
+                grid-template-areas:
+                    "flter btn-reset"
+                    "input value";
+                margin-inline: $layout-gap-horizontal;
+                margin-block-start: $layout-gap-vertical;
+
+                .filter {
+                    grid-area: flter;
+                    justify-self: start;
+                }
+
+                .value {
+                    grid-area: value;
+                    font-size: em(12px);
+                }
+
+                input {
+                    appearance: none;
+                    grid-area: input;
+                    align-self: center;
+                    background: $gray1;
+                    height: 2px;
+                    cursor: pointer;
+
+                    &::-webkit-slider-thumb {
+                        appearance: none;
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        background: black;
+                        cursor: pointer;
+                    }
+                }
+
+                .btn-reset {
+                    opacity: 0;
+                    pointer-events: none;
+                    grid-area: btn-reset;
+                    justify-self: start;
+                    align-self: center;
+                    @include btn-primary
+                }
+
+                &:hover .btn-reset {
+                    opacity: 1;
+                    pointer-events: auto;
                 }
             }
         }

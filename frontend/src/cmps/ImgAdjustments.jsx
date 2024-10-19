@@ -4,9 +4,10 @@ export function ImgAdjustments({ adjustments, handleChange }) {
         <ul className="img-adjustments">
             {adjustments.map(({ name, min, max, value }) =>
                 <li key={name}>
-                    <p>{name}</p>
+                    <p className="filter">{name}</p>
+                    <span className="btn-reset">Reset</span>
                     <input type="range" name={name} min={min} max={max} value={value} onChange={handleChange} />
-                    <span>{value}</span>
+                    <span className="value">{value}</span>
                 </li>)
             }
         </ul>
