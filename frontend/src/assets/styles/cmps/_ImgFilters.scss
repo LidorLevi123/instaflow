@@ -1,0 +1,30 @@
+.img-filters {
+    $gap: rem(18px);
+    align-self: start;
+    display: grid;
+    justify-content: center;
+    gap: $gap;
+    grid-template-columns: repeat(3, 88px);
+    margin-block-start: $gap;
+
+    >li {
+        color: $gray3;
+        display: grid;
+        row-gap: rem(8px);
+        font-size: rem(12px);
+        cursor: pointer;
+
+        img {
+            border-radius: rem(3px);
+        }
+
+        &.selected {
+            color: $clr4;
+            font-weight: 600;
+
+            img {
+                outline: 2px solid $clr4;
+            }
+        }
+    }
+}
