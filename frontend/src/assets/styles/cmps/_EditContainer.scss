@@ -1,0 +1,30 @@
+.edit-container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 330px;
+    grid-template-rows: auto 1fr;
+
+    .local-img {
+        grid-row: 1 / -1
+    }
+
+    .tabs {
+        display: grid;
+        grid-auto-flow: column;
+        font-size: rem(14px);
+
+        >* {
+            color: $gray-2;
+            border-bottom: 1px solid $gray-1;
+            padding-block: rem(12px);
+            transition: color 0.7s, border-color 0.5s;
+            cursor: pointer;
+
+            &.selected {
+                color: $clr3;
+                border-color: $clr3;
+                font-weight: 600;
+            }
+        }
+    }
+}

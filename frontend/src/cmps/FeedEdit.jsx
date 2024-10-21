@@ -1,13 +1,11 @@
 import { useState } from 'react'
+import { appService } from '../services/app.service'
 
 import { Backdrop } from './Backdrop'
 import { SvgIcon } from './SvgIcon'
-import { ImgAdjustments } from './ImgAdjustments'
-import { ImgFilters } from './ImgFilters'
-
-import { appService } from '../services/app.service'
 import { ContentUploadContainer } from './ContentUploadContainer'
 import { CropContainer } from './CropContainer'
+import { EditContainer } from './EditContainer'
 
 export function FeedEdit({ onClose }) {
     const [editStage, setEditStage] = useState(0)
@@ -47,52 +45,34 @@ export function FeedEdit({ onClose }) {
             const btnClickEvent = editStage === 3 ? onSaveFeed : () => { setEditStage(prev => prev + 1) }
 
             return (
-                <>
-                    <div className="title-container">
-                        <SvgIcon iconName="back" className="btn" onClick={() => setEditStage(prev => prev - 1)} />
-                        <h2>{title}</h2>
-                        <span className="btn-next" onClick={btnClickEvent}>{btnTxt}</span>
-                    </div>
-                </>
+                <div className="title-container">
+                    <SvgIcon iconName="back" className="btn" onClick={() => setEditStage(prev => prev - 1)} />
+                    <h2>{title}</h2>
+                    <span className="btn-next" onClick={btnClickEvent}>{btnTxt}</span>
+                </div>
             )
         }
     }
 
     const cmpClass = editStage >= 2 ? 'feed-edit expanded' : 'feed-edit'
+    const editProps = {
+        localImgUrl,
+        isFilterList,
+        selectedFilter,
+        adjustments,
+        setIsFilterList,
+        setSelectedFilter,
+        handleAdjustmentsChange
+    }
 
     return (
         <>
             <Backdrop onClose={onClose} />
-            
             <section className={cmpClass}>
                 <Title />
                 {editStage === 0 && <ContentUploadContainer onUploaded={onUploaded} />}
                 {editStage === 1 && <CropContainer localImgUrl={localImgUrl} />}
-
-                {editStage === 2 &&
-                    <>
-                        <Title />
-                        <section className="edit-container">
-                            <img src={localImgUrl} alt="Local image" className="local-img" />
-                            <div className="tabs">
-                                <div
-                                    onClick={() => setIsFilterList(true)}
-                                    className={isFilterList ? 'selected' : undefined}>Filters</div>
-                                <div
-                                    onClick={() => setIsFilterList(false)}
-                                    className={!isFilterList ? 'selected' : undefined}>Adjustments</div>
-                            </div>
-                            {isFilterList ?
-                                <ImgFilters
-                                    selectedFilter={selectedFilter}
-                                    setSelectedFilter={setSelectedFilter} /> :
-                                <ImgAdjustments
-                                    adjustments={adjustments}
-                                    handleChange={handleAdjustmentsChange} />
-                            }
-                        </section>
-                    </>
-                }
+                {editStage === 2 && <EditContainer {...editProps} />}
             </section>
         </>
     )
