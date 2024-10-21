@@ -27,10 +27,6 @@
                 background-color: $gray4;
             }
 
-            &.active {
-                font-weight: bold;
-            }
-
             &>a {
                 display: flex;
                 align-items: center;
@@ -45,6 +41,10 @@
                     width: 24px;
                     border-radius: 50%;
                 }
+            }
+
+            .active {
+                font-weight: bold;
             }
         }
     }
