@@ -7,6 +7,7 @@ import { ImgFilters } from './ImgFilters'
 
 import { appService } from '../services/app.service'
 import { ContentUploadContainer } from './ContentUploadContainer'
+import { CropContainer } from './CropContainer'
 
 export function FeedEdit({ onClose }) {
     const [editStage, setEditStage] = useState(0)
@@ -62,18 +63,11 @@ export function FeedEdit({ onClose }) {
     return (
         <>
             <Backdrop onClose={onClose} />
-
+            
             <section className={cmpClass}>
                 <Title />
                 {editStage === 0 && <ContentUploadContainer onUploaded={onUploaded} />}
-
-                {editStage === 1 &&
-                    <>
-                        <section className="crop-container">
-                            <img src={localImgUrl} alt="Local image" className="local-img" />
-                        </section>
-                    </>
-                }
+                {editStage === 1 && <CropContainer localImgUrl={localImgUrl} />}
 
                 {editStage === 2 &&
                     <>
