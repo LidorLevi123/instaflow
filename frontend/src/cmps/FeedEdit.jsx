@@ -6,6 +6,7 @@ import { ImgAdjustments } from './ImgAdjustments'
 import { ImgFilters } from './ImgFilters'
 
 import { appService } from '../services/app.service'
+import { ContentUploadContainer } from './ContentUploadContainer'
 
 export function FeedEdit({ onClose }) {
     const [editStage, setEditStage] = useState(0)
@@ -14,9 +15,15 @@ export function FeedEdit({ onClose }) {
     const [selectedFilter, setSelectedFilter] = useState('Original')
     const [adjustments, setAdjustments] = useState(appService.getImgAdjustments())
 
-    function handleAdjustmentsChange() {}
+    function handleAdjustmentsChange() { }
 
-    function onSaveFeed() {}
+    function onSaveFeed() { }
+
+    function onUploaded(ev) {
+        const imgUrl = URL.createObjectURL(ev.target.files[0])
+        setLocalImgUrl(imgUrl)
+        setEditStage(1)
+    }
 
     function getTitleTxt() {
         var title = ''
@@ -26,12 +33,6 @@ export function FeedEdit({ onClose }) {
         else if (editStage === 2) title = 'Edit'
 
         return title
-    }
-
-    function onUploaded(ev) {
-        const imgUrl = URL.createObjectURL(ev.target.files[0])
-        setLocalImgUrl(imgUrl)
-        setEditStage(1)
     }
 
     function Title() {
@@ -63,23 +64,11 @@ export function FeedEdit({ onClose }) {
             <Backdrop onClose={onClose} />
 
             <section className={cmpClass}>
-
-                {editStage === 0 &&
-                    <>
-                        <Title />
-                        <section className="content-upload-container">
-                            <SvgIcon iconName="media" />
-                            <p>Drag photos and videos here</p>
-
-                            <label htmlFor="file-input" className="btn-select">Select from computer</label>
-                            <input type="file" id="file-input" onChange={onUploaded} />
-                        </section>
-                    </>
-                }
+                <Title />
+                {editStage === 0 && <ContentUploadContainer onUploaded={onUploaded} />}
 
                 {editStage === 1 &&
                     <>
-                        <Title />
                         <section className="crop-container">
                             <img src={localImgUrl} alt="Local image" className="local-img" />
                         </section>
@@ -92,20 +81,20 @@ export function FeedEdit({ onClose }) {
                         <section className="edit-container">
                             <img src={localImgUrl} alt="Local image" className="local-img" />
                             <div className="tabs">
-                                <div 
-                                    onClick={() => setIsFilterList(true)} 
+                                <div
+                                    onClick={() => setIsFilterList(true)}
                                     className={isFilterList ? 'selected' : undefined}>Filters</div>
-                                <div 
-                                    onClick={() => setIsFilterList(false)} 
+                                <div
+                                    onClick={() => setIsFilterList(false)}
                                     className={!isFilterList ? 'selected' : undefined}>Adjustments</div>
                             </div>
                             {isFilterList ?
-                                <ImgFilters 
-                                    selectedFilter={selectedFilter} 
-                                    setSelectedFilter={setSelectedFilter}/> :
-                                <ImgAdjustments 
+                                <ImgFilters
+                                    selectedFilter={selectedFilter}
+                                    setSelectedFilter={setSelectedFilter} /> :
+                                <ImgAdjustments
                                     adjustments={adjustments}
-                                    handleChange={handleAdjustmentsChange}/>
+                                    handleChange={handleAdjustmentsChange} />
                             }
                         </section>
                     </>

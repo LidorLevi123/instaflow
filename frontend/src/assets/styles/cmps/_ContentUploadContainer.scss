@@ -1,0 +1,27 @@
+.content-upload-container {
+    display: grid;
+    justify-items: center;
+    row-gap: rem(18px);
+
+    p {
+        font-size: em(20px);
+    }
+
+    .btn-select {
+        background-color: $clr4;
+        color: white;
+        border-radius: 8px;
+        padding: em(7px) em(16px);
+        font-weight: 600;
+        font-size: rem(14px);
+        cursor: pointer;
+
+        &:hover {
+            background-color: $clr5;
+        }
+    }
+
+    input[type=file] {
+        display: none;
+    }
+}
