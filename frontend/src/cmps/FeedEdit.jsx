@@ -6,8 +6,9 @@ import { SvgIcon } from './SvgIcon'
 import { ContentUploadContainer } from './ContentUploadContainer'
 import { CropContainer } from './CropContainer'
 import { EditContainer } from './EditContainer'
+import { CreateContainer } from './CreateContainer'
 
-export function FeedEdit({ onClose }) {
+export function FeedEdit({ onClose, user }) {
     const [editStage, setEditStage] = useState(0)
     const [localImgUrl, setLocalImgUrl] = useState(null)
     const [isFilterList, setIsFilterList] = useState(true)
@@ -55,6 +56,7 @@ export function FeedEdit({ onClose }) {
     }
 
     const cmpClass = editStage >= 2 ? 'feed-edit expanded' : 'feed-edit'
+
     const editProps = {
         localImgUrl,
         isFilterList,
@@ -65,6 +67,11 @@ export function FeedEdit({ onClose }) {
         handleAdjustmentsChange
     }
 
+    const createProps = {
+        localImgUrl,
+        user
+    }
+
     return (
         <>
             <Backdrop onClose={onClose} />
@@ -73,6 +80,7 @@ export function FeedEdit({ onClose }) {
                 {editStage === 0 && <ContentUploadContainer onUploaded={onUploaded} />}
                 {editStage === 1 && <CropContainer localImgUrl={localImgUrl} />}
                 {editStage === 2 && <EditContainer {...editProps} />}
+                {editStage === 3 && <CreateContainer {...createProps} />}
             </section>
         </>
     )

@@ -3,8 +3,11 @@ import { NavBar } from '../cmps/NavBar'
 import { useSearchParams } from 'react-router-dom'
 import { FeedDetails } from '../cmps/FeedDetails'
 import { FeedEdit } from '../cmps/FeedEdit'
+import { useSelector } from 'react-redux'
 
 export function FeedIndex() {
+    const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
+
     const [searchParams, setSearchParams] = useSearchParams()
     const feedId = searchParams.get('feedId')
     const isCreate = searchParams.get('create')
@@ -26,7 +29,7 @@ export function FeedIndex() {
             <NavBar onOpenCreateModal={onOpenCreateModal} />
             <Outlet />
             {feedId && <FeedDetails feedId={feedId} />}
-            {isCreate && <FeedEdit onClose={onCloseCreateModal} />}
+            {isCreate && <FeedEdit onClose={onCloseCreateModal} user={loggedinUser}/>}
         </section>
     )
 }
