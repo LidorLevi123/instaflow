@@ -2,11 +2,11 @@
     @include modal;
 
     display: grid;
-    text-align: center;
-    align-items: center;
-
     grid-template-rows: auto 1fr;
 
+    overflow: hidden;
+    text-align: center;
+    align-items: center;
     width: 734px;
     height: 82vh;
     background-color: white;

@@ -2,14 +2,14 @@
     @include modal;
 
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: auto 1fr;
     grid-template-rows: auto 1fr auto;
     grid-template-areas:
         'img uploader'
         'img info'
         'img bottom-bar';
-    max-width: 80vw;
-    max-height: 96vh;
+    width: 62.85%;
+    height: 95vh;
     background-color: white;
     border-radius: 5px;
 

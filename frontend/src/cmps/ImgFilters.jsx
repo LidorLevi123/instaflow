@@ -10,7 +10,7 @@ export function ImgFilters({ selectedFilter, setSelectedFilter }) {
                     key={filter}
                     className={selectedFilter === filter ? 'selected' : ''}
                     onClick={() => setSelectedFilter(filter)}>
-                    <img src={`public/img/${filter}.jpg`} alt="" />
+                    <img src={`/img/${filter}.jpg`} alt="" />
                     <span>{filter}</span>
                 </li>)
             }
