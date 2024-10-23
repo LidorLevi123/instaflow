@@ -7,14 +7,14 @@ export function CreateContainer({ user, localImgUrl }) {
 
             <div className="uploader">
                 <img src={user.imgUrl} alt="Uploader img" />
-                <span className="btn fullname">{user.username}</span>
+                <span className="fullname">{user.username}</span>
             </div>
 
             <textarea name="" id=""></textarea>
 
-            <div>
-                <SvgIcon iconName="emojiBig" />
-                <span><span className="txt-count">0</span>/2,200</span>
+            <div className="emoji-txt">
+                <SvgIcon iconName="emojiBig" className="icon"/>
+                <span className="txt-count"><span>0</span>/2,200</span>
             </div>
 
             <div className="settings">

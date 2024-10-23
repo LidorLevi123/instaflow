@@ -2,10 +2,90 @@
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 330px;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto 168px auto 1fr;
+
+    > *:not(.local-img) {
+        padding-inline: rem(16px);
+    }
 
     .local-img {
         grid-row: 1 / -1;
         border-inline-end: 1px solid $gray1;
+    }
+
+    .uploader {
+        justify-self: start;
+        display: flex;
+        align-self: center;
+        gap: rem(12px);
+        margin-block-start: rem(18px);
+        margin-block-end: rem(14px);
+
+        img {
+            width: 28px;
+            border-radius: 50%;
+        }
+
+        .fullname {
+            font-weight: 600;
+            font-size: rem(14px);
+            line-height: 1.4rem;
+        }
+    }
+
+    textarea {
+        border: none;
+        resize: none;
+        font-family: $font;
+        font-size: rem(16px);
+
+        &:focus-visible {
+            outline: none;
+        }
+
+        &::placeholder {
+            font-family: $font;
+            font-size: 14px;
+        }
+    }
+
+    .emoji-txt {
+        display: flex;
+        justify-content: space-between;
+        margin-block: rem(12px);
+
+        .icon {
+            color: $gray3;
+        }
+
+        .txt-count {
+            color: $gray-3;
+            font-size: rem(12px);
+        }
+    }
+
+    .settings {
+        display: grid;
+        height: fit-content;
+        border-block: 1px solid $gray1;
+
+        >* {
+            display: grid;
+            gap: rem(5px);
+            grid-template-columns: 1fr auto;
+            text-align: start;
+            padding-block-start: rem(14px);
+            padding-block-end: rem(10px);
+        }
+
+        input {
+            border: none;
+            font-size: rem(16px);
+            font-family: $font;
+
+            &:focus-visible {
+                outline: none;
+            }
+        }
     }
 }
