@@ -6,8 +6,7 @@
     margin-block-end: rem(20px);
 
     .uploader {
-        $gtc: repeat(6, auto) 1fr;
-        @include uploader($gtc)
+        @include uploader
     }
 
     .feed-img {

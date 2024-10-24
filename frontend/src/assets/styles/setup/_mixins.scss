@@ -78,42 +78,38 @@
     }
 }
 
-@mixin uploader($gtc) {
+@mixin uploader() {
     $gap: rem(4px);
 
-        display: grid;
-        grid-template-columns: $gtc;
-        justify-content: start;
-        gap: $gap;
-        align-items: center;
+    display: flex;
+    gap: $gap;
+    align-items: center;
 
-        img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: top;
-            margin-inline-end: calc(em(12px) - $gap);
-        }
+    img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: top;
+        margin-inline-end: calc(em(12px) - $gap);
+    }
 
-        .fullname {
-            font-weight: 600;
-        }
+    .fullname {
+        font-weight: 600;
+    }
 
-        .created-at,
-        .dot {
-            color: $gray3;
-        }
+    .created-at,
+    .dot {
+        color: $gray3;
+    }
 
-        .follow {
-            @include btn-primary
-        }
+    .follow {
+        @include btn-primary;
+    }
 
-        .options-icon {
-            justify-self: end;
-            display: flex;
-            align-items: center;
-        }
+    .options-icon {
+        margin-inline-start: auto;
+    }
 }
 
 @mixin comment-layout($gtc: 32px 1fr auto) {

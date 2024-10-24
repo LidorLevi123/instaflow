@@ -30,8 +30,13 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser }) {
                 <span className="fullname">{feed.by.fullname}</span>
                 <span className="dot">•</span>
                 <span className="created-at">{createdAt}</span>
-                <span className="dot">•</span>
-                <span className="follow">Follow</span>
+                {
+                    feed.by._id !== loggedinUser._id &&
+                    <>
+                        <span className="dot">•</span>
+                        <span className="follow">Follow</span>
+                    </>
+                }
                 <SvgIcon iconName="options" className="options-icon" />
             </section>
 

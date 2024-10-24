@@ -33,8 +33,7 @@
 
     .uploader {
         grid-area: uploader;
-        $gtc: auto auto 1fr;
-        @include uploader($gtc);
+        @include uploader;
         font-size: rem(14px);
         padding-block: rem(14px);
         border-block-end: 1px solid $gray0;
