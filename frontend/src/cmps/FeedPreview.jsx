@@ -5,7 +5,6 @@ import { AddComment } from "./AddComment"
 
 export function FeedPreview({ feed }) {
     const [searchParams, setSearchParams] = useSearchParams()
-    console.log('feed:', feed)
     const likeCount = feed.likedBy.length.toLocaleString('en-US')
     const createdAt = getTimeSince(feed.createdAt)
 

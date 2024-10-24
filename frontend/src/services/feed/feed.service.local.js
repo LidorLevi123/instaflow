@@ -1,4 +1,5 @@
 import { storageService } from '../async-storage.service'
+import { userService } from '../user'
 import { loadFromStorage, saveToStorage } from '../util.service'
 
 const STORAGE_KEY = 'feed_db'
@@ -9,13 +10,6 @@ export const feedService = {
     save,
     remove,
     getEmptyFeed
-}
-
-export const loggedInUser = {
-	_id: 'u101',
-	username: 'pukpuk',
-	password: 'pukpuk',
-	fullname: 'Lidor Levi',
 }
 
 _createFeeds()
@@ -34,9 +28,13 @@ async function remove(feedId) {
 }
 
 async function save(feed) {
-    return feed._id ? 
-        await storageService.put(STORAGE_KEY, feed) :
-        await storageService.post(STORAGE_KEY, feed)
+    if(feed._id) {
+        return await storageService.put(STORAGE_KEY, feed)
+    } else {
+        feed.by = userService.getLoggedinUser()
+        feed.createdAt = Date.now()
+        return await storageService.post(STORAGE_KEY, feed)
+    }
 }
 
 function getEmptyFeed() {

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { appService } from '../services/app.service'
 
 import { Backdrop } from './Backdrop'
@@ -7,6 +7,10 @@ import { ContentUploadContainer } from './ContentUploadContainer'
 import { CropContainer } from './CropContainer'
 import { EditContainer } from './EditContainer'
 import { CreateContainer } from './CreateContainer'
+import { feedService } from '../services/feed'
+import { useForm } from '../customHooks/useForm'
+import { saveFeed } from '../store/actions/feed.actions'
+import { uploadService } from '../services/upload.service'
 
 export function FeedEdit({ onClose, user }) {
     const [editStage, setEditStage] = useState(0)
@@ -14,13 +18,25 @@ export function FeedEdit({ onClose, user }) {
     const [isFilterList, setIsFilterList] = useState(true)
     const [selectedFilter, setSelectedFilter] = useState('Original')
     const [adjustments, setAdjustments] = useState(appService.getImgAdjustments())
+    const [feed, setFeed, handleChange] = useForm(feedService.getEmptyFeed())
+    const imgEvRef = useRef()
 
-    function handleAdjustmentsChange() { }
+    function handleAdjustmentsChange() {}
 
-    function onSaveFeed() { }
+    async function onSaveFeed() {
+        try {
+            const { secure_url: imgUrl } = await uploadService.uploadImg(imgEvRef.current)
+            feed.imgUrls.push(imgUrl)
+            await saveFeed(feed)
+            onClose()
+        } catch (err) {
+            console.log('Could not save feed', err)
+        }
+    }
 
     function onUploaded(ev) {
         const imgUrl = URL.createObjectURL(ev.target.files[0])
+        imgEvRef.current = ev
         setLocalImgUrl(imgUrl)
         setEditStage(1)
     }
@@ -55,8 +71,6 @@ export function FeedEdit({ onClose, user }) {
         }
     }
 
-    const cmpClass = editStage >= 2 ? 'feed-edit expanded' : 'feed-edit'
-
     const editProps = {
         localImgUrl,
         isFilterList,
@@ -69,8 +83,13 @@ export function FeedEdit({ onClose, user }) {
 
     const createProps = {
         localImgUrl,
-        user
+        user,
+        handleChange,
+        txtCount: feed.txt.length,
+        MAX_LENGTH: 2200
     }
+
+    const cmpClass = editStage >= 2 ? 'feed-edit expanded' : 'feed-edit'
 
     return (
         <>

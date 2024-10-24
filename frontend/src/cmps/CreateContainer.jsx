@@ -1,6 +1,6 @@
 import { SvgIcon } from "./SvgIcon";
 
-export function CreateContainer({ user, localImgUrl }) {
+export function CreateContainer({ user, localImgUrl, handleChange, txtCount, MAX_LENGTH }) {
     return (
         <section className="create-container">
             <img src={localImgUrl} alt="Local image" className="local-img" />
@@ -10,11 +10,11 @@ export function CreateContainer({ user, localImgUrl }) {
                 <span className="fullname">{user.username}</span>
             </div>
 
-            <textarea name="" id=""></textarea>
+            <textarea name="txt" onChange={handleChange}></textarea>
 
             <div className="emoji-txt">
                 <SvgIcon iconName="emojiBig" className="icon"/>
-                <span className="txt-count"><span>0</span>/2,200</span>
+                <span className="txt-count"><span>{txtCount}</span>/{MAX_LENGTH.toLocaleString()}</span>
             </div>
 
             <div className="settings">

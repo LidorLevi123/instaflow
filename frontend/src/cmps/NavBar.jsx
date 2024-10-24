@@ -1,10 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { SvgIcon } from './SvgIcon'
-import { useSelector } from 'react-redux'
 
-export function NavBar({ onOpenCreateModal }) {
-
-    const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
+export function NavBar({ onOpenCreateModal, user }) {
     return (
         <nav className="nav-bar">
             <ul className="nav-list">
@@ -51,7 +48,7 @@ export function NavBar({ onOpenCreateModal }) {
                 </li>
 
                 <li className="btn-profile">
-                    <img className="user-img" src={loggedinUser.imgUrl} alt="" />Profile
+                    <img className="user-img" src={user.imgUrl} alt="" />Profile
                 </li>
 
                 <li>

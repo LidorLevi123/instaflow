@@ -10,6 +10,13 @@
         @include uploader($gtc)
     }
 
+    .feed-img {
+        width: 100%;
+        max-height: 585px;
+        object-fit: cover;
+        object-position: center;
+    }
+
     .actions {
         @include feed-action-bar
     }

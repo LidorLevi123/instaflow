@@ -8,9 +8,8 @@ import { SvgIcon } from './SvgIcon'
 import { AddComment } from './AddComment'
 import { CommentList } from './CommentList'
 import { Backdrop } from './Backdrop'
-import { loggedInUser } from '../services/feed/feed.service.local'
 
-export function FeedDetails({ feedId }) {
+export function FeedDetails({ feedId, user: loggedinUser }) {
     const [feed, setFeed] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams()
     const elBtnLikeRef = useRef()
@@ -33,13 +32,15 @@ export function FeedDetails({ feedId }) {
         try {
             const feedToSave = {
                 ...feed,
-                likedBy: [...feed.likedBy, loggedInUser]
+                likedBy: [...feed.likedBy, loggedinUser]
             }
             if (isLiked()) {
-                feedToSave.likedBy = feedToSave.likedBy.filter(user => user.username !== loggedInUser.username)
+                feedToSave.likedBy = feedToSave.likedBy.filter(user => user.username !== loggedinUser.username)
+                elBtnLikeRef.current.classList.remove('like-animation')
+            } else {
+                elBtnLikeRef.current.classList.add('like-animation')
             }
             const savedFeed = await feedService.save(feedToSave)
-            elBtnLikeRef.current.classList.toggle('like-animation')
             setFeed(prevFeed => ({ ...prevFeed, likedBy: savedFeed.likedBy }))
         } catch (err) {
             console.log(err, 'Could not like feed')
@@ -47,7 +48,7 @@ export function FeedDetails({ feedId }) {
     }
 
     function isLiked() {
-        return feed.likedBy.some(user => user.username === loggedInUser.username)
+        return feed.likedBy.some(user => user.username === loggedinUser.username)
     }
 
     function onCloseDetails() {

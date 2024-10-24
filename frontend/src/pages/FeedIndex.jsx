@@ -26,9 +26,9 @@ export function FeedIndex() {
 
     return (
         <section className="feed-index main-layout">
-            <NavBar onOpenCreateModal={onOpenCreateModal} />
+            <NavBar onOpenCreateModal={onOpenCreateModal} user={loggedinUser}/>
             <Outlet />
-            {feedId && <FeedDetails feedId={feedId} />}
+            {feedId && <FeedDetails feedId={feedId} user={loggedinUser}/>}
             {isCreate && <FeedEdit onClose={onCloseCreateModal} user={loggedinUser}/>}
         </section>
     )

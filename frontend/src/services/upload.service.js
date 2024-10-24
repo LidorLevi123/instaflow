@@ -3,8 +3,8 @@ export const uploadService = {
 }
 
 async function uploadImg(ev) {
-	const CLOUD_NAME = 'vanilla-test-images'
-	const UPLOAD_PRESET = 'stavs_preset'
+	const CLOUD_NAME = 'dvpkhwyxp'
+	const UPLOAD_PRESET = 'instaflow_uploads'
 	const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
 
 	const formData = new FormData()
