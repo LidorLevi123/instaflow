@@ -2,15 +2,25 @@ import { useSearchParams } from "react-router-dom"
 import { getTimeSince } from "../services/util.service"
 import { SvgIcon } from "./SvgIcon"
 import { AddComment } from "./AddComment"
+import { useRef } from "react"
 
-export function FeedPreview({ feed }) {
+export function FeedPreview({ feed, onToggleLike, loggedinUser }) {
     const [searchParams, setSearchParams] = useSearchParams()
     const likeCount = feed.likedBy.length.toLocaleString('en-US')
     const createdAt = getTimeSince(feed.createdAt)
+    const elBtnLikeRef = useRef()
 
-    function addSearchParam(feedId) {
-        searchParams.set('feedId', feedId)
+    function onOpenDetails() {
+        searchParams.set('feedId', feed._id)
         setSearchParams(searchParams)
+    }
+
+    function onLike() {
+        onToggleLike(feed, elBtnLikeRef.current)
+    }
+
+    function isLiked() {
+        return feed.likedBy.some(user => user.username === loggedinUser.username)
     }
 
     return (
@@ -28,8 +38,11 @@ export function FeedPreview({ feed }) {
             <img className="feed-img" src={feed.imgUrls[0]} alt="" />
 
             <section className="actions">
-                <SvgIcon iconName="heart" />
-                <SvgIcon iconName="comment" onClick={() => addSearchParam(feed._id)} />
+                <span style={{ lineHeight: 0.5 }} ref={elBtnLikeRef}>
+                    <SvgIcon iconName={isLiked() ? 'heartRed' : 'heart'}
+                        onClick={onLike} className="btn-like" />
+                </span>
+                <SvgIcon iconName="comment" onClick={onOpenDetails} />
                 <SvgIcon iconName="share" />
                 <SvgIcon iconName="bookmark" />
             </section>
@@ -40,7 +53,7 @@ export function FeedPreview({ feed }) {
                     <span className="fullname">{feed.by.fullname}</span>
                     {feed.txt || ''}
                 </p>
-                <span className="view-comments">View all {feed.comments.length} comments</span>
+                <span className="view-comments" onClick={onOpenDetails}>View all {feed.comments.length} comments</span>
                 <AddComment />
             </section>
         </article>

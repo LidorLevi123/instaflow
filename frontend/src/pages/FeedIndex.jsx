@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { FeedDetails } from '../cmps/FeedDetails'
 import { FeedEdit } from '../cmps/FeedEdit'
 import { useSelector } from 'react-redux'
+import { saveFeed } from '../store/actions/feed.actions'
 
 export function FeedIndex() {
     const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
@@ -24,11 +25,34 @@ export function FeedIndex() {
         document.title = 'Instaflow'
     }
 
+    async function onToggleLike(feed, elBtnLike) {
+        try {
+            const feedToSave = {
+                ...feed,
+                likedBy: [...feed.likedBy, loggedinUser]
+            }
+            if (feed.likedBy.some(user => user.username === loggedinUser.username)) {
+                feedToSave.likedBy = feedToSave.likedBy.filter(user => user.username !== loggedinUser.username)
+                elBtnLike.classList.remove('like-animation')
+            } else {
+                elBtnLike.classList.add('like-animation')
+            }
+            return await saveFeed(feedToSave)
+        } catch (err) {
+            console.log(err, 'Could not like feed')
+        }
+    }
+
+    const outletContext = {
+        onToggleLike,
+        loggedinUser
+    }
+
     return (
         <section className="feed-index main-layout">
             <NavBar onOpenCreateModal={onOpenCreateModal} user={loggedinUser}/>
-            <Outlet />
-            {feedId && <FeedDetails feedId={feedId} user={loggedinUser}/>}
+            <Outlet context={outletContext}/>
+            {feedId && <FeedDetails feedId={feedId} user={loggedinUser} onToggleLike={onToggleLike}/>}
             {isCreate && <FeedEdit onClose={onCloseCreateModal} user={loggedinUser}/>}
         </section>
     )

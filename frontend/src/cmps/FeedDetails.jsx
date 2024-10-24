@@ -9,7 +9,7 @@ import { AddComment } from './AddComment'
 import { CommentList } from './CommentList'
 import { Backdrop } from './Backdrop'
 
-export function FeedDetails({ feedId, user: loggedinUser }) {
+export function FeedDetails({ feedId, onToggleLike, user: loggedinUser }) {
     const [feed, setFeed] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams()
     const elBtnLikeRef = useRef()
@@ -28,23 +28,9 @@ export function FeedDetails({ feedId, user: loggedinUser }) {
         }
     }
 
-    async function onToggleLike() {
-        try {
-            const feedToSave = {
-                ...feed,
-                likedBy: [...feed.likedBy, loggedinUser]
-            }
-            if (isLiked()) {
-                feedToSave.likedBy = feedToSave.likedBy.filter(user => user.username !== loggedinUser.username)
-                elBtnLikeRef.current.classList.remove('like-animation')
-            } else {
-                elBtnLikeRef.current.classList.add('like-animation')
-            }
-            const savedFeed = await feedService.save(feedToSave)
-            setFeed(prevFeed => ({ ...prevFeed, likedBy: savedFeed.likedBy }))
-        } catch (err) {
-            console.log(err, 'Could not like feed')
-        }
+    async function onLike() {
+        const savedFeed = await onToggleLike(feed, elBtnLikeRef.current)
+        setFeed(prevFeed => ({ ...prevFeed, likedBy: savedFeed.likedBy }))
     }
 
     function isLiked() {
@@ -89,7 +75,7 @@ export function FeedDetails({ feedId, user: loggedinUser }) {
                     <section className="actions">
                         <span style={{ lineHeight: 0.5 }} ref={elBtnLikeRef}>
                             <SvgIcon iconName={isLiked() ? 'heartRed' : 'heart'}
-                                onClick={onToggleLike} className="btn-like" />
+                                onClick={onLike} className="btn-like" />
                         </span>
                         <SvgIcon iconName="comment" />
                         <SvgIcon iconName="share" />

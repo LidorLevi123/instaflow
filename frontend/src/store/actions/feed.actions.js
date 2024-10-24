@@ -1,6 +1,6 @@
-import { feedService } from '../../services/feed'
 import { store } from '../store'
-import { ADD_FEED, SET_FEEDS } from '../reducers/feed.reducer'
+import { ADD_FEED, SET_FEEDS, UPDATE_FEED } from '../reducers/feed.reducer'
+import { feedService } from '../../services/feed'
 
 export async function loadFeeds(filterBy = {}) {
     try {
@@ -16,10 +16,11 @@ export async function saveFeed(feed) {
     try {
         const savedFeed = await feedService.save(feed)
         const action = {
-            type: ADD_FEED,
+            type: feed._id ? UPDATE_FEED : ADD_FEED,
             feed: savedFeed
         }
         store.dispatch(action)
+        return savedFeed
     } catch (err) {
         console.log('Cannot load feeds', err)
         throw err
