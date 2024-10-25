@@ -1,13 +1,19 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { SvgIcon } from './SvgIcon'
+import { useForm } from '../customHooks/useForm'
+import { feedService } from '../services/feed'
 
-export function AddComment() {
-    const [txt, setTxt] = useState('')
+export function AddComment({ onAddComment }) {
+    const [comment,, handleChange] = useForm(feedService.getEmptyComment())
     const txtRef = useRef()
 
-    function handleChange(ev) {
-        const { value } = ev.target
-        setTxt(value)
+    async function addComment() {
+        try {
+            await onAddComment(comment)
+            txtRef.current.value = ''
+        } catch (err) {
+            console.log('Could not add comment', err)
+        }
     }
 
     function onResize() {
@@ -36,11 +42,12 @@ export function AddComment() {
     return (
         <section className="add-comment">
             <textarea
-                placeholder="Add a comment..."
                 ref={txtRef}
-                onInput={onResize}
-                onChange={handleChange}></textarea>
-            { txt && <span className="btn-post">Post</span> }
+                placeholder="Add a comment..."
+                name="txt"
+                onChange={handleChange}
+                onInput={onResize}></textarea>
+            {comment.txt && <span className="btn-post" onClick={addComment}>Post</span>}
             <SvgIcon iconName="emoji" />
         </section>
     )

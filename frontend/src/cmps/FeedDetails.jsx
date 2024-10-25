@@ -8,8 +8,9 @@ import { SvgIcon } from './SvgIcon'
 import { AddComment } from './AddComment'
 import { CommentList } from './CommentList'
 import { Backdrop } from './Backdrop'
+import { addComment } from '../store/actions/feed.actions'
 
-export function FeedDetails({ feedId, onToggleLike, user: loggedinUser }) {
+export function FeedDetails({ feedId, onToggleLike, loggedinUser }) {
     const [feed, setFeed] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams()
     const elBtnLikeRef = useRef()
@@ -25,6 +26,20 @@ export function FeedDetails({ feedId, onToggleLike, user: loggedinUser }) {
         } catch (err) {
             console.log('Cannot load feed', err)
             throw err
+        }
+    }
+
+    async function onAddComment(comment) {
+        try {
+            const savedFeed = await addComment(feed._id, comment)
+            setFeed(prevFeed =>
+            ({
+                ...prevFeed,
+                comments: [...savedFeed.comments]
+            })
+            )
+        } catch (err) {
+            console.log('Could not add comment', err)
         }
     }
 
@@ -85,7 +100,7 @@ export function FeedDetails({ feedId, onToggleLike, user: loggedinUser }) {
                     <span className="likes">{feed.likedBy?.length} likes</span>
                     <span className="created-at">{createdAt} ago</span>
 
-                    <AddComment />
+                    <AddComment onAddComment={onAddComment} />
                 </div>
 
             </section>

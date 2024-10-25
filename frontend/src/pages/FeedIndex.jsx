@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { FeedDetails } from '../cmps/FeedDetails'
 import { FeedEdit } from '../cmps/FeedEdit'
 import { useSelector } from 'react-redux'
-import { saveFeed } from '../store/actions/feed.actions'
+import { addComment, saveFeed } from '../store/actions/feed.actions'
 
 export function FeedIndex() {
     const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
@@ -43,6 +43,21 @@ export function FeedIndex() {
         }
     }
 
+    async function onAddComment(feedId, comment) {
+        try {
+            return await addComment(feedId, comment)
+        } catch (err) {
+            console.log('Could not add comment', err)
+        }
+    }
+
+    const detailsProps = {
+        onToggleLike,
+        onAddComment,
+        loggedinUser,
+        feedId
+    }
+
     const outletContext = {
         onToggleLike,
         loggedinUser
@@ -50,10 +65,10 @@ export function FeedIndex() {
 
     return (
         <section className="feed-index main-layout">
-            <NavBar onOpenCreateModal={onOpenCreateModal} user={loggedinUser}/>
-            <Outlet context={outletContext}/>
-            {feedId && <FeedDetails feedId={feedId} user={loggedinUser} onToggleLike={onToggleLike}/>}
-            {isCreate && <FeedEdit onClose={onCloseCreateModal} user={loggedinUser}/>}
+            <NavBar onOpenCreateModal={onOpenCreateModal} user={loggedinUser} />
+            <Outlet context={outletContext} />
+            {feedId && <FeedDetails {...detailsProps} />}
+            {isCreate && <FeedEdit onClose={onCloseCreateModal} user={loggedinUser} />}
         </section>
     )
 }

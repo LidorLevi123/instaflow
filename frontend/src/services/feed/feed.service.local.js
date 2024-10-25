@@ -1,6 +1,6 @@
 import { storageService } from '../async-storage.service'
 import { userService } from '../user'
-import { loadFromStorage, saveToStorage } from '../util.service'
+import { loadFromStorage, makeId, saveToStorage } from '../util.service'
 
 const STORAGE_KEY = 'feed_db'
 
@@ -9,7 +9,9 @@ export const feedService = {
     getById,
     save,
     remove,
-    getEmptyFeed
+    getEmptyFeed,
+    getEmptyComment,
+    addComment
 }
 
 _createFeeds()
@@ -28,13 +30,30 @@ async function remove(feedId) {
 }
 
 async function save(feed) {
-    if(feed._id) {
+    if (feed._id) {
         return await storageService.put(STORAGE_KEY, feed)
     } else {
         feed.by = userService.getLoggedinUser()
         feed.createdAt = Date.now()
         return await storageService.post(STORAGE_KEY, feed)
     }
+}
+
+async function addComment(feedId, comment) {
+    try {
+        const feed = await getById(feedId)
+        const commentToSave = { ...comment }
+
+        commentToSave.id = makeId()
+        commentToSave.by = userService.getLoggedinUser()
+        commentToSave.createdAt = Date.now()
+
+        feed.comments.push(commentToSave)
+        return await save(feed)
+    } catch (err) {
+        console.log('Could not add comment', err)
+    }
+
 }
 
 function getEmptyFeed() {
@@ -47,9 +66,16 @@ function getEmptyFeed() {
     }
 }
 
+function getEmptyComment() {
+    return {
+        txt: '',
+        likedBy: []
+    }
+}
+
 function _createFeeds() {
     var feeds = loadFromStorage(STORAGE_KEY) || []
-    if(feeds && feeds.length) return
+    if (feeds && feeds.length) return
 
     feeds = [
         {

@@ -26,3 +26,14 @@ export async function saveFeed(feed) {
         throw err
     }
 }
+
+export async function addComment(feedId, comment) {
+    try {
+        const feed = await feedService.addComment(feedId, comment)
+        store.dispatch({ type: UPDATE_FEED, feed })
+        return feed
+    } catch (err) {
+        console.log('Cannot load feeds', err)
+        throw err
+    }
+}
