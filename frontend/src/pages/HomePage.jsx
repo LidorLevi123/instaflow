@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { loadFeeds } from '../store/actions/feed.actions'
+import { addComment, loadFeeds } from '../store/actions/feed.actions'
 import { FeedList } from '../cmps/FeedList'
 import { useOutletContext } from 'react-router'
 
@@ -12,11 +12,26 @@ export function HomePage() {
         loadFeeds()
     }, [])
 
+    async function onAddComment(feedId, comment) {
+        try {
+            await addComment(feedId, comment)
+        } catch (err) {
+            console.log('Could not add comment', err)
+        }
+    }
+    
     if (!feeds) return
+
+    const listProps = {
+        feeds,
+        loggedinUser,
+        onToggleLike,
+        onAddComment,
+    }
 
     return (
         <section className="home-page">
-            <FeedList feeds={feeds} onToggleLike={onToggleLike} loggedinUser={loggedinUser}></FeedList>
+            <FeedList {...listProps}></FeedList>
         </section>
     )
 }

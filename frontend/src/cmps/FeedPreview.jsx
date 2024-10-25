@@ -4,7 +4,7 @@ import { SvgIcon } from "./SvgIcon"
 import { AddComment } from "./AddComment"
 import { useRef } from "react"
 
-export function FeedPreview({ feed, onToggleLike, loggedinUser }) {
+export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment }) {
     const [searchParams, setSearchParams] = useSearchParams()
     const likeCount = feed.likedBy.length.toLocaleString('en-US')
     const createdAt = getTimeSince(feed.createdAt)
@@ -21,6 +21,14 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser }) {
 
     function isLiked() {
         return feed.likedBy.some(user => user.username === loggedinUser.username)
+    }
+
+    async function addComment(comment) {
+        try {
+            await onAddComment(feed._id, comment)
+        } catch (err) {
+            console.log('Could not add comment', err)
+        }
     }
 
     return (
@@ -59,7 +67,7 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser }) {
                     {feed.txt || ''}
                 </p>
                 <span className="view-comments" onClick={onOpenDetails}>View all {feed.comments.length} comments</span>
-                <AddComment />
+                <AddComment onAddComment={addComment}/>
             </section>
         </article>
     )
