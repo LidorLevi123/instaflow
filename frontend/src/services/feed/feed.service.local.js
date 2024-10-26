@@ -11,7 +11,8 @@ export const feedService = {
     remove,
     getEmptyFeed,
     getEmptyComment,
-    addComment
+    addComment,
+    saveComment,
 }
 
 _createFeeds()
@@ -53,7 +54,15 @@ async function addComment(feedId, comment) {
     } catch (err) {
         console.log('Could not add comment', err)
     }
+}
 
+async function saveComment(feedId, comment) {
+    const feed = await getById(feedId)
+    const commentToSave = { ...comment }
+
+    feed.comments = feed.comments.map(comment => comment.id === commentToSave.id ? commentToSave : comment)
+    await save(feed)
+    return commentToSave
 }
 
 function getEmptyFeed() {

@@ -37,9 +37,37 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
         }
     }
 
-    async function onLike() {
+    async function onLikeFeed() {
         const savedFeed = await onToggleLike(feed, elBtnLikeRef.current)
         setFeed(prevFeed => ({ ...prevFeed, likedBy: savedFeed.likedBy }))
+    }
+
+    async function onLikeComment(comment, elBtnLike) {
+        try {
+            const commentToSave = {
+                ...comment,
+                likedBy: [...comment.likedBy, loggedinUser]
+            }
+            
+            if (isCommentLiked(comment)) {
+                commentToSave.likedBy = commentToSave.likedBy.filter(user => user._id !== loggedinUser._id)
+                elBtnLike.classList.remove('like-animation')
+            } else {
+                elBtnLike.classList.add('like-animation')
+            }
+
+            const savedComment = await feedService.saveComment(feed._id, commentToSave)
+            setFeed(prevFeed => ({
+                    ...prevFeed,
+                    comments: prevFeed.comments.map(comment => comment.id === savedComment.id ? savedComment : comment)
+                }))
+        } catch (err) {
+            console.log(err, 'Could not like comment')
+        }
+    }
+
+    function isCommentLiked(comment) {
+        return comment.likedBy.some(user => user._id === loggedinUser._id)
     }
 
     function isLiked() {
@@ -77,14 +105,19 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
                         </div>
                         <span className="created-at">{createdAt}</span>
                     </div>
-                    <CommentList comments={feed.comments} />
+                    <CommentList
+                        comments={feed.comments}
+                        onLikeComment={onLikeComment}
+                        isCommentLiked={isCommentLiked} />
                 </div>
 
                 <div className="bottom-section">
                     <section className="actions">
                         <span style={{ lineHeight: 0.5 }} ref={elBtnLikeRef}>
-                            <SvgIcon iconName={isLiked() ? 'heartRed' : 'heart'}
-                                onClick={onLike} className="btn-like" />
+                            <SvgIcon
+                                iconName={isLiked() ? 'heartRed' : 'heart'}
+                                onClick={onLikeFeed}
+                                className="btn-like" />
                         </span>
                         <SvgIcon iconName="comment" />
                         <SvgIcon iconName="share" />
