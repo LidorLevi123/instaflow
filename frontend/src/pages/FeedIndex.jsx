@@ -43,14 +43,24 @@ export function FeedIndex() {
         }
     }
 
+    async function onAddComment(feedId, comment) {
+        try {
+            return await addComment(feedId, comment)
+        } catch (err) {
+            console.log('Could not add comment', err)
+        }
+    }
+
     const detailsProps = {
         onToggleLike,
+        onAddComment,
         loggedinUser,
         feedId
     }
 
     const outletContext = {
         onToggleLike,
+        onAddComment,
         loggedinUser
     }
 
