@@ -16,4 +16,17 @@
             cursor: pointer;
         }
     }
+
+    .options-icon {
+        margin-block-start: rem(-3px);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    &:hover {
+        .options-icon {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
 }

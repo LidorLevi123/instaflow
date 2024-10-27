@@ -22,6 +22,7 @@ export function CommentPreview({ comment, onLikeComment, isCommentLiked }) {
                 <span className="created-at">{getTimeSince(comment.createdAt)}</span>
                 <span className="likes">{comment.likedBy?.length} likes</span>
                 <span className="btn-reply">Reply</span>
+                <SvgIcon iconName="options" className="options-icon"/>
             </div>
         </article>
     )
