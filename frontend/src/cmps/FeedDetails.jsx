@@ -8,6 +8,8 @@ import { SvgIcon } from './SvgIcon'
 import { AddComment } from './AddComment'
 import { CommentList } from './CommentList'
 import { Backdrop } from './Backdrop'
+import { OptionsModal } from './OptionsModal'
+import { hideOptionsModal, showOptionsModal } from '../services/event-bus.service'
 
 export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }) {
     const [feed, setFeed] = useState(null)
@@ -93,7 +95,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
                 <div className="uploader">
                     <img src={feed.by.imgUrl} alt="Uploader img" />
                     <span className="btn fullname">{feed.by.fullname}</span>
-                    <SvgIcon iconName="options" className="options-icon" />
+                    <SvgIcon iconName="options" className="btn options-icon" onClick={showOptionsModal}/>
                 </div>
 
                 <div className="info">
@@ -131,6 +133,20 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
                 </div>
 
             </section>
+
+            <OptionsModal>
+                <ul>
+                    <li className="danger">Report</li>
+                    <li className="danger">Unfollow</li>
+                    <li>Add to favorites</li>
+                    <li>Go to post</li>
+                    <li>Share to...</li>
+                    <li>Copy link</li>
+                    <li>Embed</li>
+                    <li>About this account</li>
+                    <li onClick={hideOptionsModal}>Cancel</li>
+                </ul>
+            </OptionsModal>
         </>
     )
 }
