@@ -9,10 +9,10 @@ import { AddComment } from './AddComment'
 import { CommentList } from './CommentList'
 import { Backdrop } from './Backdrop'
 import { OptionsModal } from './OptionsModal'
-import { hideOptionsModal, showOptionsModal } from '../services/event-bus.service'
 
 export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }) {
     const [feed, setFeed] = useState(null)
+    const [isOptionsModalShown, setIsOptionsModalShown] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
     const elBtnLikeRef = useRef()
 
@@ -46,11 +46,13 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
 
     async function onLikeComment(comment, elBtnLike) {
         try {
+            if(!comment.likedBy) comment.likedBy = []
+            
             const commentToSave = {
                 ...comment,
                 likedBy: [...comment.likedBy, loggedinUser]
             }
-            
+
             if (isCommentLiked(comment)) {
                 commentToSave.likedBy = commentToSave.likedBy.filter(user => user._id !== loggedinUser._id)
                 elBtnLike.classList.remove('like-animation')
@@ -60,16 +62,16 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
 
             const savedComment = await feedService.saveComment(feed._id, commentToSave)
             setFeed(prevFeed => ({
-                    ...prevFeed,
-                    comments: prevFeed.comments.map(comment => comment.id === savedComment.id ? savedComment : comment)
-                }))
+                ...prevFeed,
+                comments: prevFeed.comments.map(comment => comment.id === savedComment.id ? savedComment : comment)
+            }))
         } catch (err) {
             console.log(err, 'Could not like comment')
         }
     }
 
     function isCommentLiked(comment) {
-        return comment.likedBy.some(user => user._id === loggedinUser._id)
+        return comment.likedBy?.some(user => user._id === loggedinUser._id)
     }
 
     function isLiked() {
@@ -79,6 +81,14 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
     function onCloseDetails() {
         searchParams.delete('feedId')
         setSearchParams(searchParams)
+    }
+
+    function onShowOptionsModal() {
+        setIsOptionsModalShown(true)
+    }
+
+    function onHideOptionsModal() {
+        setIsOptionsModalShown(false)
     }
 
     if (!feed) return
@@ -95,7 +105,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
                 <div className="uploader">
                     <img src={feed.by.imgUrl} alt="Uploader img" />
                     <span className="btn fullname">{feed.by.fullname}</span>
-                    <SvgIcon iconName="options" className="btn options-icon" onClick={showOptionsModal}/>
+                    <SvgIcon iconName="options" className="btn options-icon" onClick={onShowOptionsModal} />
                 </div>
 
                 <div className="info">
@@ -110,7 +120,8 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
                     <CommentList
                         comments={feed.comments}
                         onLikeComment={onLikeComment}
-                        isCommentLiked={isCommentLiked} />
+                        isCommentLiked={isCommentLiked}
+                        loggedinUser={loggedinUser} />
                 </div>
 
                 <div className="bottom-section">
@@ -134,19 +145,20 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
 
             </section>
 
-            <OptionsModal>
-                <ul>
-                    <li className="danger">Report</li>
-                    <li className="danger">Unfollow</li>
-                    <li>Add to favorites</li>
-                    <li>Go to post</li>
-                    <li>Share to...</li>
-                    <li>Copy link</li>
-                    <li>Embed</li>
-                    <li>About this account</li>
-                    <li onClick={hideOptionsModal}>Cancel</li>
-                </ul>
-            </OptionsModal>
+            {isOptionsModalShown &&
+                <OptionsModal onClose={onHideOptionsModal}>
+                    <ul>
+                        <li className="danger">Report</li>
+                        <li className="danger">Unfollow</li>
+                        <li>Add to favorites</li>
+                        <li>Go to post</li>
+                        <li>Share to...</li>
+                        <li>Copy link</li>
+                        <li>Embed</li>
+                        <li>About this account</li>
+                        <li onClick={onHideOptionsModal}>Cancel</li>
+                    </ul>
+                </OptionsModal>}
         </>
     )
 }

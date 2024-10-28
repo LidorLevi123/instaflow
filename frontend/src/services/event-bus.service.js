@@ -1,6 +1,4 @@
 export const SHOW_MSG = 'show-msg'
-export const SHOW_OPTIONS_MODAL = 'show-options-modal'
-export const HIDE_OPTIONS_MODAL = 'hide-options-modal'
 
 function createEventEmitter() {
     const listenersMap = {}
@@ -24,17 +22,10 @@ export function showUserMsg(msg) {
     eventBus.emit(SHOW_MSG, msg)
 }
 
-export function showOptionsModal() {
-    eventBus.emit(SHOW_OPTIONS_MODAL)
-}
-
-export function hideOptionsModal() {
-    eventBus.emit(HIDE_OPTIONS_MODAL)
-}
-
 export function showSuccessMsg(txt) {
     showUserMsg({txt, type: 'success'})
 }
+
 export function showErrorMsg(txt) {
     showUserMsg({txt, type: 'error'})
 }
