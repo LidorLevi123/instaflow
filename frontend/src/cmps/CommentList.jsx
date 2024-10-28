@@ -1,10 +1,11 @@
 import { CommentPreview } from "./CommentPreview";
 
-export function CommentList({ comments, onLikeComment, isCommentLiked, loggedinUser }) {
+export function CommentList({ comments, onLikeComment, isCommentLiked, loggedinUser, onRemoveComment }) {
 
     const previewProps = {
         onLikeComment,
         isCommentLiked,
+        onRemoveComment,
         loggedinUser
     }
 

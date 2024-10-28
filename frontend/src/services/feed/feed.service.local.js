@@ -13,6 +13,7 @@ export const feedService = {
     getEmptyComment,
     addComment,
     saveComment,
+    removeComment
 }
 
 _createFeeds()
@@ -53,6 +54,16 @@ async function addComment(feedId, comment) {
         return await save(feed)
     } catch (err) {
         console.log('Could not add comment', err)
+    }
+}
+
+async function removeComment(feedId, commentId) {
+    try {
+        const feed = await getById(feedId)
+        feed.comments = feed.comments.filter(comment => comment.id !== commentId)
+        return await save(feed)
+    } catch (err) {
+        console.log('Could not remove comment', err)
     }
 }
 

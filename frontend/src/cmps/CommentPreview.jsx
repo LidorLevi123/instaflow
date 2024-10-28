@@ -3,7 +3,7 @@ import { getTimeSince } from "../services/util.service";
 import { SvgIcon } from "./SvgIcon";
 import { OptionsModal } from "./OptionsModal";
 
-export function CommentPreview({ comment, onLikeComment, isCommentLiked, loggedinUser }) {
+export function CommentPreview({ comment, onLikeComment, isCommentLiked, onRemoveComment, loggedinUser }) {
     const elBtnLikeRef = useRef()
     const [isOptionsModalShown, setIsOptionsModalShown] = useState(false)
 
@@ -42,7 +42,7 @@ export function CommentPreview({ comment, onLikeComment, isCommentLiked, loggedi
                     <ul>
                         {
                             comment.by._id === loggedinUser._id ?
-                                <li className="danger">Delete</li> :
+                                <li className="danger" onClick={() => onRemoveComment(comment.id)}>Delete</li> :
                                 <li className="danger">Report</li>
                         }
                         <li onClick={onHideOptionsModal}>Cancel</li>

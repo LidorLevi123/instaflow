@@ -39,6 +39,19 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
         }
     }
 
+    async function removeComment(commentId) {
+        try {
+            await feedService.removeComment(feed._id, commentId)
+            setFeed(prevFeed => (
+                { 
+                    ...prevFeed, 
+                    comments: [...prevFeed.comments].filter(c => c.id !== commentId) 
+                }))
+        } catch (err) {
+            console.log('Could not add comment', err)
+        }
+    }
+
     async function onLikeFeed() {
         const savedFeed = await onToggleLike(feed, elBtnLikeRef.current)
         setFeed(prevFeed => ({ ...prevFeed, likedBy: savedFeed.likedBy }))
@@ -47,7 +60,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
     async function onLikeComment(comment, elBtnLike) {
         try {
             if(!comment.likedBy) comment.likedBy = []
-            
+
             const commentToSave = {
                 ...comment,
                 likedBy: [...comment.likedBy, loggedinUser]
@@ -121,6 +134,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
                         comments={feed.comments}
                         onLikeComment={onLikeComment}
                         isCommentLiked={isCommentLiked}
+                        onRemoveComment={removeComment}
                         loggedinUser={loggedinUser} />
                 </div>
 
