@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { feedService } from '../services/feed'
+import { commentService } from '../services/comment'
 import { getTimeSince } from '../services/util.service'
 
 import { SvgIcon } from './SvgIcon'
@@ -32,8 +33,11 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
 
     async function addComment(comment) {
         try {
-            const savedFeed = await onAddComment(feed._id, comment)
-            setFeed(prevFeed => ({ ...prevFeed, comments: [...savedFeed.comments] }))
+            const savedComment = await onAddComment(feed._id, comment)
+            setFeed(prevFeed => ({
+                ...prevFeed,
+                comments: [...prevFeed.comments, savedComment]
+            }))
         } catch (err) {
             console.log('Could not add comment', err)
         }
@@ -41,14 +45,13 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
 
     async function removeComment(commentId) {
         try {
-            await feedService.removeComment(feed._id, commentId)
-            setFeed(prevFeed => (
-                { 
-                    ...prevFeed, 
-                    comments: [...prevFeed.comments].filter(c => c.id !== commentId) 
-                }))
+            await commentService.remove(feed._id, commentId)
+            setFeed(prevFeed => ({
+                ...prevFeed,
+                comments: [...prevFeed.comments].filter(c => c.id !== commentId)
+            }))
         } catch (err) {
-            console.log('Could not add comment', err)
+            console.log('Could not remove comment', err)
         }
     }
 
@@ -59,7 +62,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
 
     async function onLikeComment(comment, elBtnLike) {
         try {
-            if(!comment.likedBy) comment.likedBy = []
+            if (!comment.likedBy) comment.likedBy = []
 
             const commentToSave = {
                 ...comment,
@@ -73,7 +76,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
                 elBtnLike.classList.add('like-animation')
             }
 
-            const savedComment = await feedService.saveComment(feed._id, commentToSave)
+            const { comment: savedComment } = await commentService.save(feed._id, commentToSave)
             setFeed(prevFeed => ({
                 ...prevFeed,
                 comments: prevFeed.comments.map(comment => comment.id === savedComment.id ? savedComment : comment)

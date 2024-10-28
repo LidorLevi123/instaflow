@@ -1,6 +1,6 @@
 import { storageService } from '../async-storage.service'
 import { userService } from '../user'
-import { loadFromStorage, makeId, saveToStorage } from '../util.service'
+import { loadFromStorage, saveToStorage } from '../util.service'
 
 const STORAGE_KEY = 'feed_db'
 
@@ -10,10 +10,6 @@ export const feedService = {
     save,
     remove,
     getEmptyFeed,
-    getEmptyComment,
-    addComment,
-    saveComment,
-    removeComment
 }
 
 _createFeeds()
@@ -41,41 +37,6 @@ async function save(feed) {
     }
 }
 
-async function addComment(feedId, comment) {
-    try {
-        const feed = await getById(feedId)
-        const commentToSave = { ...comment }
-
-        commentToSave.id = makeId()
-        commentToSave.by = userService.getLoggedinUser()
-        commentToSave.createdAt = Date.now()
-
-        feed.comments.push(commentToSave)
-        return await save(feed)
-    } catch (err) {
-        console.log('Could not add comment', err)
-    }
-}
-
-async function removeComment(feedId, commentId) {
-    try {
-        const feed = await getById(feedId)
-        feed.comments = feed.comments.filter(comment => comment.id !== commentId)
-        return await save(feed)
-    } catch (err) {
-        console.log('Could not remove comment', err)
-    }
-}
-
-async function saveComment(feedId, comment) {
-    const feed = await getById(feedId)
-    const commentToSave = { ...comment }
-
-    feed.comments = feed.comments.map(comment => comment.id === commentToSave.id ? commentToSave : comment)
-    await save(feed)
-    return commentToSave
-}
-
 function getEmptyFeed() {
     return {
         txt: '',
@@ -83,13 +44,6 @@ function getEmptyFeed() {
         comments: [],
         likedBy: [],
         tags: []
-    }
-}
-
-function getEmptyComment() {
-    return {
-        txt: '',
-        likedBy: []
     }
 }
 

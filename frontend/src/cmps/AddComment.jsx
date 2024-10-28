@@ -1,10 +1,10 @@
 import { useRef } from 'react'
 import { SvgIcon } from './SvgIcon'
 import { useForm } from '../customHooks/useForm'
-import { feedService } from '../services/feed'
+import { commentService } from '../services/comment'
 
 export function AddComment({ onAddComment }) {
-    const [comment,, handleChange] = useForm(feedService.getEmptyComment())
+    const [comment, ,handleChange] = useForm(commentService.getEmptyComment())
     const txtRef = useRef()
 
     async function addComment() {
