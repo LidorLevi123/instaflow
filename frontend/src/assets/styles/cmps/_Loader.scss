@@ -1,0 +1,18 @@
+.loader {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    place-items: center;
+    display: grid;
+    grid-template-rows: 1fr auto;
+
+    >*:first-child {
+        width: 80px;
+    }
+
+    >*:last-child {
+        width: 70px;
+        margin-block-end: 40px;
+    }
+}

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { loadFeeds } from '../store/actions/feed.actions'
 import { FeedList } from '../cmps/FeedList'
 import { useOutletContext } from 'react-router'
+import { Loader } from '../cmps/Loader'
 
 export function HomePage() {
     const feeds = useSelector(storeState => storeState.feedModule.feeds)
@@ -12,7 +13,9 @@ export function HomePage() {
         loadFeeds()
     }, [])
 
-    if (!feeds) return
+    console.log('feeds:', feeds)
+
+    if (!feeds || !feeds.length) return <Loader />
 
     const listProps = {
         feeds,

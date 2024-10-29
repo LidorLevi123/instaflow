@@ -15,8 +15,9 @@ export const feedService = {
 _createFeeds()
 
 async function query(filterBy = { txt: '', price: 0 }) {
-    var feeds = await storageService.query(STORAGE_KEY)
-    return feeds
+    const feeds = await storageService.query(STORAGE_KEY)
+    const prms = feeds.map(feed => fetch(feed.imgUrls[0]))
+    return Promise.all(prms).then(() => feeds)
 }
 
 async function getById(feedId) {
