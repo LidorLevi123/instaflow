@@ -48,7 +48,10 @@ export function NavBar({ onOpenCreateModal, user }) {
                 </li>
 
                 <li className="btn-profile">
-                    <img className="user-img" src={user.imgUrl} alt="" />Profile
+                    <NavLink to={`user/${user._id}`}>
+                        <img className="user-img" src={user.imgUrl} alt="" />
+                        Profile
+                    </NavLink>
                 </li>
 
                 <li>

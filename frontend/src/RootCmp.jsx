@@ -6,6 +6,7 @@ import { FeedIndex } from './pages/FeedIndex.jsx'
 import { HomePage } from './pages/HomePage.jsx'
 import { LoginPage } from './pages/LoginPage.jsx'
 import { SignupPage } from './pages/SignupPage.jsx'
+import { UserPage } from './pages/UserPage.jsx'
 
 export function RootCmp() {
     return (
@@ -15,6 +16,7 @@ export function RootCmp() {
                 <Routes>
                     <Route path="" element={<FeedIndex />} >
                         <Route path="" element={<HomePage />} />
+                        <Route path="user/:userId" element={<UserPage />} />
                     </Route>
                     <Route path="login" element={<LoginPage />} />
                     <Route path="signup" element={<SignupPage />} />
