@@ -23,7 +23,9 @@ async function getUsers() {
 }
 
 async function getById(userId) {
-    return await storageService.get('user', userId)
+    const user = await storageService.get('user', userId)
+    delete user.password
+    return user
 }
 
 async function remove(userId) {
