@@ -1,0 +1,16 @@
+.user-feed-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(308px, 1fr));
+    gap: 4px;
+
+    > li {
+        height: 308px;
+        cursor: pointer;
+    }
+    
+    img {
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+}
