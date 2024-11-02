@@ -1,0 +1,111 @@
+.user-page {
+    display: grid;
+    align-content: start;
+    row-gap: rem(218px);
+    grid-template-columns: 
+        minmax(5px, 1fr)
+        minmax(auto, 935px)
+        minmax(5px, 1fr);
+    padding-block-start: rem(30px);
+
+    > * {
+        grid-column: 2;
+    }
+
+    header {
+        display: grid;
+        align-content: start;
+        column-gap: em(30px);
+        grid-template-columns: auto 1fr;
+        grid-template-rows: repeat(3, auto);
+
+        > *:not(.user-img) {
+            grid-column: 2;
+        } 
+
+        > *:not(.user-img, .info) {
+            display: flex;
+        } 
+
+        button {
+            border-radius: em(8px);
+            font-size: em(14px);
+            font-family: $font;
+            border: none;
+            background: $gray0;
+            padding: em(7px) em(16px);
+
+            &:hover {
+                background: $gray1;
+            }
+        }
+
+        .user-img {
+            grid-row: 1 / -1;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+            margin-inline: em(67px);
+            margin-block-start: em(30px);
+        }
+    
+        .user-name {
+            font-size: em(20px);
+            font-weight: 400;
+            margin-inline-end: em(12px);
+        }
+
+        .actions {
+            height: 40px;
+            align-items: center;
+            gap: rem(8px);
+            margin-block-start: rem(10px);
+
+            .svg-icon {
+                cursor: pointer;
+            }
+        }
+
+        .summary {
+            display: flex;
+            gap: rem(40px);
+
+            span {
+                margin-inline-end: em(4px);
+            }
+        }
+
+        .info {
+            font-size: em(14px);
+            margin-block-start: rem(12px);
+        }
+    }
+
+    .gallery-controller {
+        display: grid;
+        grid-auto-flow: column;
+        justify-content: center;
+        text-transform: uppercase;
+        gap: rem(60px);
+        font-size: rem(12px);
+        font-weight: 600;
+        color: $gray3;
+        border-block-start: 1px solid $gray1;
+        letter-spacing: rem(1px);
+
+        > * {
+            display: flex;
+            align-items: center;
+            gap: em(8px);
+            padding-block: rem(17px);
+            cursor: pointer;
+
+            &.active {
+                color: black;
+                border-block-start: 1px solid black;
+            }
+        }
+    }
+}

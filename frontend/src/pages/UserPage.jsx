@@ -25,26 +25,26 @@ export function UserPage() {
     return (
         <section className="user-page">
             <header>
-                <img src="https://res.cloudinary.com/dvpkhwyxp/image/upload/v1729242206/instaflow/tzq3es09mdch78lufntr.png" alt="" />
-                <div>
-                    <h3>{user.username}</h3>
-                    <button>Edit profile</button>
-                    <button>View archive</button>
+                <img className="user-img" src="https://res.cloudinary.com/dvpkhwyxp/image/upload/v1729242206/instaflow/tzq3es09mdch78lufntr.png" alt="" />
+                <div className="actions">
+                    <h3 className="user-name">{user.username}</h3>
+                    <button className="bold">Edit profile</button>
+                    <button className="bold">View archive</button>
                     <SvgIcon iconName="settings" />
                 </div>
-                <div>
+                <div className="summary">
                     <p><span className="bold">25</span>posts</p>
                     <p><span className="bold">150</span>followers</p>
                     <p><span className="bold">282</span>following</p>
                 </div>
-                <div>
-                    <p className="bold">{user.fullname}</p>
-                    <p>Ariel</p>
+                <div className="info">
+                    <p className="fullname bold">{user.fullname}</p>
+                    <p className="biography">Ariel</p>
                 </div>
             </header>
 
-            <div>
-                <p>
+            <div className="gallery-controller">
+                <p className="active">
                     <SvgIcon iconName="posts" />
                     <span>Posts</span>
                 </p>
