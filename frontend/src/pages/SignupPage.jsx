@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router'
 import { NavLink } from 'react-router-dom'
 
 import { signup } from '../store/actions/user.actions'
+import { userService } from '../services/user'
 
 export function SignupPage() {
-    const [userCreds, setUserCreds] = useState({ email: '', username: '', password: '', fullname: '' })
+    const [userCreds, setUserCreds] = useState(userService.getEmptyUser())
     const navigate = useNavigate()
 
     async function onSignup(ev = null) {
@@ -42,7 +43,7 @@ export function SignupPage() {
                     from your friends.
                 </p>
                 <button className="btn-facebook-login">
-                    <img src="public/img/facebook-white.png" alt="facebook-icon" />
+                    <img src="/img/facebook-white.png" alt="facebook-icon" />
                     Log in with Facebook
                 </button>
 

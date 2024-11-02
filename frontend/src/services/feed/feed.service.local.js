@@ -32,9 +32,17 @@ async function save(feed) {
     if (feed._id) {
         return await storageService.put(STORAGE_KEY, feed)
     } else {
-        feed.by = userService.getLoggedinUser()
+        const loggedinUser = userService.getLoggedinUser()
+        
+        feed.by = loggedinUser
         feed.createdAt = Date.now()
-        return await storageService.post(STORAGE_KEY, feed)
+
+        const savedFeed = await storageService.post(STORAGE_KEY, feed)
+
+        if(!loggedinUser.postedFeedsId) loggedinUser.postedFeedsId = []
+        loggedinUser.postedFeedsId.push(savedFeed._id)
+        await userService.update(loggedinUser)
+        return savedFeed
     }
 }
 
