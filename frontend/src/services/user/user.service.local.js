@@ -1,4 +1,5 @@
 import { storageService } from '../async-storage.service'
+import { feedService } from '../feed'
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
 
@@ -10,6 +11,7 @@ export const userService = {
     getById,
     remove,
     update,
+    getUserFeeds,
     getLoggedinUser,
     saveLoggedinUser,
 }
@@ -40,8 +42,15 @@ async function update({ _id, postedFeedsId }) {
     // When admin updates other user's details, do not update loggedinUser
     const loggedinUser = getLoggedinUser()
     if (loggedinUser._id === user._id) saveLoggedinUser(user)
-    
+
     return user
+}
+
+async function getUserFeeds(userId) {
+    const feeds = await feedService.query()
+    return feeds
+        .filter(feed => feed.by._id === userId)
+        .map(feed => ({ _id: feed._id, imgUrls: feed.imgUrls }))
 }
 
 async function login(userCred) {

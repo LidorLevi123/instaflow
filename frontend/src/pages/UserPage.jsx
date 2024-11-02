@@ -2,14 +2,21 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router"
 import { userService } from "../services/user"
 import { SvgIcon } from "../cmps/SvgIcon"
+import { UserFeedList } from "../cmps/UserFeedList"
+import { useEffectUpdate } from "../customHooks/useEffectUpdate"
 
 export function UserPage() {
     const [user, setUser] = useState(null)
+    const [userFeeds, setUserFeeds] = useState(null)
     const params = useParams()
 
     useEffect(() => {
         loadUser()
     }, [])
+
+    useEffectUpdate(() => {
+        loadUserFeeds()
+    }, [user])
 
     async function loadUser() {
         const { userId } = params
@@ -17,15 +24,18 @@ export function UserPage() {
         setUser(user)
     }
 
-    if (!user) return
+    async function loadUserFeeds() {
+        if(!user) return
+        const feeds = await userService.getUserFeeds(user._id)
+        setUserFeeds(feeds)
+    }
 
-    console.log(user)
-
+    if (!user || !userFeeds) return
 
     return (
         <section className="user-page">
             <header>
-                <img className="user-img" src="https://res.cloudinary.com/dvpkhwyxp/image/upload/v1729242206/instaflow/tzq3es09mdch78lufntr.png" alt="" />
+                <img className="user-img" src={user.imgUrl} alt="" />
                 <div className="actions">
                     <h3 className="user-name">{user.username}</h3>
                     <button className="bold">Edit profile</button>
@@ -57,6 +67,8 @@ export function UserPage() {
                     <span>Tagged</span>
                 </p>
             </div>
+
+            <UserFeedList feeds={userFeeds}/>
         </section>
     )
 }

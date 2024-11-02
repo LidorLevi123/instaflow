@@ -1,7 +1,6 @@
 .user-page {
     display: grid;
     align-content: start;
-    row-gap: rem(218px);
     grid-template-columns: 
         minmax(5px, 1fr)
         minmax(auto, 935px)
@@ -18,6 +17,7 @@
         column-gap: em(30px);
         grid-template-columns: auto 1fr;
         grid-template-rows: repeat(3, auto);
+        margin-block-end: rem(218px);
 
         > *:not(.user-img) {
             grid-column: 2;
