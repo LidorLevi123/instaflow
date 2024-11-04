@@ -4,11 +4,52 @@
     gap: 4px;
 
     > li {
+        position: relative;
         height: 308px;
+        background-color: black;
         cursor: pointer;
+
+        .info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+
+            display: none;
+            align-items: center;
+            gap: 5px;
+
+            img {
+                width: 20px;
+                filter: invert(1);
+
+                &:last-of-type {
+                    width: 18px;
+                }
+            }
+
+            span {
+                font-weight: bold;
+                color: white;
+
+                &:nth-child(2) {
+                    margin-inline-end: 25px;
+                }
+            }
+        }
+
+        &:hover {
+            img {
+                opacity: 0.7;
+            }
+
+            .info {
+                display: flex;
+            }
+        }
     }
     
-    img {
+    .feed-img {
         height: 100%;
         object-fit: cover;
         object-position: center;

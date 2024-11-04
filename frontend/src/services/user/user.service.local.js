@@ -50,7 +50,6 @@ async function getUserFeeds(userId) {
     const feeds = await feedService.query()
     return feeds
         .filter(feed => feed.by._id === userId)
-        .map(feed => ({ _id: feed._id, imgUrls: feed.imgUrls }))
 }
 
 async function login(userCred) {
