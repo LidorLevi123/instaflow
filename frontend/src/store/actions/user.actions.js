@@ -28,6 +28,7 @@ export async function logout() {
     try {
         await userService.logout()
         store.dispatch({ type: 'SET_LOGGEDIN_USER', user: null})
+        store.dispatch({ type: 'SET_FEEDS', feeds: null})
     } catch (err) {
         console.log('userActions: Error in logout', err)
         throw err

@@ -1,7 +1,27 @@
 import { NavLink } from 'react-router-dom'
 import { SvgIcon } from './SvgIcon'
+import { useEffect, useRef } from 'react'
 
-export function NavBar({ onOpenCreateModal, user }) {
+export function NavBar({ onOpenCreateModal, user, onLogout }) {
+
+    const elToolTipRef = useRef()
+
+    useEffect(() => {
+        const elFeedIndex = document.querySelector('.feed-index')
+        elFeedIndex.addEventListener('click', onCloseToolTip)
+        return () => elFeedIndex.removeEventListener('click', onCloseToolTip)
+    }, [])
+
+    function onOpenToolTip(ev) {
+        ev.stopPropagation()
+        elToolTipRef.current.classList.toggle('active')
+    }
+
+    function onCloseToolTip() {
+        if (!elToolTipRef.current.classList.contains('active')) return
+        elToolTipRef.current.classList.remove('active')
+    }
+
     return (
         <nav className="nav-bar">
             <ul className="nav-list">
@@ -60,10 +80,15 @@ export function NavBar({ onOpenCreateModal, user }) {
                     </NavLink>
                 </li>
 
-                <li>
+                <li className="more-options" onClick={onOpenToolTip}>
                     <SvgIcon iconName="more" />More
                 </li>
             </ul>
+
+            <div className="tool-tip" ref={elToolTipRef}>
+                <p onClick={onLogout}>Log out</p>
+            </div>
+
         </nav>
     )
 }

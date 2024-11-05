@@ -1,10 +1,11 @@
-import { Outlet } from 'react-router'
+import { Navigate, Outlet, useNavigate } from 'react-router'
 import { NavBar } from '../cmps/NavBar'
 import { useSearchParams } from 'react-router-dom'
 import { FeedDetails } from '../cmps/FeedDetails'
 import { FeedEdit } from '../cmps/FeedEdit'
 import { useSelector } from 'react-redux'
 import { addComment, saveFeed } from '../store/actions/feed.actions'
+import { logout } from '../store/actions/user.actions'
 
 export function FeedIndex() {
     const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
@@ -12,6 +13,8 @@ export function FeedIndex() {
     const [searchParams, setSearchParams] = useSearchParams()
     const feedId = searchParams.get('feedId')
     const isCreate = searchParams.get('create')
+
+    const navigate = useNavigate()
 
     function onOpenCreateModal() {
         searchParams.set('create', true)
@@ -51,6 +54,15 @@ export function FeedIndex() {
         }
     }
 
+    async function onLogout() {
+		try {
+			await logout()
+			navigate('login')
+		} catch (err) {
+			showErrorMsg('Cannot logout')
+		}
+	}
+
     const detailsProps = {
         onToggleLike,
         onAddComment,
@@ -64,9 +76,11 @@ export function FeedIndex() {
         loggedinUser
     }
 
+    if(!loggedinUser) return <Navigate to="login"></Navigate>
+
     return (
         <section className="feed-index main-layout">
-            <NavBar onOpenCreateModal={onOpenCreateModal} user={loggedinUser} />
+            <NavBar onOpenCreateModal={onOpenCreateModal} user={loggedinUser} onLogout={onLogout} />
             <Outlet context={outletContext} />
             {feedId && <FeedDetails {...detailsProps} />}
             {isCreate && <FeedEdit onClose={onCloseCreateModal} user={loggedinUser} />}
