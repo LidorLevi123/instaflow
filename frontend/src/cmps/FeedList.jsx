@@ -1,11 +1,12 @@
 import { FeedPreview } from './FeedPreview'
 
-export function FeedList({ feeds, onToggleLike, loggedinUser, onAddComment }) {
+export function FeedList({ feeds, onToggleLike, loggedinUser, onAddComment, onRemoveFeed }) {
 
     const previewProps = {
         loggedinUser,
         onToggleLike,
-        onAddComment
+        onAddComment,
+        onRemoveFeed
     }
 
     return (

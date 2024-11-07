@@ -82,6 +82,7 @@ export function FeedIndex() {
     const outletContext = {
         onToggleLike,
         onAddComment,
+        onRemoveFeed,
         loggedinUser
     }
 

@@ -5,7 +5,7 @@ import { SvgIcon } from "./SvgIcon"
 import { AddComment } from "./AddComment"
 import { OptionsModal } from "./OptionsModal"
 
-export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment }) {
+export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, onRemoveFeed }) {
     const [isOptionsModalShown, setIsOptionsModalShown] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
     const likeCount = feed.likedBy.length.toLocaleString('en-US')
@@ -38,6 +38,15 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment }) 
             await onAddComment(feed._id, comment)
         } catch (err) {
             console.log('Could not add comment', err)
+        }
+    }
+
+    async function removeFeed() {
+        try {
+            await onRemoveFeed(feed._id)
+            setIsOptionsModalShown(false)
+        } catch (err) {
+            console.log('Could not remove feed', err)
         }
     }
 
@@ -88,8 +97,8 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment }) 
                     {
                             feed.by._id === loggedinUser._id ?
                                 <>
-                                    <li className="danger">Delete</li>
-                                    <li className="danger">Edit</li>
+                                    <li className="danger" onClick={removeFeed}>Delete</li>
+                                    <li>Edit</li>
                                     <li>Hide like count to others</li>
                                     <li>Turn off commenting</li>
                                 </> :

@@ -7,7 +7,7 @@ import { Loader } from '../cmps/Loader'
 
 export function HomePage() {
     const feeds = useSelector(storeState => storeState.feedModule.feeds)
-    const { onToggleLike, onAddComment, loggedinUser } = useOutletContext()
+    const { onToggleLike, onAddComment, onRemoveFeed, loggedinUser } = useOutletContext()
 
     useEffect(() => {
         loadFeeds()
@@ -20,6 +20,7 @@ export function HomePage() {
         loggedinUser,
         onToggleLike,
         onAddComment,
+        onRemoveFeed
     }
 
     return (

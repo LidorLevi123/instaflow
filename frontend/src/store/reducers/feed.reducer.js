@@ -28,7 +28,7 @@ export function feedReducer(state = initialState, action) {
         case REMOVE_FEED:
             return {
                 ...state,
-                feeds: state.feeds.filter(feed => feed._id !== action.feed._id)
+                feeds: state.feeds.filter(feed => feed._id !== action.feedId)
             }
         default:
             return state;
