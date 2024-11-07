@@ -13,8 +13,6 @@ export function HomePage() {
         loadFeeds()
     }, [])
 
-    console.log('feeds:', feeds)
-
     if (!feeds || !feeds.length) return <Loader />
 
     const listProps = {

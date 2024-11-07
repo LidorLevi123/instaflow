@@ -1,5 +1,5 @@
 import { store } from '../store'
-import { ADD_FEED, SET_FEEDS, UPDATE_FEED } from '../reducers/feed.reducer'
+import { ADD_FEED, REMOVE_FEED, SET_FEEDS, UPDATE_FEED } from '../reducers/feed.reducer'
 import { feedService } from '../../services/feed'
 import { commentService } from '../../services/comment'
 
@@ -24,6 +24,20 @@ export async function saveFeed(feed) {
         return savedFeed
     } catch (err) {
         console.log('Cannot load feeds', err)
+        throw err
+    }
+}
+
+export async function removeFeed(feedId) {
+    try {
+        await feedService.remove(feedId)
+        const action = {
+            type: REMOVE_FEED,
+            feedId
+        }
+        store.dispatch(action)
+    } catch (err) {
+        console.log('Cannot remove feed', err)
         throw err
     }
 }

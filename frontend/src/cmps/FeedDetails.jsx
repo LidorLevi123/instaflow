@@ -11,7 +11,7 @@ import { CommentList } from './CommentList'
 import { Backdrop } from './Backdrop'
 import { OptionsModal } from './OptionsModal'
 
-export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }) {
+export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, onRemoveFeed }) {
     const [feed, setFeed] = useState(null)
     const [isOptionsModalShown, setIsOptionsModalShown] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
@@ -52,6 +52,15 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
             }))
         } catch (err) {
             console.log('Could not remove comment', err)
+        }
+    }
+
+    async function removeFeed() {
+        try {
+            await onRemoveFeed(feed._id)
+            onCloseDetails()
+        } catch (err) {
+            console.log('Could not remove feed', err)
         }
     }
 
@@ -165,9 +174,20 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment }
             {isOptionsModalShown &&
                 <OptionsModal onClose={onHideOptionsModal}>
                     <ul>
-                        <li className="danger">Report</li>
-                        <li className="danger">Unfollow</li>
-                        <li>Add to favorites</li>
+                        {
+                            feed.by._id === loggedinUser._id ?
+                                <>
+                                    <li className="danger" onClick={removeFeed}>Delete</li>
+                                    <li>Edit</li>
+                                    <li>Hide like count to others</li>
+                                    <li>Turn off commenting</li>
+                                </> :
+                                <>
+                                    <li className="danger">Report</li>
+                                    <li className="danger">Unfollow</li>
+                                    <li>Add to favorites</li>
+                                </>
+                        }
                         <li>Go to post</li>
                         <li>Share to...</li>
                         <li>Copy link</li>

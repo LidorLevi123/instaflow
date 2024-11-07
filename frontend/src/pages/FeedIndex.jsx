@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { FeedDetails } from '../cmps/FeedDetails'
 import { FeedEdit } from '../cmps/FeedEdit'
 import { useSelector } from 'react-redux'
-import { addComment, saveFeed } from '../store/actions/feed.actions'
+import { addComment, removeFeed, saveFeed } from '../store/actions/feed.actions'
 import { logout } from '../store/actions/user.actions'
 
 export function FeedIndex() {
@@ -59,13 +59,22 @@ export function FeedIndex() {
 			await logout()
 			navigate('login')
 		} catch (err) {
-			showErrorMsg('Cannot logout')
+			console.log('Cannot logout')
 		}
 	}
+
+    async function onRemoveFeed(feedId) {
+        try {
+            await removeFeed(feedId)
+        } catch (err) {
+            console.log('Cannot remove feed')
+        }
+    }
 
     const detailsProps = {
         onToggleLike,
         onAddComment,
+        onRemoveFeed,
         loggedinUser,
         feedId
     }

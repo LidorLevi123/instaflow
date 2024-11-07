@@ -85,9 +85,20 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment }) 
             {isOptionsModalShown &&
                 <OptionsModal onClose={onHideOptionsModal}>
                     <ul>
-                        <li className="danger">Report</li>
-                        <li className="danger">Unfollow</li>
-                        <li>Add to favorites</li>
+                    {
+                            feed.by._id === loggedinUser._id ?
+                                <>
+                                    <li className="danger">Delete</li>
+                                    <li className="danger">Edit</li>
+                                    <li>Hide like count to others</li>
+                                    <li>Turn off commenting</li>
+                                </> :
+                                <>
+                                    <li className="danger">Report</li>
+                                    <li className="danger">Unfollow</li>
+                                    <li>Add to favorites</li>
+                                </>
+                        }
                         <li>Go to post</li>
                         <li>Share to...</li>
                         <li>Copy link</li>
