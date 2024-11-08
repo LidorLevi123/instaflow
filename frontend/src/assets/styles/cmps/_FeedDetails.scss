@@ -96,5 +96,15 @@
             align-self: center;
             margin: em(10px) 0;
         }
+
+        .emoji-picker {
+            position: absolute;
+            bottom: 3rem;
+    
+            .backdrop {
+                opacity: 0;
+                cursor: default;
+            }
+        }
     }
 }
