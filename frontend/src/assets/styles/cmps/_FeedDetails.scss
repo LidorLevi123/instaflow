@@ -2,13 +2,13 @@
     @include modal;
 
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 2fr 1fr;
     grid-template-rows: auto 1fr auto;
     grid-template-areas:
         'img uploader'
         'img info'
         'img bottom-bar';
-    width: 62.85%;
+    width: clamp(60%, 65%, 80%);
     height: 95vh;
     background-color: white;
     border-radius: 5px;
