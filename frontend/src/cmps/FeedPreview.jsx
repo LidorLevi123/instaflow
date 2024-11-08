@@ -17,12 +17,12 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
         setSearchParams(searchParams)
     }
 
-    function onLike() {
-        onToggleLike(feed, elBtnLikeRef.current)
-    }
-
     function isLiked() {
         return feed.likedBy.some(user => user.username === loggedinUser.username)
+    }
+
+    function onLike() {
+        onToggleLike(feed, elBtnLikeRef.current)
     }
 
     function onShowOptionsModal() {
@@ -65,7 +65,7 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
                             <span className="follow">Follow</span>
                         </>
                     }
-                    <SvgIcon iconName="options" className="btn options-icon" onClick={onShowOptionsModal}/>
+                    <SvgIcon iconName="options" className="btn options-icon" onClick={onShowOptionsModal} />
                 </section>
 
                 <img className="feed-img" src={feed.imgUrls[0]} alt="" />
@@ -94,7 +94,7 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
             {isOptionsModalShown &&
                 <OptionsModal onClose={onHideOptionsModal}>
                     <ul>
-                    {
+                        {
                             feed.by._id === loggedinUser._id ?
                                 <>
                                     <li className="danger" onClick={removeFeed}>Delete</li>

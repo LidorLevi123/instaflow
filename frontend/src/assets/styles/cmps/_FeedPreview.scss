@@ -1,4 +1,5 @@
 .feed-preview {
+    position: relative;
     display: grid;
     row-gap: 12px;
     font-size: rem(14px);
@@ -36,6 +37,17 @@
         .view-comments {
             color: $gray3;
             cursor: pointer;
+        }
+    }
+
+    .emoji-picker {
+        position: absolute;
+        right: -21rem;
+        bottom: 3rem;
+
+        .backdrop {
+            opacity: 0;
+            cursor: default;
         }
     }
 }
