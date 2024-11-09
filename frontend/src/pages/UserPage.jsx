@@ -43,9 +43,9 @@ export function UserPage() {
                     <SvgIcon iconName="settings" />
                 </div>
                 <div className="summary">
-                    <p><span className="bold">25</span>posts</p>
-                    <p><span className="bold">150</span>followers</p>
-                    <p><span className="bold">282</span>following</p>
+                    <p><span className="bold">{userFeeds.length}</span>posts</p>
+                    <p><span className="bold">{user.followers?.length || 0}</span>followers</p>
+                    <p><span className="bold">{user.following?.length || 0}</span>following</p>
                 </div>
                 <div className="info">
                     <p className="fullname bold">{user.fullname}</p>
