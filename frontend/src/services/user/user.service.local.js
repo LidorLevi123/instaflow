@@ -34,9 +34,8 @@ async function remove(userId) {
     return await storageService.remove('user', userId)
 }
 
-async function update({ _id, postedFeedsId }) {
+async function update({ _id}) {
     const user = await storageService.get('user', _id)
-    user.postedFeedsId = [...postedFeedsId]
     await storageService.put('user', user)
 
     // When admin updates other user's details, do not update loggedinUser
@@ -60,7 +59,7 @@ async function login(userCred) {
 }
 
 async function signup(userCred) {
-    if (!userCred.imgUrl) userCred.imgUrl = 'https://res.cloudinary.com/dvpkhwyxp/image/upload/v1729242206/instaflow/tzq3es09mdch78lufntr.png'
+    if (!userCred.imgUrl) userCred.imgUrl = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
     const users = await storageService.query('user')
     const user = users.find(user => user.username === userCred.username || user.email === userCred.email)
 
@@ -83,7 +82,6 @@ function saveLoggedinUser(user) {
         fullname: user.fullname,
         username: user.username,
         imgUrl: user.imgUrl,
-        postedFeedsId: user.postedFeedsId
     }
     sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
     console.log(user)

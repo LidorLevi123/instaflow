@@ -39,8 +39,6 @@ async function save(feed) {
 
         const savedFeed = await storageService.post(STORAGE_KEY, feed)
 
-        if(!loggedinUser.postedFeedsId) loggedinUser.postedFeedsId = []
-        loggedinUser.postedFeedsId.push(savedFeed._id)
         await userService.update(loggedinUser)
         return savedFeed
     }
