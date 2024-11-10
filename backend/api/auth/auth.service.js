@@ -45,8 +45,7 @@ function getLoginToken(user) {
 	const userInfo = {
 		_id: user._id,
 		fullname: user.fullname,
-		score: user.score,
-		isAdmin: user.isAdmin,
+		username: user.username,
 	}
 	return cryptr.encrypt(JSON.stringify(userInfo))
 }
