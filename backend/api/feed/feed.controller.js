@@ -1,20 +1,13 @@
 import { logger } from '../../services/logger.service.js'
-import { carService } from './car.service.js'
+import { feedService } from './feed.service.js'
 
-export async function getCars(req, res) {
+export async function getFeeds(req, res) {
 	try {
-		const filterBy = {
-			txt: req.query.txt || '',
-			minSpeed: +req.query.minSpeed || 0,
-            sortField: req.query.sortField || '',
-            sortDir: req.query.sortDir || 1,
-			pageIdx: req.query.pageIdx,
-		}
-		const cars = await carService.query(filterBy)
-		res.json(cars)
+		const feeds = await feedService.query()
+		res.json(feeds)
 	} catch (err) {
-		logger.error('Failed to get cars', err)
-		res.status(400).send({ err: 'Failed to get cars' })
+		logger.error('Failed to get feeds', err)
+		res.status(400).send({ err: 'Failed to get feeds' })
 	}
 }
 

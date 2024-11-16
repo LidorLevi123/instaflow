@@ -7,7 +7,7 @@ import { asyncLocalStorage } from '../../services/als.service.js'
 
 const PAGE_SIZE = 3
 
-export const carService = {
+export const feedService = {
 	remove,
 	query,
 	getById,
@@ -17,22 +17,22 @@ export const carService = {
 	removeCarMsg,
 }
 
-async function query(filterBy = { txt: '' }) {
+async function query() {
 	try {
-        const criteria = _buildCriteria(filterBy)
-        const sort = _buildSort(filterBy)
+        // const criteria = _buildCriteria(filterBy)
+        // const sort = _buildSort(filterBy)
 
-		const collection = await dbService.getCollection('car')
-		var carCursor = await collection.find(criteria, { sort })
+		const collection = await dbService.getCollection('feed')
+		var feedCursor = await collection.find()
 
-		if (filterBy.pageIdx !== undefined) {
-			carCursor.skip(filterBy.pageIdx * PAGE_SIZE).limit(PAGE_SIZE)
-		}
+		// if (filterBy.pageIdx !== undefined) {
+		// 	feedCursor.skip(filterBy.pageIdx * PAGE_SIZE).limit(PAGE_SIZE)
+		// }
 
-		const cars = carCursor.toArray()
-		return cars
+		const feeds = feedCursor.toArray()
+		return feeds
 	} catch (err) {
-		logger.error('cannot find cars', err)
+		logger.error('cannot find feeds', err)
 		throw err
 	}
 }
