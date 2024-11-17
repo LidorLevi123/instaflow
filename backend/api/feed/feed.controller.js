@@ -11,14 +11,14 @@ export async function getFeeds(req, res) {
 	}
 }
 
-export async function getCarById(req, res) {
+export async function getFeedById(req, res) {
 	try {
-		const carId = req.params.id
-		const car = await carService.getById(carId)
-		res.json(car)
+		const { id } = req.params
+		const feed = await feedService.getById(id)
+		res.json(feed)
 	} catch (err) {
-		logger.error('Failed to get car', err)
-		res.status(400).send({ err: 'Failed to get car' })
+		logger.error('Failed to get feed', err)
+		res.status(400).send({ err: 'Failed to get feed' })
 	}
 }
 

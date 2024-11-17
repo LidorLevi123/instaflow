@@ -23,7 +23,7 @@ async function query() {
         // const sort = _buildSort(filterBy)
 
 		const collection = await dbService.getCollection('feed')
-		var feedCursor = await collection.find()
+		const feedCursor = await collection.find()
 
 		// if (filterBy.pageIdx !== undefined) {
 		// 	feedCursor.skip(filterBy.pageIdx * PAGE_SIZE).limit(PAGE_SIZE)
@@ -37,17 +37,16 @@ async function query() {
 	}
 }
 
-async function getById(carId) {
+async function getById(feedId) {
 	try {
-        const criteria = { _id: ObjectId.createFromHexString(carId) }
-
-		const collection = await dbService.getCollection('car')
-		const car = await collection.findOne(criteria)
+        const criteria = { _id: ObjectId.createFromHexString(feedId) }
+		const collection = await dbService.getCollection('feed')
+		const feed = await collection.findOne(criteria)
         
-		car.createdAt = car._id.getTimestamp()
-		return car
+		feed.createdAt = feed._id.getTimestamp()
+		return feed
 	} catch (err) {
-		logger.error(`while finding car ${carId}`, err)
+		logger.error(`while finding car ${feedId}`, err)
 		throw err
 	}
 }
