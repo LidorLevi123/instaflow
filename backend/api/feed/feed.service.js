@@ -51,23 +51,23 @@ async function getById(feedId) {
 	}
 }
 
-async function remove(carId) {
-    const { loggedinUser } = asyncLocalStorage.getStore()
-    const { _id: ownerId, isAdmin } = loggedinUser
+async function remove(feedId) {
+    // const { loggedinUser } = asyncLocalStorage.getStore()
+    // const { _id: ownerId, isAdmin } = loggedinUser
 
 	try {
         const criteria = { 
-            _id: ObjectId.createFromHexString(carId), 
+            _id: ObjectId.createFromHexString(feedId), 
         }
-        if(!isAdmin) criteria['owner._id'] = ownerId
+        // if(!isAdmin) criteria['owner._id'] = ownerId
         
-		const collection = await dbService.getCollection('car')
+		const collection = await dbService.getCollection('feed')
 		const res = await collection.deleteOne(criteria)
 
-        if(res.deletedCount === 0) throw('Not your car')
-		return carId
+        if(res.deletedCount === 0) throw('Not your feed')
+		return feedId
 	} catch (err) {
-		logger.error(`cannot remove car ${carId}`, err)
+		logger.error(`cannot remove feed ${feedId}`, err)
 		throw err
 	}
 }

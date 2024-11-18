@@ -37,12 +37,12 @@ export async function addCar(req, res) {
 
 export async function updateCar(req, res) {
 	const { loggedinUser, body: car } = req
-    const { _id: userId, isAdmin } = loggedinUser
+	const { _id: userId, isAdmin } = loggedinUser
 
-    if(!isAdmin && car.owner._id !== userId) {
-        res.status(403).send('Not your car...')
-        return
-    }
+	if (!isAdmin && car.owner._id !== userId) {
+		res.status(403).send('Not your car...')
+		return
+	}
 
 	try {
 		const updatedCar = await carService.update(car)
@@ -53,15 +53,15 @@ export async function updateCar(req, res) {
 	}
 }
 
-export async function removeCar(req, res) {
+export async function removeFeed(req, res) {
 	try {
-		const carId = req.params.id
-		const removedId = await carService.remove(carId)
+		const { id } = req.params
+		const removedId = await feedService.remove(id)
 
 		res.send(removedId)
 	} catch (err) {
-		logger.error('Failed to remove car', err)
-		res.status(400).send({ err: 'Failed to remove car' })
+		logger.error('Failed to remove feed', err)
+		res.status(400).send({ err: 'Failed to remove feed' })
 	}
 }
 
