@@ -84,18 +84,22 @@ async function add(feed) {
 	}
 }
 
-async function update(car) {
-    const carToSave = { vendor: car.vendor, speed: car.speed }
-
+async function update(feed) {
+	const feedToSave = {
+        txt: feed.txt,
+        // imgUrls: feed.imgUrls,
+        // comments: feed.comments,
+        // likedBy: feed.likedBy
+    }
     try {
-        const criteria = { _id: ObjectId.createFromHexString(car._id) }
+        const criteria = { _id: ObjectId.createFromHexString(feed._id) }
 
-		const collection = await dbService.getCollection('car')
-		await collection.updateOne(criteria, { $set: carToSave })
+		const collection = await dbService.getCollection('feed')
+		await collection.updateOne(criteria, { $set: feedToSave })
 
-		return car
+		return feed
 	} catch (err) {
-		logger.error(`cannot update car ${car._id}`, err)
+		logger.error(`cannot update feed ${feed._id}`, err)
 		throw err
 	}
 }

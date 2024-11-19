@@ -42,21 +42,29 @@ export async function addFeed(req, res) {
 	}
 }
 
-export async function updateCar(req, res) {
-	const { loggedinUser, body: car } = req
-	const { _id: userId, isAdmin } = loggedinUser
+export async function updateFeed(req, res) {
+	const { loggedinUser } = req
+	const { _id: userId } = loggedinUser
 
-	if (!isAdmin && car.owner._id !== userId) {
-		res.status(403).send('Not your car...')
-		return
-	}
+	const feed = {
+		_id: req.body._id || '',
+        txt: req.body.txt || '',
+        imgUrls: req.body.imgUrls || [],
+        comments: req.body.comments || [],
+        likedBy: req.body.likedBy || [],
+    }
+
+	// if (feed.by._id !== userId) {
+	// 	res.status(403).send('Not your feed...')
+	// 	return
+	// }
 
 	try {
-		const updatedCar = await carService.update(car)
-		res.json(updatedCar)
+		const updatedFeed = await feedService.update(feed)
+		res.json(updatedFeed)
 	} catch (err) {
-		logger.error('Failed to update car', err)
-		res.status(400).send({ err: 'Failed to update car' })
+		logger.error('Failed to update feed', err)
+		res.status(400).send({ err: 'Failed to update feed' })
 	}
 }
 
