@@ -72,14 +72,14 @@ async function remove(feedId) {
 	}
 }
 
-async function add(car) {
+async function add(feed) {
 	try {
-		const collection = await dbService.getCollection('car')
-		await collection.insertOne(car)
+		const collection = await dbService.getCollection('feed')
+		await collection.insertOne(feed)
 
-		return car
+		return feed
 	} catch (err) {
-		logger.error('cannot insert car', err)
+		logger.error('cannot insert feed', err)
 		throw err
 	}
 }

@@ -22,16 +22,23 @@ export async function getFeedById(req, res) {
 	}
 }
 
-export async function addCar(req, res) {
-	const { loggedinUser, body: car } = req
+export async function addFeed(req, res) {
+	const { loggedinUser } = req
+
+	const feed = {
+        txt: req.body.txt || '',
+        imgUrls: req.body.imgUrls || [],
+        comments: req.body.comments || [],
+        likedBy: req.body.likedBy || [],
+    }
 
 	try {
-		car.owner = loggedinUser
-		const addedCar = await carService.add(car)
-		res.json(addedCar)
+		feed.by = loggedinUser
+		const addedFeed = await feedService.add(feed)
+		res.json(addedFeed)
 	} catch (err) {
-		logger.error('Failed to add car', err)
-		res.status(400).send({ err: 'Failed to add car' })
+		logger.error('Failed to add feed', err)
+		res.status(400).send({ err: 'Failed to add feed' })
 	}
 }
 

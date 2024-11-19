@@ -7,7 +7,12 @@ export function requireAuth(req, res, next) {
 	req.loggedinUser = loggedinUser
 
 	if (config.isGuestMode && !loggedinUser) {
-		req.loggedinUser = { _id: '', fullname: 'Guest' }
+		req.loggedinUser = { 
+			_id: '', 
+			fullname: 'Guest', 
+			username: 'guest', 
+			imgUrl: 'https://res.cloudinary.com/dvpkhwyxp/image/upload/v1732046321/zu526d2bg6bg5fpnvrgm.png' 
+		}
 		return next()
 	}
 	if (!loggedinUser) return res.status(401).send('Not Authenticated')
