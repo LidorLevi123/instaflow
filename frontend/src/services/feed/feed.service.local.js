@@ -9,7 +9,6 @@ export const feedService = {
     getById,
     save,
     remove,
-    getEmptyFeed,
 }
 
 _createFeeds()
@@ -41,16 +40,6 @@ async function save(feed) {
 
         await userService.update(loggedinUser)
         return savedFeed
-    }
-}
-
-function getEmptyFeed() {
-    return {
-        txt: '',
-        imgUrls: [],
-        comments: [],
-        likedBy: [],
-        tags: []
     }
 }
 

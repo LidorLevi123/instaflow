@@ -19,17 +19,17 @@ export const feedService = {
 
 async function query() {
 	try {
-        // const criteria = _buildCriteria(filterBy)
-        // const sort = _buildSort(filterBy)
+		const criteria = _buildCriteria()
+		const sort = _buildSort()
 
 		const collection = await dbService.getCollection('feed')
-		const feedCursor = await collection.find()
+		const feedCursor = await collection.find(criteria, { sort })
 
 		// if (filterBy.pageIdx !== undefined) {
 		// 	feedCursor.skip(filterBy.pageIdx * PAGE_SIZE).limit(PAGE_SIZE)
 		// }
 
-		const feeds = feedCursor.toArray()
+		const feeds = await feedCursor.toArray()
 		return feeds
 	} catch (err) {
 		logger.error('cannot find feeds', err)
@@ -39,11 +39,10 @@ async function query() {
 
 async function getById(feedId) {
 	try {
-        const criteria = { _id: ObjectId.createFromHexString(feedId) }
+		const criteria = { _id: ObjectId.createFromHexString(feedId) }
 		const collection = await dbService.getCollection('feed')
 		const feed = await collection.findOne(criteria)
-        
-		feed.createdAt = feed._id.getTimestamp()
+
 		return feed
 	} catch (err) {
 		logger.error(`while finding car ${feedId}`, err)
@@ -52,19 +51,19 @@ async function getById(feedId) {
 }
 
 async function remove(feedId) {
-    // const { loggedinUser } = asyncLocalStorage.getStore()
-    // const { _id: ownerId, isAdmin } = loggedinUser
+	// const { loggedinUser } = asyncLocalStorage.getStore()
+	// const { _id: ownerId, isAdmin } = loggedinUser
 
 	try {
-        const criteria = { 
-            _id: ObjectId.createFromHexString(feedId), 
-        }
-        // if(!isAdmin) criteria['owner._id'] = ownerId
-        
+		const criteria = {
+			_id: ObjectId.createFromHexString(feedId),
+		}
+		// if(!isAdmin) criteria['owner._id'] = ownerId
+
 		const collection = await dbService.getCollection('feed')
 		const res = await collection.deleteOne(criteria)
 
-        if(res.deletedCount === 0) throw('Not your feed')
+		if (res.deletedCount === 0) throw ('Not your feed')
 		return feedId
 	} catch (err) {
 		logger.error(`cannot remove feed ${feedId}`, err)
@@ -86,13 +85,13 @@ async function add(feed) {
 
 async function update(feed) {
 	const feedToSave = {
-        txt: feed.txt,
-        // imgUrls: feed.imgUrls,
-        // comments: feed.comments,
-        // likedBy: feed.likedBy
-    }
-    try {
-        const criteria = { _id: ObjectId.createFromHexString(feed._id) }
+		txt: feed.txt,
+		// imgUrls: feed.imgUrls,
+		// comments: feed.comments,
+		// likedBy: feed.likedBy
+	}
+	try {
+		const criteria = { _id: ObjectId.createFromHexString(feed._id) }
 
 		const collection = await dbService.getCollection('feed')
 		await collection.updateOne(criteria, { $set: feedToSave })
@@ -106,9 +105,9 @@ async function update(feed) {
 
 async function addCarMsg(carId, msg) {
 	try {
-        const criteria = { _id: ObjectId.createFromHexString(carId) }
-        msg.id = makeId()
-        
+		const criteria = { _id: ObjectId.createFromHexString(carId) }
+		msg.id = makeId()
+
 		const collection = await dbService.getCollection('car')
 		await collection.updateOne(criteria, { $push: { msgs: msg } })
 
@@ -121,11 +120,11 @@ async function addCarMsg(carId, msg) {
 
 async function removeCarMsg(carId, msgId) {
 	try {
-        const criteria = { _id: ObjectId.createFromHexString(carId) }
+		const criteria = { _id: ObjectId.createFromHexString(carId) }
 
 		const collection = await dbService.getCollection('car')
-		await collection.updateOne(criteria, { $pull: { msgs: { id: msgId }}})
-        
+		await collection.updateOne(criteria, { $pull: { msgs: { id: msgId } } })
+
 		return msgId
 	} catch (err) {
 		logger.error(`cannot add car msg ${carId}`, err)
@@ -134,15 +133,14 @@ async function removeCarMsg(carId, msgId) {
 }
 
 function _buildCriteria(filterBy) {
-    const criteria = {
-        vendor: { $regex: filterBy.txt, $options: 'i' },
-        speed: { $gte: filterBy.minSpeed },
-    }
+	// const criteria = {
+	// 	vendor: { $regex: filterBy.txt, $options: 'i' },
+	// 	speed: { $gte: filterBy.minSpeed },
+	// }
 
-    return criteria
+	return {}
 }
 
-function _buildSort(filterBy) {
-    if(!filterBy.sortField) return {}
-    return { [filterBy.sortField]: filterBy.sortDir }
+function _buildSort() {
+	return { _id: -1 }
 }

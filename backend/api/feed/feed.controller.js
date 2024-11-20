@@ -34,6 +34,7 @@ export async function addFeed(req, res) {
 
 	try {
 		feed.by = loggedinUser
+		feed.createdAt = Date.now()
 		const addedFeed = await feedService.add(feed)
 		res.json(addedFeed)
 	} catch (err) {
@@ -46,13 +47,7 @@ export async function updateFeed(req, res) {
 	const { loggedinUser } = req
 	const { _id: userId } = loggedinUser
 
-	const feed = {
-		_id: req.body._id || '',
-        txt: req.body.txt || '',
-        imgUrls: req.body.imgUrls || [],
-        comments: req.body.comments || [],
-        likedBy: req.body.likedBy || [],
-    }
+	const feed = req.body
 
 	// if (feed.by._id !== userId) {
 	// 	res.status(403).send('Not your feed...')

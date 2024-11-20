@@ -1,16 +1,16 @@
 const { VITE_LOCAL } = import.meta.env
 
-import { getRandomIntInclusive, makeId } from '../util.service'
-
 import { feedService as local } from './feed.service.local'
 import { feedService as remote } from './feed.service.remote'
 
 function getEmptyFeed() {
-	return {
-		vendor: makeId(),
-		speed: getRandomIntInclusive(80, 240),
-		msgs: [],
-	}
+    return {
+        txt: '',
+        imgUrls: [],
+        comments: [],
+        likedBy: [],
+        tags: []
+    }
 }
 
 function getDefaultFilter() {
