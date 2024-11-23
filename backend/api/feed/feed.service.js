@@ -17,9 +17,9 @@ export const feedService = {
 	removeCarMsg,
 }
 
-async function query() {
+async function query(criteria = {}) {
 	try {
-		const criteria = _buildCriteria()
+		// const criteria = _buildCriteria(filterBy)
 		const sort = _buildSort()
 
 		const collection = await dbService.getCollection('feed')

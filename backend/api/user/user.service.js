@@ -1,5 +1,6 @@
 import { dbService } from '../../services/db.service.js'
 import { logger } from '../../services/logger.service.js'
+import { feedService } from '../feed/feed.service.js'
 import { reviewService } from '../review/review.service.js'
 import { ObjectId } from 'mongodb'
 
@@ -39,12 +40,12 @@ async function getById(userId) {
         const user = await collection.findOne(criteria)
         delete user.password
 
-        criteria = { byUserId: userId }
+        criteria = { 'by._id': userId }
+        const userFeeds = await feedService.query(criteria)
 
-        user.givenReviews = await reviewService.query(criteria)
-        user.givenReviews = user.givenReviews.map(review => {
-            delete review.byUser
-            return review
+        user.feeds = userFeeds.map(feed => {
+            delete feed.by
+            return feed
         })
 
         return user

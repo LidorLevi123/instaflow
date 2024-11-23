@@ -3,20 +3,14 @@ import { useParams } from "react-router"
 import { userService } from "../services/user"
 import { SvgIcon } from "../cmps/SvgIcon"
 import { UserFeedList } from "../cmps/UserFeedList"
-import { useEffectUpdate } from "../customHooks/useEffectUpdate"
 
 export function UserPage() {
     const [user, setUser] = useState(null)
-    const [userFeeds, setUserFeeds] = useState(null)
     const params = useParams()
 
     useEffect(() => {
         loadUser()
     }, [])
-
-    useEffectUpdate(() => {
-        loadUserFeeds()
-    }, [user])
 
     async function loadUser() {
         const { userId } = params
@@ -24,13 +18,7 @@ export function UserPage() {
         setUser(user)
     }
 
-    async function loadUserFeeds() {
-        if(!user) return
-        const feeds = await userService.getUserFeeds(user._id)
-        setUserFeeds(feeds)
-    }
-
-    if (!user || !userFeeds) return
+    if (!user) return
 
     return (
         <section className="user-page">
@@ -43,7 +31,7 @@ export function UserPage() {
                     <SvgIcon iconName="settings" />
                 </div>
                 <div className="summary">
-                    <p><span className="bold">{userFeeds.length}</span>posts</p>
+                    <p><span className="bold">{user.feeds.length}</span>posts</p>
                     <p><span className="bold">{user.followers?.length || 0}</span>followers</p>
                     <p><span className="bold">{user.following?.length || 0}</span>following</p>
                 </div>
@@ -68,7 +56,7 @@ export function UserPage() {
                 </p>
             </div>
 
-            <UserFeedList feeds={userFeeds}/>
+            <UserFeedList feeds={user.feeds}/>
         </section>
     )
 }
