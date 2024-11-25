@@ -16,8 +16,9 @@ export function FeedIndex() {
 
     const navigate = useNavigate()
 
-    function onOpenCreateModal() {
-        searchParams.set('create', true)
+    function onOpenCreateModal(feedId = '') {
+        const param = feedId ? feedId : 'new'
+        searchParams.set('create', param)
         setSearchParams(searchParams)
         document.title = 'Create new post • Instaflow'
     }
@@ -83,6 +84,7 @@ export function FeedIndex() {
         onToggleLike,
         onAddComment,
         onRemoveFeed,
+        onOpenCreateModal,
         loggedinUser
     }
 

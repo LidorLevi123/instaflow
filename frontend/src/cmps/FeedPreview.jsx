@@ -1,11 +1,11 @@
 import { useRef, useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 import { getTimeSince } from "../services/util.service"
 import { SvgIcon } from "./SvgIcon"
 import { AddComment } from "./AddComment"
 import { OptionsModal } from "./OptionsModal"
 
-export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, onRemoveFeed }) {
+export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, onRemoveFeed, onOpenCreateModal }) {
     const [isOptionsModalShown, setIsOptionsModalShown] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
     const likeCount = feed.likedBy.length.toLocaleString('en-US')
@@ -31,6 +31,11 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
 
     function onHideOptionsModal() {
         setIsOptionsModalShown(false)
+    }
+
+    function onEditFeed() {
+        onOpenCreateModal(feed._id)
+        onHideOptionsModal()
     }
 
     async function addComment(comment) {
@@ -98,7 +103,7 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
                             feed.by._id === loggedinUser._id ?
                                 <>
                                     <li className="danger" onClick={removeFeed}>Delete</li>
-                                    <li>Edit</li>
+                                    <li onClick={onEditFeed}>Edit</li>
                                     <li>Hide like count to others</li>
                                     <li>Turn off commenting</li>
                                 </> :

@@ -63,7 +63,7 @@ export function NavBar({ onOpenCreateModal, user, onLogout }) {
                     <SvgIcon iconName="heart" />Notifications
                 </li>
 
-                <li onClick={onOpenCreateModal}>
+                <li onClick={() => onOpenCreateModal()}>
                     <SvgIcon iconName="addFeed" />Create
                 </li>
 
