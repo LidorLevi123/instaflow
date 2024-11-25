@@ -10,8 +10,9 @@ import { AddComment } from './AddComment'
 import { CommentList } from './CommentList'
 import { Backdrop } from './Backdrop'
 import { OptionsModal } from './OptionsModal'
+import { eventBus } from '../services/event-bus.service'
 
-export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, onRemoveFeed }) {
+export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, onRemoveFeed, onOpenCreateModal }) {
     const [feed, setFeed] = useState(null)
     const [isOptionsModalShown, setIsOptionsModalShown] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
@@ -19,6 +20,9 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
 
     useEffect(() => {
         loadFeed()
+        
+        const unsubscribe = eventBus.on('feed-edit', feed => setFeed(feed))
+        return unsubscribe
     }, [])
 
     async function loadFeed() {
@@ -116,6 +120,11 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
         setIsOptionsModalShown(false)
     }
 
+    function onEditFeed() {
+        onOpenCreateModal(feedId)
+        onHideOptionsModal()
+    }
+
     if (!feed) return
 
     const createdAt = getTimeSince(feed.createdAt)
@@ -178,7 +187,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
                             feed.by._id === loggedinUser._id ?
                                 <>
                                     <li className="danger" onClick={removeFeed}>Delete</li>
-                                    <li>Edit</li>
+                                    <li onClick={onEditFeed}>Edit</li>
                                     <li>Hide like count to others</li>
                                     <li>Turn off commenting</li>
                                 </> :

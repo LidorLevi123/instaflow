@@ -12,6 +12,7 @@ import { useForm } from '../customHooks/useForm'
 import { saveFeed } from '../store/actions/feed.actions'
 import { uploadService } from '../services/upload.service'
 import { useSearchParams } from 'react-router-dom'
+import { eventBus } from '../services/event-bus.service'
 
 const CONTENT_UPLOAD = 0
 const CROP = 1
@@ -56,7 +57,8 @@ export function FeedEdit({ onClose, user }) {
                 const { secure_url: imgUrl } = await uploadService.uploadImg(imgEvRef.current)
                 feed.imgUrls.push(imgUrl)
             }
-            await saveFeed(feed)
+            const savedFeed = await saveFeed(feed)
+            eventBus.emit('feed-edit', savedFeed)
             onClose()
         } catch (err) {
             console.log('Could not save feed', err)

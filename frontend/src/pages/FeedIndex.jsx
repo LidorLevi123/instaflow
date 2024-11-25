@@ -76,6 +76,7 @@ export function FeedIndex() {
         onToggleLike,
         onAddComment,
         onRemoveFeed,
+        onOpenCreateModal,
         loggedinUser,
         feedId
     }
