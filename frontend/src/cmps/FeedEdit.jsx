@@ -93,11 +93,12 @@ export function FeedEdit({ onClose, user }) {
 
             var btnTxt = (editStage === CREATE) ? 'Share' : 'Next'
             btnTxt = !isCreateNew ? 'Done' : btnTxt
-            const btnClickEvent = editStage === CREATE ? onSaveFeed : () => { setEditStage(prev => prev + 1) }
+            const btnClickEvent = editStage === CREATE ? onSaveFeed : () => setEditStage(prev => prev + 1)
+            const btnBackClickEvent = !isCreateNew ? onClose : () => setEditStage(prev => prev - 1)
 
             return (
                 <div className="title-container">
-                    <SvgIcon iconName="back" className="btn" onClick={() => setEditStage(prev => prev - 1)} />
+                    <SvgIcon iconName="back" className="btn" onClick={btnBackClickEvent} />
                     <h2>{title}</h2>
                     <span className="btn-next" onClick={btnClickEvent}>{btnTxt}</span>
                 </div>
