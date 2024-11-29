@@ -3,7 +3,7 @@ import express from 'express'
 import { requireAuth } from '../../middlewares/requireAuth.middleware.js'
 import { log } from '../../middlewares/logger.middleware.js'
 
-import { getFeeds, getFeedById, addFeed, updateFeed, removeFeed, addFeedComment } from './feed.controller.js'
+import { getFeeds, getFeedById, addFeed, updateFeed, removeFeed, addFeedComment, removeFeedComment } from './feed.controller.js'
 
 const router = express.Router()
 
@@ -17,6 +17,6 @@ router.put('/:id', requireAuth, updateFeed)
 router.delete('/:id', requireAuth, removeFeed)
 
 router.post('/:id/comment', requireAuth, addFeedComment)
-// router.delete('/:id/msg/:msgId', requireAuth, removeCarMsg)
+router.delete('/:id/comment/:commentId', requireAuth, removeFeedComment)
 
 export const feedRoutes = router

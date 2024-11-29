@@ -92,15 +92,15 @@ export async function addFeedComment(req, res) {
 	}
 }
 
-export async function removeCarMsg(req, res) {
+export async function removeFeedComment(req, res) {
 	try {
-		const carId = req.params.id
-		const { msgId } = req.params
+		const feedId = req.params.id
+		const { commentId } = req.params
 
-		const removedId = await carService.removeCarMsg(carId, msgId)
+		const removedId = await feedService.removeFeedComment(feedId, commentId)
 		res.send(removedId)
 	} catch (err) {
-		logger.error('Failed to remove car msg', err)
-		res.status(400).send({ err: 'Failed to remove car msg' })
+		logger.error('Failed to remove feed comment', err)
+		res.status(400).send({ err: 'Failed to remove feed comment' })
 	}
 }

@@ -14,7 +14,7 @@ export const feedService = {
 	add,
 	update,
 	addFeedComment,
-	removeCarMsg,
+	removeFeedComment,
 }
 
 async function query(criteria = {}) {
@@ -114,21 +114,21 @@ async function addFeedComment(feedId, comment) {
 
 		return comment
 	} catch (err) {
-		logger.error(`cannot add car comment ${carId}`, err)
+		logger.error(`cannot add feed comment ${carId}`, err)
 		throw err
 	}
 }
 
-async function removeCarMsg(carId, msgId) {
+async function removeFeedComment(feedId, commentId) {
 	try {
-		const criteria = { _id: ObjectId.createFromHexString(carId) }
+		const criteria = { _id: ObjectId.createFromHexString(feedId) }
 
-		const collection = await dbService.getCollection('car')
-		await collection.updateOne(criteria, { $pull: { msgs: { id: msgId } } })
+		const collection = await dbService.getCollection('feed')
+		await collection.updateOne(criteria, { $pull: { comments: { id: commentId } } })
 
-		return msgId
+		return commentId
 	} catch (err) {
-		logger.error(`cannot add car msg ${carId}`, err)
+		logger.error(`cannot remove feed comment ${feedId}`, err)
 		throw err
 	}
 }
