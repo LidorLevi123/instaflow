@@ -1,4 +1,4 @@
-export function makeId(length = 5) {
+export function makeId(length = 8) {
 	var txt = ''
 	var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 	for (let i = 0; i < length; i++) {

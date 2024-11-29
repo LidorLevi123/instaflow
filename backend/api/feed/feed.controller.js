@@ -75,16 +75,16 @@ export async function removeFeed(req, res) {
 	}
 }
 
-export async function addCarMsg(req, res) {
+export async function addFeedComment(req, res) {
 	const { loggedinUser } = req
 
 	try {
-		const carId = req.params.id
-		const msg = {
-			txt: req.body.txt,
+		const feedId = req.params.id
+		const comment = {
 			by: loggedinUser,
+			txt: req.body.txt,
 		}
-		const savedMsg = await carService.addCarMsg(carId, msg)
+		const savedMsg = await feedService.addFeedComment(feedId, comment)
 		res.json(savedMsg)
 	} catch (err) {
 		logger.error('Failed to update car', err)
