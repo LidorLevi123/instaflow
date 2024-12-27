@@ -75,23 +75,6 @@ export async function removeFeed(req, res) {
 	}
 }
 
-export async function addFeedComment(req, res) {
-	const { loggedinUser } = req
-
-	try {
-		const feedId = req.params.id
-		const comment = {
-			by: loggedinUser,
-			txt: req.body.txt,
-		}
-		const savedMsg = await feedService.addFeedComment(feedId, comment)
-		res.json(savedMsg)
-	} catch (err) {
-		logger.error('Failed to update car', err)
-		res.status(400).send({ err: 'Failed to update car' })
-	}
-}
-
 export async function removeFeedComment(req, res) {
 	try {
 		const feedId = req.params.id
