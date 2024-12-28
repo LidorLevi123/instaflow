@@ -64,12 +64,9 @@ async function remove(commentId) {
 	try {
 		const { loggedinUser } = asyncLocalStorage.getStore()
 		const collection = await dbService.getCollection('comment')
-
-		const criteria = { _id: ObjectId.createFromHexString(commentId) }
-
-        // remove only if user is owner/admin
-		if (!loggedinUser.isAdmin) {
-            criteria.byUserId = ObjectId.createFromHexString(loggedinUser._id)
+		const criteria = { 
+            _id: ObjectId.createFromHexString(commentId),
+            'by._id': loggedinUser._id
         }
 
         const { deletedCount } = await collection.deleteOne(criteria)
@@ -82,11 +79,14 @@ async function remove(commentId) {
 
 async function add(comment) {
     try {
+        const { loggedinUser } = asyncLocalStorage.getStore()
+
         const commentToAdd = {
-            ...comment,
+            by: loggedinUser,
 			aboutFeedId: ObjectId.createFromHexString(comment.aboutFeedId),
 			txt: comment.txt,
 		}
+
 		const collection = await dbService.getCollection('comment')
 		await collection.insertOne(commentToAdd)
         
