@@ -109,7 +109,8 @@ async function add(feed) {
 async function update(feed) {
 	const feedToSave = {
 		txt: feed.txt,
-		likedBy: feed.likedBy
+		likedBy: feed.likedBy,
+		commentIds: feed.commentIds
 		// imgUrls: feed.imgUrls,
 		// comments: feed.comments,
 	}

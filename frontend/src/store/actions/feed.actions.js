@@ -1,5 +1,5 @@
 import { store } from '../store'
-import { ADD_FEED, REMOVE_FEED, SET_FEEDS, UPDATE_FEED } from '../reducers/feed.reducer'
+import { ADD_FEED, REMOVE_FEED, SET_FEEDS, UPDATE_FEED, ADD_FEED_COMMENT } from '../reducers/feed.reducer'
 import { feedService } from '../../services/feed'
 import { commentService } from '../../services/comment'
 
@@ -45,10 +45,10 @@ export async function removeFeed(feedId) {
 export async function saveComment(feedId, comment) {
     try {
         const savedComment = await commentService.save(feedId, comment)
-        // store.dispatch({ type: UPDATE_FEED, feed })
+        store.dispatch({ type: ADD_FEED_COMMENT, payload: { feedId, commentId: savedComment._id } })
         return savedComment
     } catch (err) {
-        console.log('Cannot load feeds', err)
+        console.log('Cannot save comment', err)
         throw err
     }
 }

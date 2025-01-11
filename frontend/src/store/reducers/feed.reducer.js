@@ -1,5 +1,6 @@
 export const SET_FEEDS = 'SET_FEEDS'
 export const ADD_FEED = 'ADD_FEED'
+export const ADD_FEED_COMMENT = 'UPDATE_FEED_COMMENTS'
 export const UPDATE_FEED = 'UPDATE_FEED'
 export const REMOVE_FEED = 'REMOVE_FEED'
 
@@ -24,6 +25,18 @@ export function feedReducer(state = initialState, action) {
             return {
                 ...state,
                 feeds: state.feeds.map(feed => feed._id === action.feed._id ? action.feed : feed)
+            }
+        case ADD_FEED_COMMENT:
+            return {
+                ...state,
+                feeds: state.feeds.map(feed => {
+                    if (feed._id === action.payload.feedId) {
+                        if(!feed.commentIds) feed.commentIds = [action.payload.commentId]
+                        else feed.commentIds = [...feed.commentIds, action.payload.commentId]
+                        return feed
+                    }
+                    return feed
+                })
             }
         case REMOVE_FEED:
             return {

@@ -91,7 +91,7 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
                         <span className="fullname">{feed.by.fullname}</span>
                         {feed.txt || ''}
                     </p>
-                    <span className="view-comments" onClick={onOpenDetails}>View all {feed.comments.length} comments</span>
+                    <span className="view-comments" onClick={onOpenDetails}>View all {feed.commentIds?.length || 0} comments</span>
                     <AddComment onAddComment={addComment} />
                 </section>
             </article>

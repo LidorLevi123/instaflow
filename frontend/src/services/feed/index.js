@@ -7,7 +7,6 @@ function getEmptyFeed() {
     return {
         txt: '',
         imgUrls: [],
-        comments: [],
         likedBy: [],
         tags: []
     }
