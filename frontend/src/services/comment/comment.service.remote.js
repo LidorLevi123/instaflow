@@ -5,6 +5,7 @@ export const commentService = {
 }
 
 async function save(feedId, comment) {
+    console.log('comment:', comment)
     var savedComment
     if (comment._id) {
         savedComment = await httpService.put(`comment/${comment._id}`, comment)

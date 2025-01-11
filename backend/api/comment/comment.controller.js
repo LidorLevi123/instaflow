@@ -28,3 +28,15 @@ export async function removeComment(req, res) {
 		res.status(400).send({ err: 'Failed to remove comment' })
 	}
 }
+
+export async function updateComment(req, res) {
+	const comment = req.body
+	
+	try {
+		const updatedComment = await commentService.update(comment)
+		res.json(updatedComment)
+	} catch (err) {
+		logger.error('Failed to update comment', err)
+		res.status(400).send({ err: 'Failed to update comment' })
+	}
+}

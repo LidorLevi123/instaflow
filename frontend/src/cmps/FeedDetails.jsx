@@ -89,7 +89,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
                 elBtnLike.classList.add('like-animation')
             }
 
-            const { comment: savedComment } = await commentService.save(feed._id, commentToSave)
+            const savedComment = await commentService.save(feed._id, commentToSave)
             setFeed(prevFeed => ({
                 ...prevFeed,
                 comments: prevFeed.comments.map(comment => comment.id === savedComment.id ? savedComment : comment)

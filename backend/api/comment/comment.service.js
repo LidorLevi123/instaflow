@@ -5,61 +5,7 @@ import { logger } from '../../services/logger.service.js'
 import { dbService } from '../../services/db.service.js'
 import { feedService } from '../feed/feed.service.js'
 
-export const commentService = { query, remove, add }
-
-async function query(filterBy = {}) {
-    try {
-        const criteria = _buildCriteria(filterBy)
-        const collection = await dbService.getCollection('comment')
-
-        var comments = await collection.aggregate([
-            {
-                $match: criteria,
-            },
-            {
-                $lookup: {
-                    localField: 'byUserId',
-                    from: 'user',
-                    foreignField: '_id',
-                    as: 'byUser',
-                },
-            },
-            {
-                $unwind: '$byUser',
-            },
-            {
-                $lookup: {
-                    localField: 'aboutUserId',
-                    from: 'user',
-                    foreignField: '_id',
-                    as: 'aboutUser',
-                },
-            },
-            {
-                $unwind: '$aboutUser',
-            },
-        ]).toArray()
-
-        comments = comments.map(comment => {
-            comment.byUser = {
-                _id: comment.byUser._id,
-                fullname: comment.byUser.fullname
-            }
-            comment.aboutUser = {
-                _id: comment.aboutUser._id,
-                fullname: comment.aboutUser.fullname
-            }
-            delete comment.byUserId
-            delete comment.aboutUserId
-            return comment
-        })
-
-        return comments
-    } catch (err) {
-        logger.error('cannot get comments', err)
-        throw err
-    }
-}
+export const commentService = { update, remove, add }
 
 async function remove(commentId) {
     try {
@@ -106,6 +52,23 @@ async function add(comment) {
         logger.error('cannot add comment', err)
         throw err
     }
+}
+
+async function update(comment) {
+    const commentToSave = {
+		likedBy: comment.likedBy,
+	}
+	try {
+		const criteria = { _id: ObjectId.createFromHexString(comment._id) }
+
+		const collection = await dbService.getCollection('comment')
+		await collection.updateOne(criteria, { $set: commentToSave })
+
+		return comment
+	} catch (err) {
+		logger.error(`cannot update comment ${comment._id}`, err)
+		throw err
+	}
 }
 
 function _buildCriteria(filterBy) {
