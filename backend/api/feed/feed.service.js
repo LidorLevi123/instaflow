@@ -13,8 +13,6 @@ export const feedService = {
 	getById,
 	add,
 	update,
-	addFeedComment,
-	removeFeedComment,
 }
 
 async function query(criteria = {}) {
@@ -65,6 +63,8 @@ async function getById(feedId) {
 				return comment
 			})
 		}
+
+		delete feed.commentIds
 
 		return feed
 	} catch (err) {
@@ -123,36 +123,6 @@ async function update(feed) {
 		return feed
 	} catch (err) {
 		logger.error(`cannot update feed ${feed._id}`, err)
-		throw err
-	}
-}
-
-async function addFeedComment(feedId, comment) {
-	try {
-		const criteria = { _id: ObjectId.createFromHexString(feedId) }
-		comment.id = makeId()
-		comment.createdAt = Date.now()
-
-		const collection = await dbService.getCollection('feed')
-		await collection.updateOne(criteria, { $push: { comments: comment } })
-
-		return comment
-	} catch (err) {
-		logger.error(`cannot add feed comment ${carId}`, err)
-		throw err
-	}
-}
-
-async function removeFeedComment(feedId, commentId) {
-	try {
-		const criteria = { _id: ObjectId.createFromHexString(feedId) }
-
-		const collection = await dbService.getCollection('feed')
-		await collection.updateOne(criteria, { $pull: { comments: { id: commentId } } })
-
-		return commentId
-	} catch (err) {
-		logger.error(`cannot remove feed comment ${feedId}`, err)
 		throw err
 	}
 }

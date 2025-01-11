@@ -7,7 +7,7 @@ import { feedService } from '../feed/feed.service.js'
 
 export const commentService = { update, remove, add }
 
-async function remove(commentId) {
+async function remove(feedId, commentId) {
     try {
         const { loggedinUser } = asyncLocalStorage.getStore()
         const collection = await dbService.getCollection('comment')
@@ -17,6 +17,15 @@ async function remove(commentId) {
         }
 
         const { deletedCount } = await collection.deleteOne(criteria)
+
+        const feedCollection = await dbService.getCollection('feed')
+        const feed = await feedCollection.findOne(ObjectId.createFromHexString(feedId))
+        
+        feed.commentIds = feed.commentIds.filter(_commentId => _commentId !== commentId)
+        feed._id = feed._id.toString()
+
+        await feedService.update(feed)
+
         return deletedCount
     } catch (err) {
         logger.error(`cannot remove comment ${commentId}`, err)

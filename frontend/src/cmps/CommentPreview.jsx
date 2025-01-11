@@ -42,7 +42,7 @@ export function CommentPreview({ comment, onLikeComment, isCommentLiked, onRemov
                     <ul>
                         {
                             comment.by._id === loggedinUser._id ?
-                                <li className="danger" onClick={() => onRemoveComment(comment.id)}>Delete</li> :
+                                <li className="danger" onClick={() => onRemoveComment(comment._id)}>Delete</li> :
                                 <li className="danger">Report</li>
                         }
                         <li onClick={onHideOptionsModal}>Cancel</li>

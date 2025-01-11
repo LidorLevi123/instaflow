@@ -1,5 +1,5 @@
 import { store } from '../store'
-import { ADD_FEED, REMOVE_FEED, SET_FEEDS, UPDATE_FEED, ADD_FEED_COMMENT } from '../reducers/feed.reducer'
+import { ADD_FEED, REMOVE_FEED, SET_FEEDS, UPDATE_FEED, ADD_FEED_COMMENT, REMOVE_FEED_COMMENT } from '../reducers/feed.reducer'
 import { feedService } from '../../services/feed'
 import { commentService } from '../../services/comment'
 
@@ -47,6 +47,16 @@ export async function saveComment(feedId, comment) {
         const savedComment = await commentService.save(feedId, comment)
         store.dispatch({ type: ADD_FEED_COMMENT, payload: { feedId, commentId: savedComment._id } })
         return savedComment
+    } catch (err) {
+        console.log('Cannot save comment', err)
+        throw err
+    }
+}
+
+export async function removeComment(feedId, commentId) {
+    try {
+        await commentService.remove(feedId, commentId)
+        store.dispatch({ type: REMOVE_FEED_COMMENT, payload: { feedId, commentId } })
     } catch (err) {
         console.log('Cannot save comment', err)
         throw err

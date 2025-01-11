@@ -14,10 +14,11 @@ export async function addComment(req, res) {
 
 export async function removeComment(req, res) {
 	const { loggedinUser } = req
-	const { id: commentId } = req.params
+	const { id: commentId, feedId } = req.params
+	console.log('req.params:', req.params)
 
 	try {
-		const deletedCount = await commentService.remove(commentId)
+		const deletedCount = await commentService.remove(feedId, commentId)
 		if (deletedCount < 1) {
 			logger.warn(`${loggedinUser.username} is illegaly attemping to remove comments`)
 			return res.status(403).send({ err: 'Cannot remove comment' })

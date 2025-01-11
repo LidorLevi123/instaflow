@@ -10,6 +10,6 @@ const router = express.Router()
 // router.get('/', log, getComments)
 router.post('/', log, requireAuth, addComment)
 router.put('/:id', requireAuth, updateComment)
-router.delete('/:id', requireAuth, removeComment)
+router.delete('/:id/:feedId', requireAuth, removeComment)
 
 export const commentRoutes = router

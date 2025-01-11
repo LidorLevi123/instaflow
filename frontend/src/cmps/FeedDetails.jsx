@@ -11,6 +11,7 @@ import { CommentList } from './CommentList'
 import { Backdrop } from './Backdrop'
 import { OptionsModal } from './OptionsModal'
 import { eventBus } from '../services/event-bus.service'
+import { removeComment } from '../store/actions/feed.actions'
 
 export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, onRemoveFeed, onOpenCreateModal }) {
     const [feed, setFeed] = useState(null)
@@ -28,6 +29,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
     async function loadFeed() {
         try {
             const feed = await feedService.getById(feedId)
+            console.log(feed)
             setFeed(feed)
         } catch (err) {
             console.log('Cannot load feed', err)
@@ -47,13 +49,16 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
         }
     }
 
-    async function removeComment(commentId) {
+    async function onRemoveComment(commentId) {
         try {
-            await commentService.remove(feed._id, commentId)
+            await removeComment(feed._id, commentId)
+            
             setFeed(prevFeed => ({
                 ...prevFeed,
-                comments: [...prevFeed.comments].filter(c => c.id !== commentId)
+                comments: prevFeed.comments.filter(c => c._id !== commentId)
             }))
+
+            onHideOptionsModal()
         } catch (err) {
             console.log('Could not remove comment', err)
         }
@@ -155,7 +160,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
                         comments={feed.comments}
                         onLikeComment={onLikeComment}
                         isCommentLiked={isCommentLiked}
-                        onRemoveComment={removeComment}
+                        onRemoveComment={onRemoveComment}
                         loggedinUser={loggedinUser} />
                 </div>
 
