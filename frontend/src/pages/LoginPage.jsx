@@ -11,12 +11,13 @@ export function LoginPage() {
     async function onLogin(ev = null) {
         if (ev) ev.preventDefault()
 
-        if (!userCreds.username) return
-        const user = await login(userCreds)
-
-        if(user) navigate('/')
-        else console.log('Could not login')
-        
+        try {
+            if (!userCreds.username) throw 'Could not login'
+            const user = await login(userCreds)
+            if (user) navigate('/')
+        } catch (err) {
+            console.log('Could not login')
+        }
     }
 
     function handleChange(ev) {
@@ -33,7 +34,7 @@ export function LoginPage() {
         <section className="login-page">
             <div>
                 <div className="logo">
-                    <img src="https://static.cdninstagram.com/rsrc.php/v3/yv/r/KoLLpWDb4f6.png"  />
+                    <img src="https://static.cdninstagram.com/rsrc.php/v3/yv/r/KoLLpWDb4f6.png" />
                 </div>
 
                 <form onSubmit={onLogin}>
