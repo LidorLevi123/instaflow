@@ -86,9 +86,9 @@ async function add(feed) {
 async function update(feed) {
 	const feedToSave = {
 		txt: feed.txt,
+		likedBy: feed.likedBy
 		// imgUrls: feed.imgUrls,
 		// comments: feed.comments,
-		// likedBy: feed.likedBy
 	}
 	try {
 		const criteria = { _id: ObjectId.createFromHexString(feed._id) }
