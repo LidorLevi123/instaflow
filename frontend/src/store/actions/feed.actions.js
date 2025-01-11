@@ -42,10 +42,10 @@ export async function removeFeed(feedId) {
     }
 }
 
-export async function addComment(feedId, comment) {
+export async function saveComment(feedId, comment) {
     try {
-        const { feed, comment: savedComment } = await commentService.save(feedId, comment)
-        store.dispatch({ type: UPDATE_FEED, feed })
+        const savedComment = await commentService.save(feedId, comment)
+        // store.dispatch({ type: UPDATE_FEED, feed })
         return savedComment
     } catch (err) {
         console.log('Cannot load feeds', err)

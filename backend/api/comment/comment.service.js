@@ -85,6 +85,7 @@ async function add(comment) {
             by: loggedinUser,
 			aboutFeedId: ObjectId.createFromHexString(comment.aboutFeedId),
 			txt: comment.txt,
+            createdAt: Date.now()
 		}
 
 		const collection = await dbService.getCollection('comment')

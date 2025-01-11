@@ -41,11 +41,34 @@ async function getById(feedId) {
 	try {
 		const criteria = { _id: ObjectId.createFromHexString(feedId) }
 		const collection = await dbService.getCollection('feed')
-		const feed = await collection.findOne(criteria)
+
+		const results = await collection
+			.aggregate([
+				{
+					$match: criteria
+				},
+				{
+					$lookup: {
+						from: 'comment',
+						localField: '_id',
+						foreignField: 'aboutFeedId',
+						as: 'comments',
+					},
+				},
+			])
+			.toArray()
+
+		const feed = {
+			...results[0],
+			comments: results[0].comments.map(comment => {
+				delete comment.aboutFeedId
+				return comment
+			})
+		}
 
 		return feed
 	} catch (err) {
-		logger.error(`while finding car ${feedId}`, err)
+		logger.error(`while finding feed ${feedId}`, err)
 		throw err
 	}
 }

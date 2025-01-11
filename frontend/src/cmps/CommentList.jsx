@@ -13,7 +13,7 @@ export function CommentList({ comments, onLikeComment, isCommentLiked, loggedinU
         <section>
             <ul className="comment-list">
                 {comments.map(comment =>
-                    <li key={comment.id}>
+                    <li key={comment._id}>
                         <CommentPreview comment={comment} {...previewProps}/>
                     </li>)}
             </ul>

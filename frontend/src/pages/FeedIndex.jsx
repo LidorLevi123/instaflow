@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { FeedDetails } from '../cmps/FeedDetails'
 import { FeedEdit } from '../cmps/FeedEdit'
 import { useSelector } from 'react-redux'
-import { addComment, removeFeed, saveFeed } from '../store/actions/feed.actions'
+import { saveComment, removeFeed, saveFeed } from '../store/actions/feed.actions'
 import { logout } from '../store/actions/user.actions'
 
 export function FeedIndex() {
@@ -49,7 +49,7 @@ export function FeedIndex() {
 
     async function onAddComment(feedId, comment) {
         try {
-            return await addComment(feedId, comment)
+            return await saveComment(feedId, comment)
         } catch (err) {
             console.log('Could not add comment', err)
         }

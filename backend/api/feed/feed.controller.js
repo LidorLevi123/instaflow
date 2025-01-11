@@ -48,7 +48,6 @@ export async function updateFeed(req, res) {
 	const { _id: userId } = loggedinUser
 
 	const feed = req.body
-	console.log("🚀 ~ updateFeed ~ feed:", feed)
 
 	// if (feed.by._id !== userId) {
 	// 	res.status(403).send('Not your feed...')

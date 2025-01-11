@@ -28,6 +28,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
     async function loadFeed() {
         try {
             const feed = await feedService.getById(feedId)
+            console.log('feed :', feed )
             setFeed(feed)
         } catch (err) {
             console.log('Cannot load feed', err)
