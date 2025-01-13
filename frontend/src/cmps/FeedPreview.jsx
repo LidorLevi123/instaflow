@@ -66,12 +66,28 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
         }
     }
 
-    async function removeFeed() {
-        try {
-            await onRemoveFeed(feed._id)
-            setIsOptionsModalShown(false)
-        } catch (err) {
-            console.log('Could not remove feed', err)
+    function removeFeed() {
+        showDynamicModal({
+            cmp: () =>
+                <>
+                    <div className="feed-remove-approval">
+                        <h2>Delete post?</h2>
+                        <p>Are you sure you want to delete this post?</p>
+                    </div>
+                    <ul>
+                        <li className="danger" onClick={_removeFeed}>Delete</li>
+                        <li onClick={hideDynamicModal}>Cancel</li>
+                    </ul>
+                </>
+        })
+
+        async function _removeFeed() {
+            try {
+                await onRemoveFeed(feed._id)
+                hideDynamicModal()
+            } catch (err) {
+                console.log('Could not remove feed', err)
+            }
         }
     }
 

@@ -23,4 +23,31 @@
             }
         }
     }
+
+    .feed-remove-approval {
+        display: grid;
+        text-align: center;
+        gap: 0.4rem;
+
+        padding: 32px;
+        padding-block-end: rem(32px);
+
+        h2 {
+            font-weight: 400;
+            font-size: rem(20px);
+        }
+
+        p {
+            color: $gray3;
+            font-size: rem(14px);
+        }
+
+        ~ ul {
+            > li {
+                &:first-child {
+                    border-block-start: 1px solid $gray1;
+                }
+            }
+        }
+    }
 }
