@@ -9,19 +9,17 @@ import { SvgIcon } from './SvgIcon'
 import { AddComment } from './AddComment'
 import { CommentList } from './CommentList'
 import { Backdrop } from './Backdrop'
-import { OptionsModal } from './OptionsModal'
-import { eventBus } from '../services/event-bus.service'
+import { eventBus, hideDynamicModal, showDynamicModal } from '../services/event-bus.service'
 import { removeComment } from '../store/actions/feed.actions'
 
 export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, onRemoveFeed, onOpenCreateModal }) {
     const [feed, setFeed] = useState(null)
-    const [isOptionsModalShown, setIsOptionsModalShown] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
     const elBtnLikeRef = useRef()
 
     useEffect(() => {
         loadFeed()
-        
+
         const unsubscribe = eventBus.on('feed-edit', feed => setFeed(feed))
         return unsubscribe
     }, [])
@@ -29,7 +27,6 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
     async function loadFeed() {
         try {
             const feed = await feedService.getById(feedId)
-            console.log(feed)
             setFeed(feed)
         } catch (err) {
             console.log('Cannot load feed', err)
@@ -52,13 +49,13 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
     async function onRemoveComment(commentId) {
         try {
             await removeComment(feed._id, commentId)
-            
+
             setFeed(prevFeed => ({
                 ...prevFeed,
                 comments: prevFeed.comments.filter(c => c._id !== commentId)
             }))
 
-            onHideOptionsModal()
+            hideDynamicModal()
         } catch (err) {
             console.log('Could not remove comment', err)
         }
@@ -118,16 +115,37 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
     }
 
     function onShowOptionsModal() {
-        setIsOptionsModalShown(true)
-    }
+        const OptionsList = () => {
+            return <ul>
+                {
+                    feed.by._id === loggedinUser._id ?
+                        <>
+                            <li className="danger" onClick={removeFeed}>Delete</li>
+                            <li onClick={onEditFeed}>Edit</li>
+                            <li>Hide like count to others</li>
+                            <li>Turn off commenting</li>
+                        </> :
+                        <>
+                            <li className="danger">Report</li>
+                            <li className="danger">Unfollow</li>
+                            <li>Add to favorites</li>
+                        </>
+                }
+                <li>Go to post</li>
+                <li>Share to...</li>
+                <li>Copy link</li>
+                <li>Embed</li>
+                <li>About this account</li>
+                <li onClick={hideDynamicModal}>Cancel</li>
+            </ul>
+        }
 
-    function onHideOptionsModal() {
-        setIsOptionsModalShown(false)
+        showDynamicModal({ cmp: OptionsList })
     }
 
     function onEditFeed() {
+        hideDynamicModal()
         onOpenCreateModal(feedId)
-        onHideOptionsModal()
     }
 
     if (!feed) return
@@ -182,34 +200,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
 
                     <AddComment onAddComment={addComment} />
                 </div>
-
             </section>
-
-            {isOptionsModalShown &&
-                <OptionsModal onClose={onHideOptionsModal}>
-                    <ul>
-                        {
-                            feed.by._id === loggedinUser._id ?
-                                <>
-                                    <li className="danger" onClick={removeFeed}>Delete</li>
-                                    <li onClick={onEditFeed}>Edit</li>
-                                    <li>Hide like count to others</li>
-                                    <li>Turn off commenting</li>
-                                </> :
-                                <>
-                                    <li className="danger">Report</li>
-                                    <li className="danger">Unfollow</li>
-                                    <li>Add to favorites</li>
-                                </>
-                        }
-                        <li>Go to post</li>
-                        <li>Share to...</li>
-                        <li>Copy link</li>
-                        <li>Embed</li>
-                        <li>About this account</li>
-                        <li onClick={onHideOptionsModal}>Cancel</li>
-                    </ul>
-                </OptionsModal>}
         </>
     )
 }

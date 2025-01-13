@@ -1,12 +1,11 @@
-import { useRef, useState } from "react"
-import { Link, useSearchParams } from "react-router-dom"
+import { useRef } from "react"
+import { useSearchParams } from "react-router-dom"
 import { getTimeSince } from "../services/util.service"
 import { SvgIcon } from "./SvgIcon"
 import { AddComment } from "./AddComment"
-import { OptionsModal } from "./OptionsModal"
+import { hideDynamicModal, showDynamicModal } from "../services/event-bus.service"
 
 export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, onRemoveFeed, onOpenCreateModal }) {
-    const [isOptionsModalShown, setIsOptionsModalShown] = useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
     const likeCount = feed.likedBy.length.toLocaleString('en-US')
     const createdAt = getTimeSince(feed.createdAt)
@@ -26,16 +25,37 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
     }
 
     function onShowOptionsModal() {
-        setIsOptionsModalShown(true)
-    }
+        const OptionsList = () => {
+            return <ul>
+                {
+                    feed.by._id === loggedinUser._id ?
+                        <>
+                            <li className="danger" onClick={removeFeed}>Delete</li>
+                            <li onClick={onEditFeed}>Edit</li>
+                            <li>Hide like count to others</li>
+                            <li>Turn off commenting</li>
+                        </> :
+                        <>
+                            <li className="danger">Report</li>
+                            <li className="danger">Unfollow</li>
+                            <li>Add to favorites</li>
+                        </>
+                }
+                <li>Go to post</li>
+                <li>Share to...</li>
+                <li>Copy link</li>
+                <li>Embed</li>
+                <li>About this account</li>
+                <li onClick={hideDynamicModal}>Cancel</li>
+            </ul>
+        }
 
-    function onHideOptionsModal() {
-        setIsOptionsModalShown(false)
+        showDynamicModal({ cmp: OptionsList })
     }
 
     function onEditFeed() {
+        hideDynamicModal()
         onOpenCreateModal(feed._id)
-        onHideOptionsModal()
     }
 
     async function addComment(comment) {
@@ -95,32 +115,6 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
                     <AddComment onAddComment={addComment} />
                 </section>
             </article>
-
-            {isOptionsModalShown &&
-                <OptionsModal onClose={onHideOptionsModal}>
-                    <ul>
-                        {
-                            feed.by._id === loggedinUser._id ?
-                                <>
-                                    <li className="danger" onClick={removeFeed}>Delete</li>
-                                    <li onClick={onEditFeed}>Edit</li>
-                                    <li>Hide like count to others</li>
-                                    <li>Turn off commenting</li>
-                                </> :
-                                <>
-                                    <li className="danger">Report</li>
-                                    <li className="danger">Unfollow</li>
-                                    <li>Add to favorites</li>
-                                </>
-                        }
-                        <li>Go to post</li>
-                        <li>Share to...</li>
-                        <li>Copy link</li>
-                        <li>Embed</li>
-                        <li>About this account</li>
-                        <li onClick={onHideOptionsModal}>Cancel</li>
-                    </ul>
-                </OptionsModal>}
         </>
     )
 }

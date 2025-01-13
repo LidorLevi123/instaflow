@@ -1,12 +1,14 @@
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router'
 
-import { UserMsg } from './cmps/UserMsg.jsx'
 import { FeedIndex } from './pages/FeedIndex.jsx'
 import { HomePage } from './pages/HomePage.jsx'
 import { LoginPage } from './pages/LoginPage.jsx'
 import { SignupPage } from './pages/SignupPage.jsx'
 import { UserPage } from './pages/UserPage.jsx'
+
+import { DynamicModal } from './cmps/DynamicModal.jsx'
+
 import { userService } from './services/user/user.service.local.js'
 
 function RouteGuard({ children }) {
@@ -18,7 +20,6 @@ function RouteGuard({ children }) {
 export function RootCmp() {
     return (
         <div className="main-container">
-            <UserMsg />
             <main>
                 <Routes>
                     <Route path="" element={<RouteGuard><FeedIndex /></RouteGuard>} >
@@ -29,6 +30,7 @@ export function RootCmp() {
                     <Route path="signup" element={<SignupPage />} />
                 </Routes>
             </main>
+            <DynamicModal />
         </div>
     )
 }

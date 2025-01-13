@@ -18,6 +18,14 @@ function createEventEmitter() {
 
 export const eventBus = createEventEmitter()
 
+export function showDynamicModal(modalData) {
+    eventBus.emit('show-modal', modalData)
+}
+
+export function hideDynamicModal() {
+    eventBus.emit('show-modal', null)
+}
+
 export function showUserMsg(msg) {
     eventBus.emit(SHOW_MSG, msg)
 }

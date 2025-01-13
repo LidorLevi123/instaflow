@@ -1,18 +1,24 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { getTimeSince } from "../services/util.service";
 import { SvgIcon } from "./SvgIcon";
-import { OptionsModal } from "./OptionsModal";
+import { hideDynamicModal, showDynamicModal } from "../services/event-bus.service";
 
 export function CommentPreview({ comment, onLikeComment, isCommentLiked, onRemoveComment, loggedinUser }) {
     const elBtnLikeRef = useRef()
-    const [isOptionsModalShown, setIsOptionsModalShown] = useState(false)
 
     function onShowOptionsModal() {
-        setIsOptionsModalShown(true)
-    }
+        const OptionsList = () => {
+            return <ul>
+                {
+                    comment.by._id === loggedinUser._id ?
+                        <li className="danger" onClick={() => onRemoveComment(comment._id)}>Delete</li> :
+                        <li className="danger">Report</li>
+                }
+                <li onClick={hideDynamicModal}>Cancel</li>
+            </ul>
+        }
 
-    function onHideOptionsModal() {
-        setIsOptionsModalShown(false)
+        showDynamicModal({ cmp: OptionsList })
     }
 
     return (
@@ -36,18 +42,6 @@ export function CommentPreview({ comment, onLikeComment, isCommentLiked, onRemov
                     <SvgIcon iconName="options" className="options-icon" onClick={onShowOptionsModal} />
                 </div>
             </article>
-
-            {isOptionsModalShown &&
-                <OptionsModal onClose={onHideOptionsModal}>
-                    <ul>
-                        {
-                            comment.by._id === loggedinUser._id ?
-                                <li className="danger" onClick={() => onRemoveComment(comment._id)}>Delete</li> :
-                                <li className="danger">Report</li>
-                        }
-                        <li onClick={onHideOptionsModal}>Cancel</li>
-                    </ul>
-                </OptionsModal>}
         </>
     )
 }
