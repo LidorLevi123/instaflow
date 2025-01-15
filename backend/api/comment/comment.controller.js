@@ -15,7 +15,6 @@ export async function addComment(req, res) {
 export async function removeComment(req, res) {
 	const { loggedinUser } = req
 	const { id: commentId, feedId } = req.params
-	console.log('req.params:', req.params)
 
 	try {
 		const deletedCount = await commentService.remove(feedId, commentId)

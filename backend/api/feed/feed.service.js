@@ -1,11 +1,8 @@
 import { ObjectId } from 'mongodb'
 
 import { logger } from '../../services/logger.service.js'
-import { makeId } from '../../services/util.service.js'
 import { dbService } from '../../services/db.service.js'
-import { asyncLocalStorage } from '../../services/als.service.js'
-
-const PAGE_SIZE = 3
+import { commentService } from '../comment/comment.service.js'
 
 export const feedService = {
 	remove,
@@ -42,9 +39,7 @@ async function getById(feedId) {
 		const feed = await feedsCollection.findOne(criteria)
 
 		if(feed.commentIds?.length) {
-			const commentObjIds = feed.commentIds.map(ObjectId.createFromHexString)
-			const commentsCollection = await dbService.getCollection('comment')
-			const comments = await commentsCollection.find({ _id: { $in: commentObjIds } }).toArray()
+			const comments = await commentService.query({ feedId })
 	
 			feed.comments = comments.map(comment => {
 				delete comment.aboutFeedId
@@ -60,44 +55,6 @@ async function getById(feedId) {
 		throw err
 	}
 }
-
-// async function getById(feedId) {
-// 	try {
-// 		const criteria = { _id: ObjectId.createFromHexString(feedId) }
-// 		const collection = await dbService.getCollection('feed')
-
-// 		const results = await collection
-// 			.aggregate([
-// 				{
-// 					$match: criteria
-// 				},
-// 				{
-// 					$lookup: {
-// 						from: 'comment',
-// 						localField: '_id',
-// 						foreignField: 'aboutFeedId',
-// 						as: 'comments',
-// 					},
-// 				},
-// 			])
-// 			.toArray()
-
-// 		const feed = {
-// 			...results[0],
-// 			comments: results[0].comments.map(comment => {
-// 				delete comment.aboutFeedId
-// 				return comment
-// 			})
-// 		}
-
-// 		delete feed.commentIds
-
-// 		return feed
-// 	} catch (err) {
-// 		logger.error(`while finding feed ${feedId}`, err)
-// 		throw err
-// 	}
-// }
 
 async function remove(feedId) {
 	// const { loggedinUser } = asyncLocalStorage.getStore()

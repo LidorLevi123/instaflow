@@ -12,22 +12,14 @@ export const commentService = {
     add 
 }
 
-query({ feedId: '6782ac0ec1084ca75eecc3e5'})
-
 async function query(filterBy = {}) {
     try {
         const criteria = _buildCriteria(filterBy)
         const sort = _buildSort()
 
         const collection = await dbService.getCollection('comment')
-        const commentCursor = await collection.find(criteria, { sort })
+        const comments = await collection.find(criteria, { sort }).toArray()
 
-        // if (filterBy.pageIdx !== undefined) {
-        // 	feedCursor.skip(filterBy.pageIdx * PAGE_SIZE).limit(PAGE_SIZE)
-        // }
-
-        const comments = await commentCursor.toArray()
-        console.log('comments:', comments)
         return comments
     } catch (err) {
         logger.error('cannot find comments', err)
