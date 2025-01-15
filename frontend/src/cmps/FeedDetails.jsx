@@ -39,7 +39,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
             const savedComment = await onAddComment(feed._id, comment)
             setFeed(prevFeed => ({
                 ...prevFeed,
-                comments: [...prevFeed.comments, savedComment]
+                comments: prevFeed.comments ? [savedComment, ...prevFeed.comments] : [savedComment]
             }))
         } catch (err) {
             console.log('Could not add comment', err)
@@ -191,12 +191,13 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
                         </div>
                         <span className="created-at">{createdAt}</span>
                     </div>
-                    <CommentList
-                        comments={feed.comments}
-                        onLikeComment={onLikeComment}
-                        isCommentLiked={isCommentLiked}
-                        onRemoveComment={onRemoveComment}
-                        loggedinUser={loggedinUser} />
+                    {feed.comments &&
+                        <CommentList
+                            comments={feed.comments}
+                            onLikeComment={onLikeComment}
+                            isCommentLiked={isCommentLiked}
+                            onRemoveComment={onRemoveComment}
+                            loggedinUser={loggedinUser} />}
                 </div>
 
                 <div className="bottom-section">

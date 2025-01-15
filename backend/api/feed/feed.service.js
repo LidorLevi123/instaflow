@@ -41,16 +41,19 @@ async function getById(feedId) {
 		const feedsCollection = await dbService.getCollection('feed')
 		const feed = await feedsCollection.findOne(criteria)
 
-		const commentObjIds = feed.commentIds.map(ObjectId.createFromHexString)
-		const commentsCollection = await dbService.getCollection('comment')
-		const commentsCursor = await commentsCollection.find({ _id: { $in: commentObjIds } })
+		if(feed.commentIds?.length) {
+			const commentObjIds = feed.commentIds.map(ObjectId.createFromHexString)
+			const commentsCollection = await dbService.getCollection('comment')
+			const comments = await commentsCollection.find({ _id: { $in: commentObjIds } }).toArray()
+	
+			feed.comments = comments.map(comment => {
+				delete comment.aboutFeedId
+				return comment
+			})
+	
+			delete feed.commentIds
+		}
 
-		feed.comments = commentsCursor.toArray().map(comment => {
-			delete comment.aboutFeedId
-			return comment
-		})
-
-		delete feed.commentIds
 		return feed
 	} catch (err) {
 		logger.error(`while finding feed ${feedId}`, err)
