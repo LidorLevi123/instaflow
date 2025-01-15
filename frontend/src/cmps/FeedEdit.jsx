@@ -12,7 +12,7 @@ import { useForm } from '../customHooks/useForm'
 import { saveFeed } from '../store/actions/feed.actions'
 import { uploadService } from '../services/upload.service'
 import { useSearchParams } from 'react-router-dom'
-import { eventBus } from '../services/event-bus.service'
+import { eventBus, hideDynamicModal, showOptionsModal } from '../services/event-bus.service'
 
 const CONTENT_UPLOAD = 0
 const CROP = 1
@@ -72,6 +72,22 @@ export function FeedEdit({ onClose, user }) {
         setEditStage(1)
     }
 
+    function onDiscardChanges() {
+        if(editStage === CONTENT_UPLOAD) return onClose()
+
+        showOptionsModal(() =>
+            <>
+                <div className="feed-remove-approval">
+                    <h2>Discard post?</h2>
+                    <p>If you leave, your edits won't be saved.</p>
+                </div>
+                <ul>
+                    <li className="danger" onClick={() => { onClose(); hideDynamicModal() }}>Discard</li>
+                    <li onClick={hideDynamicModal}>Cancel</li>
+                </ul>
+            </>)
+    }
+
     function getTitleTxt() {
         var title = ''
 
@@ -128,7 +144,7 @@ export function FeedEdit({ onClose, user }) {
 
     return (
         <>
-            <Backdrop onClose={onClose} />
+            <Backdrop onClose={onDiscardChanges} />
             <section className={cmpClass}>
                 <Title />
                 {editStage === CONTENT_UPLOAD && <ContentUploadContainer onUploaded={onUploaded} />}
