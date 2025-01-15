@@ -9,7 +9,7 @@ import { SvgIcon } from './SvgIcon'
 import { AddComment } from './AddComment'
 import { CommentList } from './CommentList'
 import { Backdrop } from './Backdrop'
-import { eventBus, hideDynamicModal, showDynamicModal } from '../services/event-bus.service'
+import { eventBus, hideDynamicModal, showOptionsModal } from '../services/event-bus.service'
 import { removeComment } from '../store/actions/feed.actions'
 
 export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, onRemoveFeed, onOpenCreateModal }) {
@@ -62,19 +62,17 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
     }
 
     function removeFeed() {
-        showDynamicModal({
-            cmp: () =>
-                <>
-                    <div className="feed-remove-approval">
-                        <h2>Delete post?</h2>
-                        <p>Are you sure you want to delete this post?</p>
-                    </div>
-                    <ul>
-                        <li className="danger" onClick={_removeFeed}>Delete</li>
-                        <li onClick={hideDynamicModal}>Cancel</li>
-                    </ul>
-                </>
-        })
+        showOptionsModal(() =>
+            <>
+                <div className="feed-remove-approval">
+                    <h2>Delete post?</h2>
+                    <p>Are you sure you want to delete this post?</p>
+                </div>
+                <ul>
+                    <li className="danger" onClick={_removeFeed}>Delete</li>
+                    <li onClick={hideDynamicModal}>Cancel</li>
+                </ul>
+            </>)
 
         async function _removeFeed() {
             try {
@@ -132,8 +130,8 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
     }
 
     function onShowOptionsModal() {
-        const OptionsList = () => {
-            return <ul>
+        const OptionsList = () =>
+            <ul>
                 {
                     feed.by._id === loggedinUser._id ?
                         <>
@@ -155,9 +153,8 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
                 <li>About this account</li>
                 <li onClick={hideDynamicModal}>Cancel</li>
             </ul>
-        }
 
-        showDynamicModal({ cmp: OptionsList })
+        showOptionsModal(OptionsList)
     }
 
     function onEditFeed() {

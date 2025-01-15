@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom"
 import { getTimeSince } from "../services/util.service"
 import { SvgIcon } from "./SvgIcon"
 import { AddComment } from "./AddComment"
-import { hideDynamicModal, showDynamicModal } from "../services/event-bus.service"
+import { hideDynamicModal, showOptionsModal } from "../services/event-bus.service"
 
 export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, onRemoveFeed, onOpenCreateModal }) {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -25,8 +25,8 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
     }
 
     function onShowOptionsModal() {
-        const OptionsList = () => {
-            return <ul>
+        const OptionsList = () => 
+            <ul>
                 {
                     feed.by._id === loggedinUser._id ?
                         <>
@@ -48,9 +48,8 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
                 <li>About this account</li>
                 <li onClick={hideDynamicModal}>Cancel</li>
             </ul>
-        }
 
-        showDynamicModal({ cmp: OptionsList })
+        showOptionsModal(OptionsList)
     }
 
     function onEditFeed() {
@@ -67,8 +66,7 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
     }
 
     function removeFeed() {
-        showDynamicModal({
-            cmp: () =>
+        showOptionsModal(() =>
                 <>
                     <div className="feed-remove-approval">
                         <h2>Delete post?</h2>
@@ -78,8 +76,7 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
                         <li className="danger" onClick={_removeFeed}>Delete</li>
                         <li onClick={hideDynamicModal}>Cancel</li>
                     </ul>
-                </>
-        })
+                </>)
 
         async function _removeFeed() {
             try {

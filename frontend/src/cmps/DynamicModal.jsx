@@ -22,11 +22,12 @@ export function DynamicModal() {
 
     const Cmp = modalData.cmp || <></>
     const props = modalData.props || null
+    const className = modalData.className || ''
 
     return (
         <>
             <Backdrop onClose={onCloseModal}></Backdrop>
-            <div className="dynamic-modal">
+            <div className={`dynamic-modal ${className}`}>
                 <Cmp {...props} />
             </div>
         </>

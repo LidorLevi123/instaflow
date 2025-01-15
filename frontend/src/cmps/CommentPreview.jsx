@@ -1,14 +1,14 @@
 import { useRef } from "react";
 import { getTimeSince } from "../services/util.service";
 import { SvgIcon } from "./SvgIcon";
-import { hideDynamicModal, showDynamicModal } from "../services/event-bus.service";
+import { hideDynamicModal, showOptionsModal } from "../services/event-bus.service";
 
 export function CommentPreview({ comment, onLikeComment, isCommentLiked, onRemoveComment, loggedinUser }) {
     const elBtnLikeRef = useRef()
 
     function onShowOptionsModal() {
-        const OptionsList = () => {
-            return <ul>
+        const OptionsList = () =>
+            <ul>
                 {
                     comment.by._id === loggedinUser._id ?
                         <li className="danger" onClick={() => onRemoveComment(comment._id)}>Delete</li> :
@@ -16,9 +16,8 @@ export function CommentPreview({ comment, onLikeComment, isCommentLiked, onRemov
                 }
                 <li onClick={hideDynamicModal}>Cancel</li>
             </ul>
-        }
 
-        showDynamicModal({ cmp: OptionsList })
+        showOptionsModal(OptionsList)
     }
 
     return (
