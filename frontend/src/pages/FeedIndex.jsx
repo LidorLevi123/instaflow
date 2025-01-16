@@ -94,7 +94,7 @@ export function FeedIndex() {
         onRemoveFeed,
         onOpenCreateModal,
         loggedinUser,
-        feeds
+        feeds,
     }
 
     if (!loggedinUser) return <Navigate to="login"></Navigate>

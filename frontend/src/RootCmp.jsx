@@ -10,6 +10,7 @@ import { UserPage } from './pages/UserPage.jsx'
 import { DynamicModal } from './cmps/DynamicModal.jsx'
 
 import { userService } from './services/user/user.service.local.js'
+import { ExplorePage } from './pages/ExplorePage.jsx'
 
 function RouteGuard({ children }) {
     const user = userService.getLoggedinUser()
@@ -25,6 +26,7 @@ export function RootCmp() {
                     <Route path="" element={<RouteGuard><FeedIndex /></RouteGuard>} >
                         <Route path="" element={<HomePage />} />
                         <Route path="user/:userId" element={<UserPage />} />
+                        <Route path="explore" element={<ExplorePage />} />
                     </Route>
                     <Route path="login" element={<LoginPage />} />
                     <Route path="signup" element={<SignupPage />} />
