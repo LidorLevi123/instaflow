@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router"
 import { userService } from "../services/user"
 import { SvgIcon } from "../cmps/SvgIcon"
-import { UserFeedList } from "../cmps/UserFeedList"
+import { FeedGallery } from "../cmps/FeedGallery"
 
 export function UserPage() {
     const [user, setUser] = useState(null)
@@ -56,7 +56,7 @@ export function UserPage() {
                 </p>
             </div>
 
-            <UserFeedList feeds={user.feeds}/>
+            <FeedGallery type="user-feeds" feeds={user.feeds}/>
         </section>
     )
 }

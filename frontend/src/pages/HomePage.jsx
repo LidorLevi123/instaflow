@@ -1,4 +1,4 @@
-import { FeedList } from '../cmps/FeedList'
+import { FeedGallery } from '../cmps/FeedGallery'
 import { useOutletContext } from 'react-router'
 
 export function HomePage() {
@@ -15,7 +15,7 @@ export function HomePage() {
 
     return (
         <section className="home-page">
-            <FeedList {...listProps}></FeedList>
+            <FeedGallery type="list" {...listProps} ></FeedGallery>
         </section>
     )
 }
