@@ -4,11 +4,18 @@ import { useSearchParams } from 'react-router-dom'
 import { FeedDetails } from '../cmps/FeedDetails'
 import { FeedEdit } from '../cmps/FeedEdit'
 import { useSelector } from 'react-redux'
-import { saveComment, removeFeed, saveFeed } from '../store/actions/feed.actions'
+import { saveComment, removeFeed, saveFeed, loadFeeds } from '../store/actions/feed.actions'
 import { logout } from '../store/actions/user.actions'
+import { useEffect } from 'react'
+import { Loader } from '../cmps/Loader'
 
 export function FeedIndex() {
+    const feeds = useSelector(storeState => storeState.feedModule.feeds)
     const loggedinUser = useSelector(storeState => storeState.userModule.loggedinUser)
+
+    useEffect(() => {
+        loadFeeds()
+    }, [])
 
     const [searchParams, setSearchParams] = useSearchParams()
     const feedId = searchParams.get('feedId')
@@ -56,13 +63,13 @@ export function FeedIndex() {
     }
 
     async function onLogout() {
-		try {
-			await logout()
-			navigate('login')
-		} catch (err) {
-			console.log('Cannot logout')
-		}
-	}
+        try {
+            await logout()
+            navigate('login')
+        } catch (err) {
+            console.log('Cannot logout')
+        }
+    }
 
     async function onRemoveFeed(feedId) {
         try {
@@ -86,10 +93,12 @@ export function FeedIndex() {
         onAddComment,
         onRemoveFeed,
         onOpenCreateModal,
-        loggedinUser
+        loggedinUser,
+        feeds
     }
 
-    if(!loggedinUser) return <Navigate to="login"></Navigate>
+    if (!loggedinUser) return <Navigate to="login"></Navigate>
+    if (!feeds || !feeds.length) return <Loader />
 
     return (
         <section className="feed-index main-layout">
