@@ -50,8 +50,24 @@
                 }
             }
 
+            .svg-icon.normal {
+                display: inline-block;
+            }
+            
+            .svg-icon.bold {
+                display: none;
+            }
+
             .active {
                 font-weight: bold;
+
+                .svg-icon.normal {
+                    display: none;
+                }
+
+                .svg-icon.bold {
+                    display: inline-block;
+                }
             }
         }
     }

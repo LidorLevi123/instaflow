@@ -33,7 +33,9 @@ export function NavBar({ onOpenCreateModal, user, onLogout }) {
 
                 <li>
                     <NavLink to="/">
-                        <SvgIcon iconName="home" />Home
+                        <SvgIcon iconName="home" className="normal" />
+                        <SvgIcon iconName="home-bold" className="bold" />
+                        <span className="link-txt">Home</span>
                     </NavLink>
                 </li>
 
@@ -43,7 +45,9 @@ export function NavBar({ onOpenCreateModal, user, onLogout }) {
 
                 <li>
                     <NavLink to="explore">
-                        <SvgIcon iconName="explore" />Explore
+                        <SvgIcon iconName="explore" className="normal" />
+                        <SvgIcon iconName="explore-bold" className="bold" />
+                        <span className="link-txt">Explore</span>
                     </NavLink>
                 </li>
 
