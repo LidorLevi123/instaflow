@@ -12,6 +12,51 @@
         grid-row: span 2;
     }
 
+    > li {
+        position: relative;
+        background-color: black;
+        cursor: pointer;
+
+        .info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            translate: -50% -50%;
+
+            display: none;
+            align-items: center;
+            gap: rem(7px);
+
+            img {
+                width: 20px;
+                filter: invert(1);
+
+                &:last-of-type {
+                    width: 18px;
+                }
+            }
+
+            span {
+                font-weight: bold;
+                color: white;
+
+                &:nth-child(2) {
+                    margin-inline-end: 25px;
+                }
+            }
+        }
+
+        &:hover {
+            img {
+                opacity: 0.7;
+            }
+
+            .info {
+                display: flex;
+            }
+        }
+    }
+
     img {
         width: 100%;
         height: 100%;
