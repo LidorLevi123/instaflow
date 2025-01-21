@@ -4,13 +4,14 @@ import { useSearchParams } from 'react-router-dom'
 import { feedService } from '../services/feed'
 import { commentService } from '../services/comment'
 import { getTimeSince } from '../services/util.service'
+import { eventBus, hideDynamicModal, showOptionsModal } from '../services/event-bus.service'
+
+import { removeComment } from '../store/actions/feed.actions'
 
 import { SvgIcon } from './SvgIcon'
 import { AddComment } from './AddComment'
 import { CommentList } from './CommentList'
 import { Backdrop } from './Backdrop'
-import { eventBus, hideDynamicModal, showOptionsModal } from '../services/event-bus.service'
-import { removeComment } from '../store/actions/feed.actions'
 
 export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, onRemoveFeed, onOpenCreateModal }) {
     const [feed, setFeed] = useState(null)

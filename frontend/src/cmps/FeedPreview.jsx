@@ -4,17 +4,14 @@ import { getTimeSince } from "../services/util.service"
 import { SvgIcon } from "./SvgIcon"
 import { AddComment } from "./AddComment"
 import { hideDynamicModal, showOptionsModal } from "../services/event-bus.service"
+import { useFeedDetails } from "../customHooks/useFeedDetails"
 
 export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, onRemoveFeed, onOpenCreateModal }) {
-    const [searchParams, setSearchParams] = useSearchParams()
-    const likeCount = feed.likedBy.length.toLocaleString('en-US')
-    const createdAt = getTimeSince(feed.createdAt)
+    const [onOpenDetails] = useFeedDetails(feed._id)
     const elBtnLikeRef = useRef()
 
-    function onOpenDetails() {
-        searchParams.set('feedId', feed._id)
-        setSearchParams(searchParams)
-    }
+    const likeCount = feed.likedBy.length.toLocaleString('en-US')
+    const createdAt = getTimeSince(feed.createdAt)
 
     function isLiked() {
         return feed.likedBy.some(user => user.username === loggedinUser.username)
@@ -25,7 +22,7 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
     }
 
     function onShowOptionsModal() {
-        const OptionsList = () => 
+        const OptionsList = () =>
             <ul>
                 {
                     feed.by._id === loggedinUser._id ?
@@ -67,16 +64,16 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
 
     function removeFeed() {
         showOptionsModal(() =>
-                <>
-                    <div className="feed-remove-approval">
-                        <h2>Delete post?</h2>
-                        <p>Are you sure you want to delete this post?</p>
-                    </div>
-                    <ul>
-                        <li className="danger" onClick={_removeFeed}>Delete</li>
-                        <li onClick={hideDynamicModal}>Cancel</li>
-                    </ul>
-                </>)
+            <>
+                <div className="feed-remove-approval">
+                    <h2>Delete post?</h2>
+                    <p>Are you sure you want to delete this post?</p>
+                </div>
+                <ul>
+                    <li className="danger" onClick={_removeFeed}>Delete</li>
+                    <li onClick={hideDynamicModal}>Cancel</li>
+                </ul>
+            </>)
 
         async function _removeFeed() {
             try {

@@ -1,18 +1,13 @@
-import { useSearchParams } from "react-router-dom"
+import { useFeedDetails } from "../customHooks/useFeedDetails"
 
 export function FeedExploreList({ feeds }) {
-    const [searchParams, setSearchParams] = useSearchParams()
-
-    function onOpenFeedDetails(feedId) {
-        searchParams.set('feedId', feedId)
-        setSearchParams(searchParams)
-    }
+    const [onOpenDetails] = useFeedDetails()
 
     return (
         <ul className="feed-explore-list">
             {
                 feeds.map(feed =>
-                    <li key={feed._id} onClick={() => onOpenFeedDetails(feed._id)}>
+                    <li key={feed._id} onClick={() => onOpenDetails(feed._id)}>
                         <img src={feed.imgUrls[0]} alt="Post preview" />
                         <div className="info">
                             <img src="/img/heart.png" alt="" />

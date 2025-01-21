@@ -1,12 +1,7 @@
-import { useSearchParams } from "react-router-dom"
+import { useFeedDetails } from "../customHooks/useFeedDetails"
 
 export function UserFeedList({ feeds }) {
-    const [searchParams, setSearchParams] = useSearchParams()
-
-    function onOpenDetails(feedId) {
-        searchParams.set('feedId', feedId)
-        setSearchParams(searchParams)
-    }
+    const [onOpenDetails] = useFeedDetails()
 
     return (
         <ul className="user-feed-list">
@@ -17,7 +12,7 @@ export function UserFeedList({ feeds }) {
                         <div className="info">
                             <img src="/img/heart.png" alt="" />
                             <span>{feed.likedBy.length}</span>
-                            
+
                             <img src="/img/comment.png" alt="" />
                             <span>{feed.comments.length}</span>
                         </div>
