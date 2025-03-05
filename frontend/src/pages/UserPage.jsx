@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router"
 import { userService } from "../services/user"
 import { SvgIcon } from "../cmps/SvgIcon"
@@ -6,6 +6,7 @@ import { FeedGallery } from "../cmps/FeedGallery"
 
 export function UserPage() {
     const [user, setUser] = useState(null)
+    const [currView, setCurrView] = useState('posts')
     const params = useParams()
 
     useEffect(() => {
@@ -18,7 +19,13 @@ export function UserPage() {
         setUser(user)
     }
 
+    function onChangeView(view) {
+        setCurrView(view)
+    }
+
     if (!user) return
+
+    const galleryOptions = ['posts', 'saved', 'tagged']
 
     return (
         <section className="user-page">
@@ -42,21 +49,16 @@ export function UserPage() {
             </header>
 
             <div className="gallery-controller">
-                <p className="active">
-                    <SvgIcon iconName="posts" />
-                    <span>Posts</span>
-                </p>
-                <p>
-                    <SvgIcon iconName="saved" />
-                    <span>Saved</span>
-                </p>
-                <p>
-                    <SvgIcon iconName="tagged" />
-                    <span>Tagged</span>
-                </p>
+                {
+                    galleryOptions.map(view =>
+                        <p key={view} className={view === currView ? 'active' : ''} onClick={() => onChangeView(view)}>
+                            <SvgIcon iconName={view} />
+                            <span>{view}</span>
+                        </p>)
+                }
             </div>
 
-            <FeedGallery type="user-feeds" feeds={user.feeds}/>
+            {currView === 'posts' && <FeedGallery type="user-feeds" feeds={user.feeds} />}
         </section>
     )
 }
