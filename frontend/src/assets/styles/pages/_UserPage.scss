@@ -1,13 +1,11 @@
 .user-page {
     display: grid;
     align-content: start;
-    grid-template-columns: 
-        minmax(5px, 1fr)
-        minmax(auto, 935px)
-        minmax(5px, 1fr);
+    grid-template-columns:
+        minmax(5px, 1fr) minmax(auto, 935px) minmax(5px, 1fr);
     padding-block-start: rem(30px);
 
-    > * {
+    >* {
         grid-column: 2;
     }
 
@@ -19,13 +17,13 @@
         grid-template-rows: repeat(3, auto);
         margin-block-end: rem(218px);
 
-        > *:not(.user-img) {
+        >*:not(.user-img) {
             grid-column: 2;
-        } 
+        }
 
-        > *:not(.user-img, .info) {
+        >*:not(.user-img, .info) {
             display: flex;
-        } 
+        }
 
         button {
             border-radius: em(8px);
@@ -41,16 +39,34 @@
         }
 
         .user-img {
+            position: relative;
             grid-row: 1 / -1;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            object-position: center;
-            border-radius: 50%;
             margin-inline: em(67px);
             margin-block-start: em(30px);
+
+
+            label {
+                position: absolute;
+                display: block;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+
+            input {
+                display: none;
+            }
+
+            img {
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+                object-position: center;
+                border-radius: 50%;
+            }
         }
-    
+
         .user-name {
             font-size: em(20px);
             font-weight: 400;
@@ -95,7 +111,7 @@
         border-block-start: 1px solid $gray1;
         letter-spacing: rem(1px);
 
-        > * {
+        >* {
             display: flex;
             align-items: center;
             gap: em(8px);

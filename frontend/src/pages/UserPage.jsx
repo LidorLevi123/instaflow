@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from "react"
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from "react-router"
 import { userService } from "../services/user"
 import { SvgIcon } from "../cmps/SvgIcon"
 import { FeedGallery } from "../cmps/FeedGallery"
+import { uploadService } from "../services/upload.service"
 
 export function UserPage() {
+    const loggedinUser = useSelector(state => state.userModule.loggedinUser)
     const [user, setUser] = useState(null)
     const [currView, setCurrView] = useState('posts')
     const params = useParams()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         loadUser()
@@ -23,14 +27,39 @@ export function UserPage() {
         setCurrView(view)
     }
 
+    async function uploadImg(ev) {
+        try {
+            const { secure_url } = await uploadService.uploadImg(ev)
+            user.imgUrl = secure_url
+            
+            const savedUser = await userService.update(user)
+            if (loggedinUser._id === user._id) dispatch({ type: 'SET_LOGGEDIN_USER', user: savedUser })
+            setUser(prevUser => ({ ...prevUser, imgUrl: secure_url }))
+        } catch (err) {
+            console.log('Could not change profile picture', err)
+        }
+    }
+
     if (!user) return
 
-    const galleryOptions = ['posts', 'saved', 'tagged']
+    const galleryViews = ['posts', 'saved', 'tagged']
 
     return (
         <section className="user-page">
             <header>
-                <img className="user-img" src={user.imgUrl} alt="" />
+                <section className="user-img">
+                    {
+                        loggedinUser._id === user._id &&
+                        <>
+                            <label
+                                htmlFor="file-input"
+                                title={loggedinUser._id === user._id ? 'Change profile picture' : 'View'}>
+                            </label>
+                            <input type="file" id="file-input" onChange={uploadImg} />
+                        </>
+                    }
+                    <img src={user.imgUrl} />
+                </section>
                 <div className="actions">
                     <h3 className="user-name">{user.username}</h3>
                     <button className="bold">Edit profile</button>
@@ -50,7 +79,7 @@ export function UserPage() {
 
             <div className="gallery-controller">
                 {
-                    galleryOptions.map(view =>
+                    galleryViews.map(view =>
                         <p key={view} className={view === currView ? 'active' : ''} onClick={() => onChangeView(view)}>
                             <SvgIcon iconName={view} />
                             <span>{view}</span>
