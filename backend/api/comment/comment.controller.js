@@ -3,8 +3,11 @@ import { commentService } from './comment.service.js'
 
 export async function addComment(req, res) {
 	try {
-		const comment = req.body
-		const savedComment = await commentService.add(comment)
+		const comment = req.body.comment || null
+		const feedId = req.body.feedId || ''
+
+		if(!comment || !feedId) return res.status(400).send({ err: 'Failed to add comment' })
+		const savedComment = await commentService.add(comment, feedId)
 		res.json(savedComment)
 	} catch (err) {
 		logger.error('Failed to add comment', err)
@@ -17,7 +20,7 @@ export async function removeComment(req, res) {
 	const { id: commentId, feedId } = req.params
 
 	try {
-		const deletedCount = await commentService.remove(feedId, commentId)
+		const deletedCount = await commentService.remove(commentId, feedId)
 		if (deletedCount < 1) {
 			logger.warn(`${loggedinUser.username} is illegaly attemping to remove comments`)
 			return res.status(403).send({ err: 'Cannot remove comment' })

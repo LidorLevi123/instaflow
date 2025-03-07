@@ -12,8 +12,7 @@ async function save(feedId, comment) {
     if (comment._id) {
         savedComment = await httpService.put(BASE_URL + comment._id, comment)
     } else {
-        comment.aboutFeedId = feedId
-        savedComment = await httpService.post(BASE_URL, comment)
+        savedComment = await httpService.post(BASE_URL, { comment, feedId })
     }
     return savedComment
 }

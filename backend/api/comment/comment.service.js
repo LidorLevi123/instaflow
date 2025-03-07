@@ -27,7 +27,7 @@ async function query(filterBy = {}) {
     }
 }
 
-async function remove(feedId, commentId) {
+async function remove(commentId, feedId) {
     try {
         const { loggedinUser } = asyncLocalStorage.getStore()
         const collection = await dbService.getCollection('comment')
@@ -53,13 +53,12 @@ async function remove(feedId, commentId) {
     }
 }
 
-async function add(comment) {
+async function add(comment, feedId) {
     try {
         const { loggedinUser } = asyncLocalStorage.getStore()
 
         const commentToAdd = {
             by: loggedinUser,
-            aboutFeedId: ObjectId.createFromHexString(comment.aboutFeedId),
             txt: comment.txt,
             createdAt: Date.now()
         }
@@ -68,7 +67,7 @@ async function add(comment) {
         await collection.insertOne(commentToAdd)
 
         const feedCollection = await dbService.getCollection('feed')
-        const feed = await feedCollection.findOne(commentToAdd.aboutFeedId)
+        const feed = await feedCollection.findOne(ObjectId.createFromHexString(feedId))
 
         if (!feed.commentIds) feed.commentIds = []
         feed.commentIds = [...feed.commentIds, commentToAdd._id.toString()]
@@ -103,8 +102,8 @@ async function update(comment) {
 function _buildCriteria(filterBy) {
     const criteria = {}
 
-    if (filterBy.feedId) {
-        criteria.aboutFeedId = ObjectId.createFromHexString(filterBy.feedId)
+    if (filterBy.commentIds) {
+        criteria._id = { $in: filterBy.commentIds.map(ObjectId.createFromHexString) }
     }
     return criteria
 }

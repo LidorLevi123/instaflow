@@ -39,13 +39,7 @@ async function getById(feedId) {
 		const feed = await feedsCollection.findOne(criteria)
 
 		if(feed.commentIds?.length) {
-			const comments = await commentService.query({ feedId })
-	
-			feed.comments = comments.map(comment => {
-				delete comment.aboutFeedId
-				return comment
-			})
-	
+			feed.comments = await commentService.query({ commentIds: feed.commentIds })
 			delete feed.commentIds
 		}
 
