@@ -28,7 +28,6 @@ export async function addFeed(req, res) {
 	const feed = {
         txt: req.body.txt || '',
         imgUrls: req.body.imgUrls || [],
-        comments: req.body.comments || [],
         likedBy: req.body.likedBy || [],
     }
 
@@ -49,10 +48,10 @@ export async function updateFeed(req, res) {
 
 	const feed = req.body
 
-	// if (feed.by._id !== userId) {
-	// 	res.status(403).send('Not your feed...')
-	// 	return
-	// }
+	if (feed.by._id !== userId) {
+		res.status(403).send('Cannot update')
+		return
+	}
 	
 	try {
 		const updatedFeed = await feedService.update(feed)

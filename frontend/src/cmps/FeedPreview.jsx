@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { useSearchParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { getTimeSince } from "../services/util.service"
 import { SvgIcon } from "./SvgIcon"
 import { AddComment } from "./AddComment"
@@ -89,8 +89,14 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
         <>
             <article className="feed-preview">
                 <section className="uploader">
-                    <img src={feed.by.imgUrl} alt="Uploader img" />
-                    <span className="fullname">{feed.by.fullname}</span>
+                    <Link to={`user/${feed.by._id}`}>
+                        <img src={feed.by.imgUrl} alt="Uploader img" />
+                    </Link>
+
+                    <Link to={`user/${feed.by._id}`}>
+                        <span className="fullname">{feed.by.fullname}</span>
+                    </Link>
+
                     <span className="dot">•</span>
                     <span className="created-at">{createdAt}</span>
                     {

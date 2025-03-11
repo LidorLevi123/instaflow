@@ -11,10 +11,10 @@ export function UserFeedList({ feeds }) {
                         <img className="feed-img" src={feed.imgUrls[0]} alt="" />
                         <div className="info">
                             <img src="/img/heart.png" alt="" />
-                            <span>{feed.likedBy.length}</span>
+                            <span>{feed.likedBy?.length || 0}</span>
 
                             <img src="/img/comment.png" alt="" />
-                            <span>{feed.comments.length}</span>
+                            <span>{feed.commentIds?.length || 0}</span>
                         </div>
                     </li>)
             }
