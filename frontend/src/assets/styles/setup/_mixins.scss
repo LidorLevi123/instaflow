@@ -60,6 +60,21 @@
     }
 }
 
+@mixin btn-secondary {
+    border: none;
+    color: white;
+    background: $clr4;
+    padding: rem(7px) rem(16px);
+    font-size: rem(14px);
+    font-weight: 600;
+    font-family: $font;
+    border-radius: rem(8px);
+
+    &:hover {
+        background: $clr5;
+    }
+}
+
 @mixin feed-action-bar {
     display: grid;
     gap: 16px;

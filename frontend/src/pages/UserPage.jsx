@@ -15,7 +15,7 @@ export function UserPage() {
 
     useEffect(() => {
         loadUser()
-    }, [])
+    }, [params.userId])
 
     async function loadUser() {
         const { userId } = params
@@ -31,7 +31,7 @@ export function UserPage() {
         try {
             const { secure_url } = await uploadService.uploadImg(ev)
             user.imgUrl = secure_url
-            
+
             const savedUser = await userService.update(user)
             if (loggedinUser._id === user._id) dispatch({ type: 'SET_LOGGEDIN_USER', user: savedUser })
             setUser(prevUser => ({ ...prevUser, imgUrl: secure_url }))
@@ -62,9 +62,19 @@ export function UserPage() {
                 </section>
                 <div className="actions">
                     <h3 className="user-name">{user.username}</h3>
-                    <button className="bold">Edit profile</button>
-                    <button className="bold">View archive</button>
-                    <SvgIcon iconName="settings" />
+                    {
+                        loggedinUser._id === user._id ?
+                            <>
+                                <button className="bold">Edit profile</button>
+                                <button className="bold">View archive</button>
+                                <SvgIcon iconName="settings" />
+                            </> :
+                            <>
+                                <button className="btn-follow bold">Follow</button>
+                                <button className="bold">Message</button>
+                                <SvgIcon iconName="options" className="options-svg"/>
+                            </>
+                    }
                 </div>
                 <div className="summary">
                     <p><span className="bold">{user.feeds.length}</span>posts</p>

@@ -79,8 +79,28 @@
             gap: rem(8px);
             margin-block-start: rem(10px);
 
+            .btn-follow {
+                display: flex;
+                align-items: center;
+                gap: rem(5px);
+                
+                &:not(.following) {
+                    @include btn-secondary;
+                    padding: rem(7px) rem(20px);
+                }
+
+                svg {
+                    height: 12px;
+                }
+            }
+
             .svg-icon {
                 cursor: pointer;
+            }
+
+            .options-svg svg {
+                width: 32px;
+                height: 32px;
             }
         }
 

@@ -4,11 +4,11 @@
     padding-block-start: 10vh;
     text-align: center;
 
-    > * {
+    >* {
         border: 1px solid $gray1;
     }
 
-    > *:first-child {
+    >*:first-child {
         display: grid;
         gap: rem(18px);
         margin-block-end: rem(10px);
@@ -26,27 +26,18 @@
         }
 
         .btn-facebook-login {
+            @include btn-secondary;
+
             justify-self: center;
-            width: 75%;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: rem(8px);
-            border: none;
-            color: white;
-            background: $clr4;
-            padding: rem(7px) rem(16px);
-            font-size: 14px;
-            font-weight: 600;
-            font-family: $font;
-            border-radius: rem(8px);
+
+            width: 75%;
 
             img {
                 width: 16px;
-            }
-
-            &:hover {
-                background: $clr5;
             }
         }
 
@@ -94,7 +85,7 @@
             width: 75%;
             justify-self: center;
 
-            > * {
+            >* {
                 width: 100%;
                 height: 1px;
                 background-color: $gray1;
