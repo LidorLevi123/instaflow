@@ -8,8 +8,9 @@ import { authRoutes } from './api/auth/auth.routes.js'
 import { userRoutes } from './api/user/user.routes.js'
 import { feedRoutes } from './api/feed/feed.routes.js'
 import { commentRoutes } from './api/comment/comment.routes.js'
-import { setupSocketAPI } from './services/socket.service.js'
+import { followRoutes } from './api/follow/follow.routes.js'
 
+import { setupSocketAPI } from './services/socket.service.js'
 import { setupAsyncLocalStorage } from './middlewares/setupAls.middleware.js'
 
 const app = express()
@@ -38,6 +39,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/user', userRoutes)
 app.use('/api/feed', feedRoutes)
 app.use('/api/comment', commentRoutes)
+app.use('/api/follow', followRoutes)
 
 setupSocketAPI(server)
 

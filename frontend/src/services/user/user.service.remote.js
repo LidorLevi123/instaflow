@@ -12,6 +12,7 @@ export const userService = {
 	update,
 	getLoggedinUser,
 	saveLoggedinUser,
+	follow,
 }
 
 function getUsers() {
@@ -53,6 +54,12 @@ async function signup(userCred) {
 async function logout() {
 	sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
 	return await httpService.post('auth/logout')
+}
+
+async function follow(userId) {
+	const loggedinUser = getLoggedinUser()
+	const follow = { followerId: loggedinUser._id, followingId: userId }
+	return await httpService.post('follow/', follow)
 }
 
 function getLoggedinUser() {

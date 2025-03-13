@@ -23,10 +23,6 @@ export function UserPage() {
         setUser(user)
     }
 
-    function onChangeView(view) {
-        setCurrView(view)
-    }
-
     async function uploadImg(ev) {
         try {
             const { secure_url } = await uploadService.uploadImg(ev)
@@ -38,6 +34,27 @@ export function UserPage() {
         } catch (err) {
             console.log('Could not change profile picture', err)
         }
+    }
+
+    async function onFollow() {
+        try {
+            const follow = await userService.follow(user._id)
+            setUser(prevUser => ({...prevUser, followers: [...prevUser.followers, follow]}))
+        } catch (err) {
+            console.log('Could not follow user', err);
+        }
+    }
+
+    async function onUnFollow() {
+
+    }
+
+    function onChangeView(view) {
+        setCurrView(view)
+    }
+
+    function isFollowing() {
+        return user.followers.some(follower => follower.followerId === loggedinUser._id)
     }
 
     if (!user) return
@@ -70,7 +87,14 @@ export function UserPage() {
                                 <SvgIcon iconName="settings" />
                             </> :
                             <>
-                                <button className="btn-follow bold">Follow</button>
+                                { 
+                                    isFollowing() ? 
+                                        <button className="btn-follow bold following" onClick={onUnFollow}>
+                                            Following
+                                            <SvgIcon iconName="chevronDown"/>
+                                        </button> :
+                                        <button className="btn-follow bold" onClick={onFollow}>Follow</button>
+                                    }
                                 <button className="bold">Message</button>
                                 <SvgIcon iconName="options" className="options-svg"/>
                             </>

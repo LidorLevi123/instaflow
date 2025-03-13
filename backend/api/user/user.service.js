@@ -1,6 +1,7 @@
 import { dbService } from '../../services/db.service.js'
 import { logger } from '../../services/logger.service.js'
 import { feedService } from '../feed/feed.service.js'
+import { followService } from '../follow/follow.service.js'
 import { ObjectId } from 'mongodb'
 
 export const userService = {
@@ -46,6 +47,9 @@ async function getById(userId) {
             delete feed.by
             return feed
         })
+
+        user.following = await followService.query({ followerId: userId })
+        user.followers = await followService.query({ followingId: userId })
 
         return user
     } catch (err) {
