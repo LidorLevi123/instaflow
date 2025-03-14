@@ -110,7 +110,7 @@ export function FeedDetails({ feedId, onToggleLike, loggedinUser, onAddComment, 
             const savedComment = await commentService.save(feed._id, commentToSave)
             setFeed(prevFeed => ({
                 ...prevFeed,
-                comments: prevFeed.comments.map(comment => comment.id === savedComment.id ? savedComment : comment)
+                comments: prevFeed.comments.map(comment => comment._id === savedComment._id ? savedComment : comment)
             }))
         } catch (err) {
             console.log(err, 'Could not like comment')
