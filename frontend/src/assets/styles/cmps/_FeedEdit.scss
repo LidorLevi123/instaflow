@@ -47,6 +47,10 @@
         }
     }
 
+    >*:last-child {
+        min-height: 0;
+    }
+
     .local-img {
         width: 100%;
         height: 100%;

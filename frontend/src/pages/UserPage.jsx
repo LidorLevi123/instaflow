@@ -20,7 +20,6 @@ export function UserPage() {
     async function loadUser() {
         const { userId } = params
         const user = await userService.getById(userId)
-        console.log(' user:', user)
         setUser(user)
     }
 
@@ -40,7 +39,6 @@ export function UserPage() {
     async function onFollow() {
         try {
             await userService.follow(user._id)
-            console.log(' follow:', loggedinUser)
             setUser(prevUser => ({...prevUser, followers: [...prevUser.followers, loggedinUser]}))
         } catch (err) {
             console.log('Could not follow user', err)
