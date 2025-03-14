@@ -13,6 +13,7 @@ export const userService = {
 	getLoggedinUser,
 	saveLoggedinUser,
 	follow,
+	unfollow
 }
 
 function getUsers() {
@@ -60,6 +61,10 @@ async function follow(userId) {
 	const loggedinUser = getLoggedinUser()
 	const follow = { followerId: loggedinUser._id, followingId: userId }
 	return await httpService.post('follow/', follow)
+}
+
+async function unfollow(userId) {
+	return await httpService.delete('follow/' + userId)
 }
 
 function getLoggedinUser() {

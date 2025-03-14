@@ -3,11 +3,11 @@ import { ObjectId } from 'mongodb'
 import { asyncLocalStorage } from '../../services/als.service.js'
 import { logger } from '../../services/logger.service.js'
 import { dbService } from '../../services/db.service.js'
-import { feedService } from '../feed/feed.service.js'
 
 export const followService = { 
     query,
-    add
+    add,
+    remove
 }
 
 async function query(filterBy = {}) {
@@ -24,28 +24,19 @@ async function query(filterBy = {}) {
     }
 }
 
-async function remove(commentId, feedId) {
+async function remove(userId) {
     try {
         const { loggedinUser } = asyncLocalStorage.getStore()
-        const collection = await dbService.getCollection('comment')
+        const collection = await dbService.getCollection('follow')
         const criteria = {
-            _id: ObjectId.createFromHexString(commentId),
-            'by._id': loggedinUser._id
+            followerId: ObjectId.createFromHexString(loggedinUser._id),
+            followingId: ObjectId.createFromHexString(userId)
         }
 
         const { deletedCount } = await collection.deleteOne(criteria)
-
-        const feedCollection = await dbService.getCollection('feed')
-        const feed = await feedCollection.findOne(ObjectId.createFromHexString(feedId))
-
-        feed.commentIds = feed.commentIds.filter(_commentId => _commentId !== commentId)
-        feed._id = feed._id.toString()
-
-        await feedService.update(feed)
-
         return deletedCount
     } catch (err) {
-        logger.error(`cannot remove comment ${commentId}`, err)
+        logger.error(`cannot unfollow ${userId}`, err)
         throw err
     }
 }
@@ -58,15 +49,14 @@ async function add(follow) {
         }
         
 		const collection = await dbService.getCollection('follow')
-        const { followerId, followingId } = followToSave
-        const isFollowing = await collection.findOne({ followerId, followingId })
+        const isFollowing = await collection.findOne(followToSave)
         
         if(isFollowing) throw 'Cannot follow user'
 
 		await collection.insertOne(followToSave)
         return followToSave
 	} catch (err) {
-		logger.error('cannot insert follow', err)
+		logger.error('cannot add follow', err)
 		throw err
 	}
 }

@@ -22,7 +22,10 @@
         margin-block-end: rem(14px);
 
         img {
+            height: 28px;
             width: 28px;
+            object-fit: cover;
+            object-position: center;
             border-radius: 50%;
         }
 

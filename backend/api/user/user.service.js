@@ -48,8 +48,17 @@ async function getById(userId) {
             return feed
         })
 
-        user.following = await followService.query({ followerId: userId })
-        user.followers = await followService.query({ followingId: userId })
+        const following = await followService.query({ followerId: userId })
+        const followers = await followService.query({ followingId: userId })
+
+        const followingIds = following.map(follow => follow.followingId)
+        const followersIds = followers.map(follow => follow.followerId)
+
+        const res1 = await collection.find({ _id: { $in: followingIds } }).toArray()
+        const res2 = await collection.find({ _id: { $in: followersIds } }).toArray()
+
+        user.following = res1.map(user => { delete user.password; delete user.email; return user })
+        user.followers = res2.map(user => { delete user.password; delete user.email; return user })
 
         return user
     } catch (err) {

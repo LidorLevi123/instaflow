@@ -20,6 +20,7 @@ export function UserPage() {
     async function loadUser() {
         const { userId } = params
         const user = await userService.getById(userId)
+        console.log(' user:', user)
         setUser(user)
     }
 
@@ -38,15 +39,21 @@ export function UserPage() {
 
     async function onFollow() {
         try {
-            const follow = await userService.follow(user._id)
-            setUser(prevUser => ({...prevUser, followers: [...prevUser.followers, follow]}))
+            await userService.follow(user._id)
+            console.log(' follow:', loggedinUser)
+            setUser(prevUser => ({...prevUser, followers: [...prevUser.followers, loggedinUser]}))
         } catch (err) {
-            console.log('Could not follow user', err);
+            console.log('Could not follow user', err)
         }
     }
 
     async function onUnFollow() {
-
+        try {
+            await userService.unfollow(user._id)
+            setUser(prevUser => ({...prevUser, followers: prevUser.followers.filter(follower => follower._id !== loggedinUser._id)}))
+        } catch (err) {
+            console.log('Could not follow user', err)
+        }
     }
 
     function onChangeView(view) {
@@ -54,7 +61,7 @@ export function UserPage() {
     }
 
     function isFollowing() {
-        return user.followers.some(follower => follower.followerId === loggedinUser._id)
+        return user.followers.some(follower => follower._id === loggedinUser._id)
     }
 
     if (!user) return
@@ -89,7 +96,7 @@ export function UserPage() {
                             <>
                                 { 
                                     isFollowing() ? 
-                                        <button className="btn-follow bold following" onClick={onUnFollow}>
+                                        <button className="btn-follow bold following" onClick={onUnFollow} title="Unfollow">
                                             Following
                                             <SvgIcon iconName="chevronDown"/>
                                         </button> :
