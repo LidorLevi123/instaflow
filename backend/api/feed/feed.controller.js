@@ -43,15 +43,7 @@ export async function addFeed(req, res) {
 }
 
 export async function updateFeed(req, res) {
-	const { loggedinUser } = req
-	const { _id: userId } = loggedinUser
-
 	const feed = req.body
-
-	if (feed.by._id !== userId) {
-		res.status(403).send('Cannot update')
-		return
-	}
 	
 	try {
 		const updatedFeed = await feedService.update(feed)
