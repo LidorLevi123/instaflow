@@ -1,6 +1,6 @@
 .main-layout {
     display: grid;
-    grid-template-columns: 73px minmax(1013px, 1fr);
+    grid-template-columns: 73px minmax($mobile-breakpoint, 1fr);
 
     @include for-normal-layout {
         grid-template-columns: 245px minmax(1013px, 1fr);

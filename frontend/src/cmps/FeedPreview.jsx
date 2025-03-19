@@ -99,13 +99,13 @@ export function FeedPreview({ feed, onToggleLike, loggedinUser, onAddComment, on
 
                     <span className="dot">•</span>
                     <span className="created-at">{createdAt}</span>
-                    {
+                    {/* {
                         feed.by._id !== loggedinUser._id &&
                         <>
                             <span className="dot">•</span>
                             <span className="follow">Follow</span>
                         </>
-                    }
+                    } */}
                     <SvgIcon iconName="options" className="btn options-icon" onClick={onShowOptionsModal} />
                 </section>
 

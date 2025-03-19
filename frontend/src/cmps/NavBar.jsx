@@ -27,7 +27,8 @@ export function NavBar({ onOpenCreateModal, user, onLogout }) {
             <ul className="nav-list">
                 <li className="logo">
                     <NavLink to="/">
-                        <SvgIcon iconName="logoTxt" />
+                        <SvgIcon iconName="logoTxt" className="logo-txt"/>
+                        <SvgIcon iconName="logo" className="logo-icon"/>
                     </NavLink>
                 </li>
 
@@ -40,7 +41,8 @@ export function NavBar({ onOpenCreateModal, user, onLogout }) {
                 </li>
 
                 <li>
-                    <SvgIcon iconName="search" />Search
+                    <SvgIcon iconName="search" />
+                    <span className="link-txt">Search</span>
                 </li>
 
                 <li>
@@ -53,39 +55,45 @@ export function NavBar({ onOpenCreateModal, user, onLogout }) {
 
                 <li>
                     <NavLink to="reels">
-                        <SvgIcon iconName="reels" />Reels
+                        <SvgIcon iconName="reels" />
+                        <span className="link-txt">Reels</span>
                     </NavLink>
                 </li>
 
                 <li>
                     <NavLink to="messages">
-                        <SvgIcon iconName="messenger" />Messages
+                        <SvgIcon iconName="messenger" />
+                        <span className="link-txt">Messages</span>
                     </NavLink>
                 </li>
 
                 <li>
-                    <SvgIcon iconName="heart" />Notifications
+                    <SvgIcon iconName="heart" />
+                    <span className="link-txt">Notifications</span>
                 </li>
 
                 <li onClick={() => onOpenCreateModal()}>
-                    <SvgIcon iconName="addFeed" />Create
+                    <SvgIcon iconName="addFeed" />
+                    <span className="link-txt">Create</span>
                 </li>
 
                 <li className="btn-profile">
                     <NavLink to={`user/${user._id}`}>
                         <img className="user-img" src={user.imgUrl} alt="" />
-                        Profile
+                        <span className="link-txt">Profile</span>
                     </NavLink>
                 </li>
 
                 <li>
                     <NavLink to="https://www.threads.net/?xmt=AQGzXUqqEb9xb-HuqkLyKZMoTtPiJ5GimIdR-VpPWsD2kxA">
-                        <SvgIcon iconName="threads" />Threads
+                        <SvgIcon iconName="threads" />
+                        <span className="link-txt">Threads</span>
                     </NavLink>
                 </li>
 
                 <li className="more-options" onClick={onOpenToolTip}>
-                    <SvgIcon iconName="more" />More
+                    <SvgIcon iconName="more" />
+                    <span className="link-txt">More</span>
                 </li>
             </ul>
 

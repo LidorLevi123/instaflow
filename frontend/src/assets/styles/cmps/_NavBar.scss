@@ -7,6 +7,18 @@
 
     .logo {
         padding: rem(32px) rem(12px) rem(28px) rem(12px);
+        .logo-txt {
+            display: none;
+        }
+
+        @include for-normal-layout {
+            .logo-txt {
+                display: inline;
+            }
+            .logo-icon {
+                display: none;
+            }
+        }
     }
 
     .nav-list {
@@ -72,6 +84,14 @@
                     display: inline-block;
                 }
             }
+
+            .link-txt {
+                display: none;
+
+                @include for-normal-layout {
+                    display: block;
+                }
+            }
         }
     }
 
@@ -105,5 +125,4 @@
             }
         }
     }
-
 }
