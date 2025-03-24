@@ -98,7 +98,7 @@ export function FeedIndex() {
     }
 
     if (!loggedinUser) return <Navigate to="login"></Navigate>
-    if (!feeds || !feeds.length) return <Loader />
+    if (!feeds) return <Loader />
 
     return (
         <section className="feed-index main-layout">
